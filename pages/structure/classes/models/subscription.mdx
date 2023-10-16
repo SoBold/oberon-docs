@@ -1,0 +1,109 @@
+# Subscription Model
+
+The Oberon Subscription Model is responsible for managing individual subscription details, transactions, and associated database operations.
+
+## Properties
+
+| Property Name   | Type             | Description                                                                       | Version |
+| --------------- | ---------------- | --------------------------------------------------------------------------------- | ------- |
+| id              | int              | Subscription ID.                                                                  | 0.1.0   |
+| user_id         | int              | User ID associated with the subscription.                                         | 0.1.0   |
+| membership_id   | int              | Membership ID associated with the subscription.                                   | 0.1.0   |
+| coupon_id       | int&#124;null    | Coupon ID associated with the subscription. Null if there's no associated coupon. | 0.1.0   |
+| price           | int              | Price of the subscription.                                                        | 0.1.0   |
+| total           | int              | Total amount of the subscription.                                                 | 0.1.0   |
+| tax_amount      | int              | Tax amount of the subscription.                                                   | 0.1.0   |
+| tax_rate        | int              | Tax rate of the subscription.                                                     | 0.1.0   |
+| tax_class       | string&#124;null | Tax class of the subscription. Null if not defined.                               | 0.1.0   |
+| gateway_type    | string           | Gateway type used for the subscription.                                           | 0.1.0   |
+| period          | int              | Period of the subscription.                                                       | 0.1.0   |
+| period_type     | string           | Period type of the subscription (e.g., days, months).                             | 0.1.0   |
+| renew           | bool             | Indicates if the subscription should be renewed.                                  | 0.1.0   |
+| status          | string           | Status of the subscription.                                                       | 0.1.0   |
+| created_at      | string           | Creation timestamp.                                                               | 0.1.0   |
+| expires_at      | string           | Expiry timestamp.                                                                 | 0.1.0   |
+
+## Methods
+
+### `construct`
+
+**Parameters:**
+- `$id` (optional): Membership ID or `0` to construct a new instance.
+
+**Description:** Initializes the model. By default, if no ID is provided, constructs a new subscription.
+
+**Version:** `0.1.0`
+
+### `init`
+
+**Parameters:**
+- `$data`: Array of data to be assigned to the model.
+- `$id` (optional): The subscription ID.
+
+**Description:** Construct the model from inputted data.
+
+**Version:** `0.1.0`
+
+### `getValue`
+
+**Parameters:**
+- `$key`: The key of the columns you want to retrieve.
+
+**Returns:** Mixed
+
+**Description:** Retrieve a piece of information from the subscription table based on the given key.
+
+**Version:** `0.1.0`
+
+### `save`
+
+**Returns:** `int|bool` - ID on successful save, `true` on update success, and `false` on failure.
+
+**Description:** Save the subscription data to the database.
+
+**Version:** `0.1.0`
+
+### `delete`
+
+**Returns:** `bool` - True on successful deletion, false otherwise.
+
+**Description:** Delete the subscription from the database.
+
+**Version:** `0.1.0`
+
+### `transactions`
+
+**Returns:** `Transaction[]` - Array of transactions.
+
+**Description:** Get the subscription transactions.
+
+**Version:** `0.1.0`
+
+### `getTransactionBasedValues`
+
+**Returns:** `void`
+
+**Description:** Retrieve the expiry date from the transactions.
+
+**Version:** `0.1.0`
+
+## Usage
+
+To initialize a new subscription:
+```php
+$subscription = new \Oberon\Models\Subscription();
+```
+
+To save the subscription to the database:
+```php
+$subscription->user_id = 123;
+$subscription->membership_id = 456;
+// ... set other properties as required ...
+$subscription->save();
+```
+
+To retrieve a subscription transactions
+```php
+$subscription->transactions();
+```
+

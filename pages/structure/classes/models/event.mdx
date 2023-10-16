@@ -1,0 +1,32 @@
+# Event Model
+
+The Oberon Event Model manages various events within the Oberon system. Each event can be triggered and have associated data.
+
+## Properties
+
+| Property Name      | Type           | Description                                      | Version |
+|--------------------|----------------|--------------------------------------------------|---------|
+| event              | string         | The name of the event                            | 0.1.0   |
+| time               | string         | Timestamp for when the event happened            | 0.1.0   |
+| data               | `array<mixed>`   | Data associated with the event                   | 0.1.0   |
+| validEvents        | `array<string>`  | List of valid event names                        | 0.1.0   |
+
+## Methods
+
+### `__construct`
+
+**Parameters:**
+- `$event`: The name of the event.
+- `$data`: Data for the event.
+- `$time`: Timestamp for when the event happened.
+
+**Description:** Initializes the event model. If the event is not in the list of valid events, it returns an error.
+
+**Version:** `0.1.0`
+
+### `fire`
+
+**Description:** Triggers the event.
+
+**Version:** `0.1.0`
+

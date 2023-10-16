@@ -1,0 +1,53 @@
+## CheckMembershipPriceValid
+
+### Overview
+The `CheckMembershipPriceValid` function is responsible for ensuring the validity of a membership's price by sending a request to the server. By passing in membership details, coupon data, and tax rates, the server checks if the client's calculated price matches its expectations. This is particularly useful to ensure that client-side pricing calculations have not been tampered with.
+
+### Function Definition
+```typescript
+const CheckMembershipPriceValid = async (priceData: PriceData): Promise<boolean>
+```
+
+### Parameters
+- **`priceData (PriceData)`:** An object containing membership details, tax rates, coupon data, and other relevant pricing details.
+
+### Returns
+- **`Promise<boolean>`:** Returns a Promise resolving to `true` if the price is valid, otherwise `false`.
+
+### Function Details
+1. **Construct Endpoint URL:** Utilizes the provided `priceData` to construct the appropriate API endpoint.
+2. **Fetch Price Validation:** Sends a request to the server for price validation.
+3. **Return Result:** Analyzes the server's response to determine if the price is valid or not. If the server returns no errors, the function resolves to `true`, otherwise it resolves to `false`.
+
+### Dependencies
+- **encodeDataToURL:** This function uses the `encodeDataToURL` helper function to serialize the provided `priceData` object into a query string format suitable for the API request.
+
+### Version
+- Introduced in version 0.1.0.
+
+---
+
+## Documentation for `encodeDataToURL` Helper Function
+
+### Overview
+The `encodeDataToURL` function is a utility function designed to convert an object into a URL-encoded string. This string can then be appended to a URL to form a query string.
+
+### Function Definition
+```typescript
+const encodeDataToURL = (data: any): string
+```
+
+### Parameters
+- **data (any):** An object containing key-value pairs that will be converted to a URL-encoded string.
+
+### Returns
+- **string:** A URL-encoded string representation of the provided data object.
+
+### Function Details
+1. **Object Iteration:** Iterates through each key-value pair of the provided data object.
+2. **URL Encoding:** Each key and value is URL-encoded to ensure they can be safely appended to a URL.
+3. **Join Pairs:** Joins each key-value pair using the '=' character and then joins each of these pairs with the '&' character to form the final URL-encoded string.
+
+### Usage
+Use this function when you need to convert an object into a query string format to append to a URL, especially when constructing API endpoints.
+

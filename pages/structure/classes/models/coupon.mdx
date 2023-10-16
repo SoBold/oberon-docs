@@ -1,0 +1,54 @@
+# Coupon Model
+
+The Oberon Coupon Model handles various coupon related functionalities and data within the Oberon system.
+
+## Properties
+
+| Property Name           | Type       | Description                                                   | Version |
+|-------------------------|------------|---------------------------------------------------------------|---------|
+| id                      | int        | The ID of the coupon                                          | 0.1.0   |
+| coupon                  | string     | The coupon code/name                                          | 0.1.0   |
+| type                    | string     | The type of coupon                                            | 0.1.0   |
+| value                   | int        | The value or discount of the coupon                           | 0.1.0   |
+| usage_count             | int        | The number of times the coupon has been used                  | 0.1.0   |
+| description             | string     | Description of the coupon                                      | 0.1.0   |
+| date_start              | string     | Start date of coupon's validity                                | 0.1.0   |
+| date_end                | string     | End date of coupon's validity                                  | 0.1.0   |
+| user_restricted         | array/bool | User restrictions for the coupon                               | 0.1.0   |
+| membership_restricted   | array/bool | Membership restrictions for the coupon                         | 0.1.0   |
+
+## Methods
+
+### `__construct`
+
+**Parameters:**
+- `$id`: The ID of the coupon.
+
+**Description:** Constructs the coupon model, initializes with default values and given ID.
+
+**Version:** `0.1.0`
+
+### `init`
+
+**Parameters:**
+- `$default`: Default values for the coupon properties.
+- `$id`: The ID of the coupon.
+
+**Description:** Initializes the coupon with given default values and ID.
+
+**Version:** `0.1.0`
+
+### `getByTitle`
+
+**Parameters:**
+- `$coupon`: The title/name of the coupon.
+
+**Description:** Searches for a coupon by its title/name.
+
+**Version:** *Not provided, assuming 0.1.0*
+
+### `usageCount`
+
+**Description:** Fetches the number of times the coupon has been used.
+
+**Version:** *Not provided, assuming 0.1.0*

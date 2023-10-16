@@ -1,0 +1,38 @@
+## ChangeLoginScreen
+
+### Overview
+The `ChangeLoginScreen` function is responsible for toggling between the login and forgotten password screens on a login form. It checks the currently active screen and switches its visibility with the hidden one.
+
+### Function Definition
+```typescript
+const ChangeLoginScreen = (): void
+```
+
+### Parameters
+- **None**
+
+### Returns
+- **void:** This function does not return a value.
+
+### Function Details
+1. **Get Login Container:** The function starts by acquiring a reference to the container div with the ID `'obrnLogin__Container'`.
+
+2. **Identify Active Screen:** Within the container, it identifies the login and forgotten password screens using their respective IDs (`'obrnLogin__Login'` and `'obrnLogin__Forgot'`). It then determines which screen is currently active.
+
+3. **Toggle Screens:** Depending on the currently active screen:
+   - If the login screen is active, it is hidden, and the forgotten password screen is shown.
+   - If the forgotten password screen is active, it is hidden, and the login screen is shown.
+   
+4. **Update Class List:** The active class is removed from the currently active screen and added to the previously hidden one to mark the change in visibility.
+
+### Dependencies
+This function directly manipulates the DOM and relies on certain elements with specific IDs being present:
+- **obrnLogin__Container:** The container that wraps both login screens.
+- **obrnLogin__Login:** The actual login screen element.
+- **obrnLogin__Forgot:** The forgotten password screen element.
+
+### Usage
+This function can be triggered, for example, by a button click or any other event, to seamlessly switch between the login and forgotten password screens without needing to reload or navigate to a new page.
+
+### Version
+- Introduced in version 0.1.0.

@@ -1,0 +1,37 @@
+## AttemptLogin
+
+### Overview
+The `AttemptLogin` function is designed to authenticate a user by either using a password or a magic link. It sends a REST API request to a custom endpoint to verify user credentials or to send a magic link email.
+
+### Function Definition
+```typescript
+const AttemptLogin = async (details: ILogin): Promise<AuthResponse>
+```
+
+### Parameters
+- **details (ILogin):** An object containing user-inputted login details. Depending on the properties set within this object, the function may either try to authenticate using a password or send a magic link email.
+
+### Returns
+- **`Promise<AuthResponse>`:** A promise that resolves to an object. If the login process is successful, the object will contain a `success` property set to `true`. If unsuccessful, it will return a `success` property set to `false` and a `message` property with information regarding the failure. If the request fails altogether, the function will return a generic message "Something went wrong".
+
+### Response Object Structure
+
+| Property   | Type    | Description                                                                                                    |
+|------------|---------|----------------------------------------------------------------------------------------------------------------|
+| message    | string  | A message providing information about the operation or the failure reason, if applicable.                       |
+| success    | boolean | Indicates the success or failure of the function. `true` if successful, `false` otherwise.                       |
+
+### Function Details
+1. **Construct the API Url:** The function constructs the API URL by concatenating the base URL from `obrnArgs.apiUrl` with the endpoint `/v1/auth/login`.
+   
+2. **Login POST Request:** Using the Fetch API, the function sends a POST request to the constructed API URL. The request includes headers for authentication and the user-inputted details in the body.
+   
+3. **Determine Success:** After sending the request, the function waits for a response. If a valid response is received, it returns the response. If there's an issue with the fetch request or it fails, a default error message "Something went wrong" is returned.
+
+### Dependencies
+- **ILogin:** An interface imported from `../../interfaces/Login`.
+   
+- **ObrnArgs:** An interface imported from `../../interfaces/ObrnArgs`. This is used to access the API's base URL and the nonce for authentication.
+
+### Version
+- Introduced in version 0.1.0.

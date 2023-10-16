@@ -1,0 +1,27 @@
+## VerifyCoupon
+
+### Overview
+The `VerifyCoupon` function serves as a mechanism to check and validate coupon codes. It sends a request to a custom REST API endpoint, aiming to validate the user-entered coupon code. The function will verify if the coupon is valid and determine if the user has the necessary permissions to apply the provided coupon.
+
+### Function Definition
+```typescript
+const VerifyCoupon = async (coupon: string): Promise<boolean | Coupon>
+```
+
+### Parameters
+- **coupon (string):** The coupon code that needs validation.
+
+### Returns
+- **`Promise<boolean|Coupon>`:** The function returns a Promise. Upon successful validation, it resolves to a `Coupon` object containing details about the coupon. If the coupon is not valid, it resolves to `false`.
+
+### Function Details
+1. **API URL Construction:** The function first constructs the API URL intended for verifying coupons, appending the user-provided coupon code as a search parameter.
+2. **Verification Request:** A fetch call is made to the aforementioned API endpoint.
+3. **Handle Response:** The function processes the server response. If the coupon is verified successfully and the status is 200, the coupon details are returned. If not, the function resolves to `false`.
+
+### Dependencies
+- **obrnArgs:** This function leans on the `obrnArgs` object for the API URL and other related configurations.
+
+### Usage
+The `VerifyCoupon` function is vital for applications and platforms offering discounts and promotions through coupon codes. Properly handling the response is crucial to offer users accurate feedback based on the coupon validation outcome.
+

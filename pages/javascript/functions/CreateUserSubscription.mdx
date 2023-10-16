@@ -1,0 +1,30 @@
+## CreateUserSubscription
+
+### Overview
+The `CreateUserSubscription` function is designed to initialize a subscription for a user. Depending on the payment method used, the function handles the creation of subscriptions differently. In case of offline or PayPal payments, the function will instantiate a subscription and a "paid" transaction. Conversely, for Stripe payments, it establishes a "pending" transaction, which awaits a successful charge upon reaching the thank-you page.
+
+### Function Definition
+```typescript
+const CreateUserSubscription = async (
+    paymentRequest: PaymentRequest
+): Promise<StartSignup>
+```
+
+### Parameters
+- **paymentRequest (PaymentRequest):** An object containing detailed information about the payment. It includes attributes like the gateway, prices, user ID, currency type, applicable coupon, tax details, and (optionally) a PayPal order ID.
+
+### Returns
+- **`Promise<StartSignup>`:** This function returns a Promise that resolves to a `StartSignup` object. This object encapsulates a subscription and a transaction instance, reflecting the outcome of the subscription creation process.
+
+### Function Details
+1. **API URL Construction:** Constructs the API URL designated for initiating user subscriptions.
+2. **Subscription Request:** Executes a POST request to the API, transmitting the payment details and expecting a response containing the subscription and transaction details.
+3. **Response Handling:** Parses the server's response and returns the relevant details.
+
+### Dependencies
+- **obrnArgs:** This function utilizes the `obrnArgs` object to derive the API URL and other pertinent configurations.
+- **Interfaces:** The function leans on multiple interfaces such as `PaymentRequest`, `StartSignup`, `Subscription`, and `Transaction` for structured data handling.
+
+### Usage
+The `CreateUserSubscription` function is paramount in applications or platforms offering subscription-based services or features. Ensuring accurate implementation and response handling is vital to offer users a seamless subscription experience and confirm the successful creation of their subscription.
+

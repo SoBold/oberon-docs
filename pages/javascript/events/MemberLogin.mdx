@@ -1,0 +1,51 @@
+## MemberLogin
+`obrn_event_member_login`
+
+### Description
+This event is triggered when a member logs in.
+
+### Event Properties
+
+- **`detail`** (Object): Contains detailed information about the login.
+
+  - **`user`** (Object): Contains user-specific details related to the login attempt.
+
+    - **`user_login`** (String): Represents the email ID or username of the member.
+      
+      - **Type**: String
+      - **Example**: `"example@email.com"`
+    
+    - **`remember`** (Boolean): Specifies whether the member wants the application to remember their login for future visits.
+      
+      - **Type**: Boolean
+      - **Example**: `true` or `false`
+
+  - **`response`** (Object): Contains the result of the login attempt.
+  
+    - **`message`** (String): A message regarding the login attempt.
+      
+      - **Type**: String
+      - **Example**: `"Login successful"`
+    
+    - **`success`** (Boolean): Indicates if the login was successful or not.
+      
+      - **Type**: Boolean
+      - **Example**: `true` or `false`
+
+### Usage
+
+```typescript
+const memberLoginEvent: CustomEvent = new CustomEvent('obrn_event_member_login', {
+    detail: {
+        user: <Login>{
+            user_login: '',
+            remember: true|false
+        },
+        response: <AuthResponse>{
+            message: '',
+            success: true|false
+        }
+    }
+});
+```
+

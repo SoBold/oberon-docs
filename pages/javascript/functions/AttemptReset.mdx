@@ -1,0 +1,38 @@
+## AttemptReset
+
+### Overview
+The `AttemptReset` function is designed to facilitate the process of resetting a user's password. It requires specific reset keys and the new password. A REST API request is made to update the password. If the process is successful, the user's password is updated, otherwise appropriate error messages are returned.
+
+### Function Definition
+```typescript
+const AttemptReset = async (reset: Reset): Promise<ResetResponse>
+```
+
+### Parameters
+- **reset (Reset):** An object containing reset password keys and request details.
+
+### Returns
+- **`Promise<ResetResponse>`:** A promise that resolves to an object. On a successful reset, the object will contain a `success` property set to `true`. If the process is unsuccessful, it will return a `success` property set to `false` and a `message` property with information regarding the failure. If there are additional errors, an `errors` property containing an object will also be included. If the request fails to process altogether, a generic error message "Something went wrong" is returned.
+
+### Response Object Structure
+
+| Property   | Type    | Description                                                                                                        |
+|------------|---------|--------------------------------------------------------------------------------------------------------------------|
+| success    | boolean | Indicates the success or failure of the function. `true` if successful, `false` otherwise.                          |
+| message    | string  | A message providing information about the operation or the failure reason, if applicable.                           |
+| errors     | object  | (Optional) Contains an object with specific error details when the function is unsuccessful. Otherwise, not present.|
+
+### Function Details
+1. **Construct the API Url:** The function constructs the API URL by concatenating the base URL from `obrnArgs.apiUrl` with the endpoint `/v1/auth/reset`.
+   
+2. **Reset Password POST Request:** Using the Fetch API, the function sends a POST request to the constructed API URL. The request includes headers for authentication and the reset details in the body.
+   
+3. **Determine Success:** After sending the request, the function waits for a response. If a valid response is received, it returns the response. If there's an issue with the fetch request or it fails, a default error message "Something went wrong" is returned.
+
+### Dependencies
+- **Reset:** An interface imported from `../../interfaces/Reset`.
+   
+- **ObrnArgs:** An interface imported from `../../interfaces/ObrnArgs`. This is used to access the API's base URL and the nonce for authentication.
+
+### Version
+- Introduced in version 0.1.0.

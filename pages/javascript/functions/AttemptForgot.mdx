@@ -1,0 +1,38 @@
+## AttemptForgot
+
+### Overview
+The `AttemptForgot` function is designed to trigger the password reset sequence when provided with an email. It sends a REST API request to a custom endpoint and determines the success based on the response received.
+
+### Function Definition
+```typescript
+const AttemptForgot = async (reset: Forgot): Promise<ForgotResponse>
+```
+
+### Parameters
+- **reset (Forgot):** An object containing an email. This is used to initiate the password reset process.
+
+### Returns
+- **`Promise<ForgotResponse>`:** A promise that resolves to an object. If the process is successful, the object will contain a `success` property set to `true` and a `resetLink` property. If unsuccessful, it will return a `success` property set to `false` and a `message` property with information regarding the failure. If the request fails altogether, the function will return a generic message.
+
+### Response Object Structure
+
+| Property   | Type    | Description                                                                                                    |
+|------------|---------|----------------------------------------------------------------------------------------------------------------|
+| success    | boolean | Indicates the success or failure of the function. `true` if successful, `false` otherwise.                       |
+| message    | string  | A message providing information about the failure reason, if applicable.                                       |
+| resetLink  | string  | (Optional) Contains the valid reset link when the function is successful. Otherwise, it will not be included.  |
+
+### Function Details
+1. **Construct the API Url:** The function constructs the API URL by concatenating the base URL from `obrnArgs.apiUrl` with the endpoint `/v1/auth/forgot`.
+   
+2. **Reset Password POST Request:** Using the Fetch API, the function sends a POST request to the constructed API URL. The request includes headers for authentication and the email for password reset in the body.
+   
+3. **Determine Success:** After sending the request, the function waits for a response. If a valid response is received, it returns the response. If there's an issue with the fetch request or it fails, a default error message "Something went wrong" is returned.
+
+### Dependencies
+- **Forgot:** An interface imported from `../../interfaces/Forgot`.
+   
+- **ObrnArgs:** An interface imported from `../../interfaces/ObrnArgs`. This is used to access the API's base URL and the nonce for authentication.
+
+### Version
+- Introduced in version 0.1.0.

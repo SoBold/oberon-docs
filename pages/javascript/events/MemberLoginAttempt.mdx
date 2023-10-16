@@ -1,0 +1,30 @@
+## MemberLoginAttempt
+`obrn_event_member_login_attempt`
+
+### Description
+This event is triggered when a member attempts to log in. It triggers before the member is logged in.
+
+### Event Properties
+
+- **`detail`** (Object): Contains detailed information about the login attempt.
+
+  - **`user_login`** (String): Represents the email ID or username of the member trying to log in.
+  
+    - **Type**: String
+    - **Example**: `"example@email.com"`
+  
+  - **`remember`** (Boolean): Specifies whether the member wants the application to remember their login for future visits.
+    
+    - **Type**: Boolean
+    - **Example**: `true` or `false`
+
+### Usage
+
+```typescript
+const memberLoginAttemptEvent: CustomEvent = new CustomEvent('obrn_event_member_login_attempt', {
+    detail: <Login>{
+        user_login: '',
+        remember: true|false,
+    }
+});
+```

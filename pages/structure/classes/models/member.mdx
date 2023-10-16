@@ -1,0 +1,74 @@
+# Member Model
+
+The Oberon Member Model represents individual members in the Oberon system. It provides various methods for managing and retrieving member-related data.
+
+## Properties
+
+| Property Name       | Type   | Description                           | Version |
+|---------------------|--------|---------------------------------------|---------|
+| user_id             | int    | User ID associated with the member    | 0.1.0   |
+| is_logged_in        | bool   | Checks if the user is logged in       | 0.1.0   |
+| display_name        | string | Member's display name                 | 0.1.0   |
+| email               | string | Member's email address                | 0.1.0   |
+| role                | string | Member's role                         | 0.1.0   |
+| registration_date   | string | Member's registration date            | 0.1.0   |
+
+## Methods
+
+### `__construct`
+
+**Parameters:**
+- `$user_id`: The User ID of the member.
+
+**Description:** Initializes the model and sets member properties based on WordPress user data.
+
+**Version:** `0.1.0`
+
+### `init`
+
+**Parameters:**
+- `$user_id`: The User ID of the member.
+
+**Description:** Initializes member properties based on WordPress user data.
+
+**Version:** `0.1.0`
+
+### `save`
+
+**Returns:** bool
+
+**Description:** Save the member data to the database.
+
+**Version:** `0.1.0`
+
+### `delete`
+
+**Returns:** bool
+
+**Description:** Delete the member's user account.
+
+**Version:** `0.1.0`
+
+### `subscriptions`
+
+**Returns:** Array
+
+**Description:** Retrieves a list of subscriptions for the member.
+
+**Version:** `0.1.0`
+
+### `transactions`
+
+**Returns:** Array
+
+**Description:** Retrieves a list of transactions for the member.
+
+**Version:** `0.1.0`
+
+### `hasActiveSubscription`
+
+**Returns:** bool
+
+**Description:** Check if user has an active subscription.
+
+**Version:** `0.1.0`

@@ -1,0 +1,32 @@
+## UpdateProfile
+
+### Overview
+The `UpdateProfile` function allows for updating user profile information via a custom REST API endpoint. By using this function, you can modify three primary attributes of a user profile: the first name, last name, and email. The server-side mechanism manages user authentication using nonces that are sent along as headers. When the profile update is successful, changes are reflected in the database. If any error occurs, the function will provide feedback in the form of the `ProfileResponse` object.
+
+### Function Definition
+```typescript
+const UpdateProfile = async (
+    profileData: ProfileData
+): Promise<ProfileResponse>
+```
+
+### Parameters
+- **profileData (ProfileData):** Contains the details that need to be updated. It should have:
+  - **first_name (string):** The first name of the user.
+  - **last_name (string):** The last name of the user.
+  - **user_email (string):** The email address of the user.
+
+### Returns
+- **`Promise<ProfileResponse>`:** The function returns a Promise. On successful profile update, it resolves to an object containing the success status, message, and potential errors. In case of a failed request, a generic error message "Something went wrong" is provided with a `success` property set to `false`.
+
+### Function Details
+1. **API URL Construction:** The function constructs the API URL meant for updating user profiles.
+2. **Profile Update Request:** A POST request is sent to the previously mentioned API endpoint, including the profile data to be updated.
+3. **Handle Response:** The function waits for a response from the server. If there's a successful profile update, the updated profile data is returned. In the case of any failures, an error message is generated and returned.
+
+### Dependencies
+- **obrnArgs:** This function depends on the `obrnArgs` object, which provides access to the API URL and other necessary configurations.
+
+### Usage
+The `UpdateProfile` function is essential for applications and platforms that allow users to update their profile details. Ensure to handle the response gracefully to provide users with accurate feedback based on the operation's outcome.
+

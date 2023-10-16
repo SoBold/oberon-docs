@@ -1,0 +1,31 @@
+## StripeCreatePaymentIntent
+
+### Overview
+The `StripeCreatePaymentIntent` function is a crucial component for integrating Stripe payments. It's tasked with obtaining a `client_id` from the backend which is required by the Stripe SDK to process payments. To achieve this, the function communicates with a REST endpoint, sending the intended amount and currency type. The endpoint then generates and returns a client secret to facilitate the transaction.
+
+### Function Definition
+```typescript
+const StripeCreatePaymentIntent = async (
+    amount: number,
+    currency: string
+): Promise<string | boolean>
+```
+
+### Parameters
+- **amount (number):** Represents the amount that is to be charged.
+- **currency (string):** Specifies the currency type for the charge, e.g., 'USD', 'EUR', etc.
+
+### Returns
+- **`Promise<string | boolean>`:** The function returns a Promise. On success, it resolves to a string containing the client secret code. If the operation fails, it resolves to `false`.
+
+### Function Details
+1. **API URL Construction:** A URL is constructed to communicate with the relevant API endpoint that handles Stripe payment intents.
+2. **Client Secret Request:** The function sends a POST request to the endpoint, passing the required `amount` and `currency` data.
+3. **Handle Response:** Upon receiving a response, the function checks for any errors or failed intents. If there are issues, it returns `false`. Otherwise, it retrieves and returns the client secret.
+
+### Dependencies
+- **obrnArgs:** This function relies on the `obrnArgs` object to access the API URL and other necessary configurations.
+
+### Usage
+This function is specifically tailored for Stripe payments integration. It should be utilized whenever initiating a Stripe payment to securely fetch the required `client_id` from the backend.
+

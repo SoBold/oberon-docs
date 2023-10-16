@@ -1,0 +1,87 @@
+# Transaction Model
+
+The Oberon Transaction Model is responsible for managing individual transaction details and associated database operations.
+
+## Properties
+
+| Property Name     | Type        | Description                                                                        | Version |
+| ----------------- | ----------- | ---------------------------------------------------------------------------------- | ------- |
+| id                | int         | Transaction ID.                                                                    | 0.1.0   |
+| subscription_id   | int         | Subscription ID associated with the transaction.                                   | 0.1.0   |
+| coupon_id         | int&#124;null  | Coupon ID associated with the transaction. Null if there's no associated coupon.   | 0.1.0   |
+| price             | float       | Price of the transaction.                                                          | 0.1.0   |
+| total             | float       | Total amount of the transaction.                                                   | 0.1.0   |
+| tax_amount        | float       | Tax amount of the transaction.                                                     | 0.1.0   |
+| tax_rate          | float       | Tax rate of the transaction.                                                       | 0.1.0   |
+| tax_class         | string      | Tax class of the transaction.                                                      | 0.1.0   |
+| gateway_type      | string      | Gateway type used for the transaction.                                             | 0.1.0   |
+| prorated          | bool        | Indicates if the transaction is prorated.                                          | 0.1.0   |
+| type              | string      | Type of the transaction (e.g., payment, refund).                                   | 0.1.0   |
+| renew             | bool        | Indicates if the transaction is for renewal.                                       | 0.1.0   |
+| payment_id        | string      | Payment ID of the transaction.                                                     | 0.1.0   |
+| status            | string      | Status of the transaction.                                                         | 0.1.0   |
+| created_at        | string      | Creation timestamp.                                                               | 0.1.0   |
+| expires_at        | string      | Expiry timestamp.                                                                 | 0.1.0   |
+
+## Methods
+
+### `construct`
+
+**Parameters:**
+- `$id` (optional): Transaction ID or `0` to construct a new instance.
+
+**Description:** Initializes the model. By default, if no ID is provided, constructs a new transaction.
+
+**Version:** `0.1.0`
+
+### `init`
+
+**Parameters:**
+- `$data`: Array of data to be assigned to the model.
+- `$id` (optional): The transaction ID.
+
+**Description:** Construct the model from inputted data.
+
+**Version:** `0.1.0`
+
+### `getValue`
+
+**Parameters:**
+- `$key`: The key of the columns you want to retrieve.
+
+**Returns:** Mixed
+
+**Description:** Retrieve a piece of information from the transaction table based on the given key.
+
+**Version:** `0.1.0`
+
+### `save`
+
+**Returns:** `int|bool` - ID on successful save, `true` on update success, and `false` on failure.
+
+**Description:** Save the transaction data to the database.
+
+**Version:** `0.1.0`
+
+### `delete`
+
+**Returns:** `bool` - True on successful deletion, false otherwise.
+
+**Description:** Delete the transaction from the database.
+
+**Version:** `0.1.0`
+
+## Usage
+
+To initialize a new transaction:
+```php
+$transaction = new \Oberon\Models\Transaction();
+```
+
+To save the transaction to the database:
+
+```php
+$transaction->subscription_id = 123;
+// ... set other properties as required ...
+$transaction->save();
+```

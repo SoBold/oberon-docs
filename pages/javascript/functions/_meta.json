@@ -1,0 +1,11 @@
+{
+    "CreateUserSubscription": "CreateUserSubscription",
+    "VerifyCoupon": "VerifyCoupon",
+    "UpdateProfile": "UpdateProfile",
+    "StripeCreatePaymentIntent": "StripeCreatePaymentIntent",
+    "CheckMembershipPriceValid": "CheckMembershipPriceValid",
+    "ChangeLoginScreen": "ChangeLoginScreen",
+    "AttemptReset": "AttemptReset",
+    "AttemptLogin": "AttemptLogin",
+    "AttemptForgot": "AttemptForgot"
+}
