@@ -1,3 +1,8 @@
 {
-    "models": "Models"
+    "models": "Models",
+    "controllers": "Controllers",
+    "helpers": "Helpers",
+    "events": "Events",
+    "utilities": "Utilities",
+    "wordpress": "WordPress"
 }
