@@ -1,0 +1,31 @@
+## Test Helpers
+
+### Description:
+This class tests the functionality and reliability of various helper classes within the Oberon package.
+
+### Tests
+
+#### `testDatabaseHelper`
+
+- **Objective**: Test the `DatabaseHelper` utility class to ensure it can accurately fetch, count, and manage rows in the database.
+
+- **Assertions**:
+  - Verify that the method `fetchAllRows` returns an array with the expected length.
+  - Confirm that the `countRows` method returns the accurate count of rows in a given table.
+
+#### `testMetaHelper`
+
+- **Objective**: Validate the `MetaHelper` utility class for its ability to correctly insert, update, and retrieve meta values.
+
+- **Assertions**:
+  - Confirm that the upserted meta values (`localizationCountry` and `localizationCurrency`) are properly stored and can be retrieved correctly.
+
+#### `testL10nHelper`
+
+- **Objective**: Test the `L10nHelper` utility class's functionality, especially in context with localization settings stored in meta values.
+
+- **Assertions**:
+  - Ensure the helper class retrieves and structures currency and country data accurately.
+  - Validate that the `currency` attribute contains the expected currency code.
+  - Verify that the `country` attribute's first key matches the expected country code.
+

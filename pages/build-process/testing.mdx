@@ -2,3 +2,43 @@
 
 ### Running tests
 
+We have 3 testing frameworks setup on the plugin.
+
+* PHP Unit Testing (WordPress)
+* PHP Stan
+* JEST (for JS)
+
+#### PHP Unit Testing (WordPress)
+
+This goes and builds a WordPress instance behind the scene and goes and tests the code we define inside `tests` directory. 
+
+##### Running the tests
+
+By running this command, the testing framework runs
+
+```bash
+npm run test
+````
+
+##### Creating tests
+
+Tests need to be created inside of the `tests` directory and need to extend the `WP_UnitTestCase` class. See the link below for assistance writing tests for WordPress.
+
+[Make Wordpress - Writing Tests](https://make.wordpress.org/core/handbook/testing/automated-testing/writing-phpunit-tests/)
+
+
+#### PHP Stan
+
+PHP Stan has some additional features, one more notable includes making sure that comments are correct as per the output of the code and also any obvious syntax errors are addressed.
+
+To run the test script, run
+
+```bash
+npm run test:php
+```
+
+This will output a list of errors that need addressing for the whole project.
+
+#### JEST
+
+** Yet to be implemented

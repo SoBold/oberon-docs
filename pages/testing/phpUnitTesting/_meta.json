@@ -1,0 +1,7 @@
+{
+    "postTypes": "Post Types",
+    "models": "Models",
+    "helpers": "Helpers",
+    "endpoints": "Endpoints",
+    "controllers": "Controllers"
+}

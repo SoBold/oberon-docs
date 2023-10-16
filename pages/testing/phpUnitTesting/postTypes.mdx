@@ -1,0 +1,44 @@
+## Test Post Types
+
+### Description
+This class tests the construction and management of custom post types within WordPress.
+
+### Setup
+
+Before each test, the `init` action is triggered.
+
+### Tests
+
+#### `testMembershipPostType`
+
+- **Objective**: Validate that the `membership` post type exists, and test the insertion and validation of a Membership post in WordPress.
+  
+- **Assertions**:
+  - The `membership` post type exists.
+  - Successfully inserts a `membership` post.
+  - The inserted post's properties match the expected values, including meta data.
+  - Clean up by deleting the inserted post.
+
+#### `testGroupPostType`
+
+- **Objective**: Validate that the `group` post type exists, and test the insertion and validation of a Group post in WordPress.
+
+- **Assertions**:
+  - The `group` post type exists.
+  - Successfully inserts a `group` post.
+  - The inserted post's `id` property matches the post ID.
+  - Clean up by deleting the inserted post.
+
+#### `testCouponPostType`
+
+- **Objective**: Validate that the `coupon` post type exists, and test the insertion of a Coupon post in WordPress.
+
+- **Assertions**:
+  - The `coupon` post type exists.
+  - Successfully inserts a `coupon` post.
+  - Clean up by deleting the inserted post.
+
+### Tear Down
+
+After each test, cleanup processes are handled.
+

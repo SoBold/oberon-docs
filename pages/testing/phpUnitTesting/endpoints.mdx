@@ -1,0 +1,41 @@
+## Test Endpoints
+
+### Description
+This class tests the functionality and reliability of the REST API endpoints within the Oberon package.
+
+### Properties
+
+- **server (WP_REST_Server)**: Holds the WordPress REST server object.
+  
+- **user (WP_User)**: Contains the WordPress user object used for testing.
+  
+- **apiBase (string)**: The base URL of the API.
+
+### Setup
+- Set up the parent test environment.
+  
+- Create a new user with an administrator role and set it as the current user.
+  
+- Initialize the REST API server.
+
+### Tests
+
+#### `testMembershipEndpoints`
+
+- **Objective**: Test the membership endpoints to ensure they can accurately retrieve memberships from the database and handle search queries.
+
+- **Actions**:
+  - Create a test membership post of type `membership` with specific metadata.
+  - Send a request to retrieve the specific membership using its ID.
+  - Ensure the response is not an error and contains the correct membership instance.
+  - Modify the request to execute a search operation and validate the returned results.
+
+- **Assertions**:
+  - Verify that the response data does not contain any WordPress error.
+  - Confirm that the `membership` key exists in the response data and contains an instance of the `Membership` model.
+  - Ensure the search query response contains the `totalCount` key with an integer value and the `memberships` key with an array of memberships.
+
+### Teardown
+
+- The function `tearDown` helps in cleaning up after the test operations. This is executed after all tests are run.
+
