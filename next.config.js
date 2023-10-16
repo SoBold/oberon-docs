@@ -3,9 +3,21 @@ const withNextra = require('nextra')({
   themeConfig: './theme.config.tsx',
 })
 
-module.exports = {
-  ...withNextra(),
+const isProduction = process.env.NODE_ENV === "production";
+const assetPrefix = isProduction ? "/reading-notes" : "";
+
+const nextConfig = {
   images: {
     unoptimized: true,
   },
+  reactStrictMode: true,
+  swcMinify: true,
+  trailingSlash: true,
+  assetPrefix,
+  basePath: assetPrefix,
+};
+
+module.exports = {
+  ...withNextra(),
+  ...nextConfig,
 };
