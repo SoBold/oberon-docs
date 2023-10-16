@@ -1,6 +1,9 @@
 {
   "index": "Introduction",
+  "setup": "Setup",
+  "build-process": "Build Process",
   "database": "Database",
+  "testing": "Testing",
   "structure": "Structure",
   "javascript": "Javascript",
   "about": {

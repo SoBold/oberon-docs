@@ -1,0 +1,25 @@
+## Development
+
+### Using Webpack
+
+Webpack is responsive for compiling both the SCSS and Typescript. We use the Webpack development server for hot reloading when it comes to development. It automatically refreshes your files on save. We also use it for production builds to compile and minify scripts.
+
+#### Development
+
+To use for development, simply run
+
+```bash
+npm run dev
+```
+
+This will setup the development server and compile the typescript to JS to use. It will source map in development.
+
+#### production
+
+To use for production, run
+
+```bash
+npm run build
+```
+
+This will compile all the scripts and styles into a build file minfied and compressed. However this isn't advised. Go to (Deployment)[]

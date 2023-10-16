@@ -1,0 +1,6 @@
+{
+    "development": "Development",
+    "testing": "Testing",
+    "sourceControl": "Source Control",
+    "deployment": "Deployment"
+}

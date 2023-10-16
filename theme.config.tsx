@@ -3,6 +3,11 @@ import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
   logo: <span>Oberon</span>,
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s - Oberon'
+    }
+  },
   project: {
     link: 'https://github.com/SoBold/oberon',
   },

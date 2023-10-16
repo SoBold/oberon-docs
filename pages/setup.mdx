@@ -1,0 +1,52 @@
+## Setup
+
+### Clone codebase
+
+Clone the repo to a your local WordPress site...
+
+```bash
+git clone git@github.com/SoBold/oberon.git
+```
+
+### Install testing framework
+
+Following pulling the codebase, the testing framework needs to be installed. Run the following command to install the test database and install the testing framework. Make sure you run this command from the plugin folder.
+
+```bash
+bash bin/setup.sh
+```
+
+### Install packages
+
+Download the releavent npm and composer packages for development.
+
+```bash
+npm i && composer i
+```
+
+After running this, if running for the first time, run the "prepare" command also
+
+```bash
+npm run prepare
+```
+
+### Troubleshooting
+
+If you are having issues with installing the testing framework, reference below for some help...
+
+#### MySQL related
+
+First try running this, it reinstalls and reinits mysql in brew locally (or installs it if you don't have it)
+
+```bash
+bash bin/fix-brew.sh
+mysql.service start
+```
+
+#### Library/Other error related
+
+Try upgrading brew with the following command first, if fails then stack overflow is your best friend
+
+```bash
+brew upgrade
+```
