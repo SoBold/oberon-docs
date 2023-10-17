@@ -7,5 +7,7 @@
     "ChangeLoginScreen": "ChangeLoginScreen",
     "AttemptReset": "AttemptReset",
     "AttemptLogin": "AttemptLogin",
-    "AttemptForgot": "AttemptForgot"
+    "AttemptForgot": "AttemptForgot",
+    "RequestVerificationCode": "RequestVerificationCode",
+    "VerifyVerificationCode": "VerifyVerificationCode"
 }

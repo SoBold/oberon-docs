@@ -1,0 +1,46 @@
+## Documentation for `VerifyVerificationCode` Function
+
+### Overview
+The `VerifyVerificationCode` function verifies the provided verification code for a specific action. This can be seen as the second step after requesting a verification code, ensuring that the user possesses the correct code before proceeding with sensitive operations.
+
+### Function Definition
+```typescript
+const VerifyVerificationCode = async (
+    action: string,
+    code: string | number
+): Promise<Response>
+```
+
+### Parameters
+- **action (string):** Specifies the name of the action that requires verification.
+- **code (string | number):** Represents the verification code the user has received and is submitting for validation.
+
+### Returns
+- **`Promise<Response>`:** A Promise that resolves to a `Response` object. This object contains:
+  - `success`: A boolean indicating if the verification was successful.
+  - `message`: A string that conveys any relevant message from the server, such as success messages or error descriptions.
+
+### Function Details
+1. **API URL Construction:** Forms the API URL intended for verifying the code.
+2. **Verification Request:** Executes a PUT request to the formed API URL, sending both the action name and the code for validation.
+3. **Response Handling:** Processes the server's response to ascertain and convey the success status and associated message.
+
+### Dependencies
+- **obrnArgs:** The function employs the `obrnArgs` object to fetch the API URL and other necessary configurations.
+
+### Usage
+The `VerifyVerificationCode` function is pivotal when users must validate their actions using verification codes. Properly implemented, it ensures that users can only proceed with sensitive operations after they've been adequately verified, thereby enhancing the application's security and integrity.
+
+Verifying a code, you can find a full list of actions [here](/events) - The user comes from the corresponding nonce
+
+```typescript
+VerifyVerificationCode('action', 'code').then(res=>{
+    if (res.success) {
+        //* code verified
+    } else {
+        //* code invalid
+    }
+}).catch(err=>{
+    //* catch error
+})
+```

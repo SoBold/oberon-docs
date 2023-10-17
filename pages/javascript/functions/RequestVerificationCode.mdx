@@ -1,0 +1,40 @@
+## RequestVerificationCode
+
+### Overview
+The `RequestVerificationCode` function is designed to request a verification code based on a specific action name provided. It's useful in scenarios where a user might be performing sensitive operations and needs a verification code to continue, such as changing passwords or verifying new devices.
+
+### Function Definition
+```typescript
+const RequestVerificationCode = async (action: string): Promise<Response>
+```
+
+### Parameters
+- **action (string):** This parameter denotes the name of the action for which the verification code is being requested.
+
+### Returns
+- **`Promise<Response>`:** This function returns a Promise that resolves to a `Response` object. This object has a `success` boolean field, indicating whether the request was successful, and a `message` field that holds any relevant message from the server.
+
+### Function Details
+1. **API URL Construction:** It constructs the API URL intended for requesting verification codes.
+2. **Verification Code Request:** Executes a POST request to the constructed API URL, transmitting the action name.
+3. **Response Handling:** Parses the server's response to derive and return the success status and any relevant message.
+
+### Dependencies
+- **obrnArgs:** This function leverages the `obrnArgs` object to acquire the API URL and other essential configurations.
+
+### Usage
+The `RequestVerificationCode` function plays a pivotal role in scenarios requiring additional user verification. Proper implementation ensures that users can securely and efficiently obtain verification codes for critical actions, thereby bolstering the application's security.
+
+Requesting a code, you can find a full list of actions [here](/events) - The user comes from the corresponding nonce
+
+```typescript
+RequestVerificationCode('action').then(res=>{
+    if (res.success) {
+        //* code sent
+    } else {
+        //* other issue, message will exist
+    }
+}).catch(err=>{
+    //* catch error
+})
+```
