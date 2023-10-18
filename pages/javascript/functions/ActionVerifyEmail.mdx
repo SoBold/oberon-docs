@@ -1,0 +1,39 @@
+## ActionVerifyEmail
+
+### Overview
+The `ActionVerifyEmail` function is responsible for initiating the request to generate and send a verification link to the user's email. This can be particularly useful for verifying sensitive operations such as changing an email address.
+
+### Function Definition
+```typescript
+const ActionVerifyEmail = async (
+    action: string
+): Promise<Response>
+```
+
+### Parameters
+- **action (string):** Specifies the name of the action that requires email verification.
+
+### Returns
+- **`Promise<Response>`:** A Promise that resolves to a `Response` object. This object contains:
+  - `success`: A boolean indicating if the request was successful.
+  - `message`: A string conveying any relevant message from the server, like success messages or error details.
+
+### Function Details
+1. **API URL Construction:** Constructs the target API URL for the email verification link request.
+2. **Email Verification Link Request:** Initiates a POST request to the formed API URL, indicating the desired action and specifying the verification type as 'link'.
+3. **Response Handling:** Parses the server's response to determine the success status and associated message.
+
+### Dependencies
+- **obrnArgs:** The function leverages the `obrnArgs` object to access the API URL and other necessary configurations.
+
+### Usage
+The `ActionVerifyEmail` function is crucial when ensuring users confirm their actions via email. By verifying through email links, the application reinforces security by ensuring that the user has access to the associated email address. 
+
+#### Sample Code:
+```javascript
+ActionVerifyEmail('email_change').then(res => {
+    console.log('res', res);
+}).catch(err => {
+    console.log('err', err);
+});
+```

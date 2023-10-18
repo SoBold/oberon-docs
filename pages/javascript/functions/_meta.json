@@ -9,5 +9,6 @@
     "AttemptLogin": "AttemptLogin",
     "AttemptForgot": "AttemptForgot",
     "RequestVerificationCode": "RequestVerificationCode",
-    "VerifyVerificationCode": "VerifyVerificationCode"
+    "VerifyVerificationCode": "VerifyVerificationCode",
+    "ActionVerifyEmail": "ActionVerifyEmail"
 }
