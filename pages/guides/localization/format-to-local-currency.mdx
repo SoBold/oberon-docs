@@ -1,0 +1,12 @@
+## How to format to the local currency
+
+If you have a number and want it formated to the local currency, you can do so via a helper function on the localization helper.
+
+```php
+$l10nHelper = new \Oberon\Helpers\L10nHelper();
+$localized_price = $l10nHelper->formatToLocalCurrency({(mixed) number});
+```
+
+Returns:
+
+* (string) - the formatted currency

@@ -1,0 +1,24 @@
+## How to get a subscription
+
+### Construct a subscription controller
+
+Construct a new instance of the subscription controller
+
+```php
+$subscriptionController = new \Oberon\Controllers\SubscriptionController();
+```
+
+### Update the subscription via the controller API
+
+Use the method `updateSubscription` to update an existing subscription. It accepts 2 paramters.
+
+* ID - The subscription ID
+* Data - The subscription data to be updated
+
+It returns a boolean if updated or not.
+
+```php
+$subscriptionUpdate = $subscriptionController->updateSubscription({subscription_id}, [
+    {subscription_data}
+]);
+```

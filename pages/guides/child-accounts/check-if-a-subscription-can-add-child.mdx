@@ -1,0 +1,15 @@
+## How to check if a subscription can add a child account
+
+You can check t see if a specific subscription is able to add anymore child accounts by using this function. It requires the subscription ID and returns a boolean.
+
+Params:
+
+* $subscriptionId (int) - The ID of the subscription
+
+Returns:
+
+* Boolean - True if they can, false if they can't
+
+```php
+\Oberon\Helpers\ChildAccountHelper::checkCanAddChild({subscription_id});
+```

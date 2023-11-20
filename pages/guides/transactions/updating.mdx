@@ -1,0 +1,24 @@
+## How to get a transaction
+
+### Construct a transaction controller
+
+Construct a new instance of the transaction controller
+
+```php
+$transactionController = new \Oberon\Controllers\TransactionController();
+```
+
+### Update the transaction via the controller API
+
+Use the method `updateTransaction` to update an existing transaction. It accepts 2 paramters.
+
+* ID - The transaction ID
+* Data - The transaction data to be updated
+
+It returns a boolean if updated or not.
+
+```php
+$transactionUpdate = $transactionController->updateTransaction({transaction_id}, [
+    {transaction_data}
+]);
+```

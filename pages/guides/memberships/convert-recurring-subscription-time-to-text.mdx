@@ -1,0 +1,10 @@
+## How to output a human readable version of the membership frequency
+
+After constructing a membership model, you then have the available property of `formatted_price` which will return the period of a subscription into readable text. Such as '£150 every 2 years' etc...
+
+#### Example
+
+```php
+$membership = new \Oberon\Models\Membership({membership_id});
+$readableFormat = $membership->$formatted_price;
+```

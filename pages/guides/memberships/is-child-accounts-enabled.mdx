@@ -1,0 +1,18 @@
+## How to check if child accounts are enabled
+
+By constructing a Membership Oberon model you will have access to 2 properties...
+
+* $enable_child_accounts (boolean)
+* $max_child_accounts    (int)
+
+The `$enable_child_accounts` property will either be true or false if the subscription is valid for child accounts and then provide a subsiquent `$max_child_accounts` proprty value of the maximum amount of child accounts that membership can have. If the child accounts are disabled for that particular membership then the `$enable_child_accounts` property will be false and the `$max_child_accounts` will be 0.
+
+```php
+$membership = new \Oberon\Models\Membership({membership_id});
+
+// (output true for example)
+$childAccountsEnabled = $membership->$enable_child_accounts;
+
+// (output 10 for example)
+$maxChildAccounts = $membership->$max_child_accounts;
+```

@@ -1,0 +1,31 @@
+## How to retrieve child accounts from a subscription
+
+Child accounts can be retrived by a method from the subscription model.
+
+```php
+$subscriptionController = new \Oberon\Controllers\SubscriptionController();
+$subscription = $subscriptioncontroller->getSubscription({subscription_id});
+```
+
+Once you have retrieved the subscription, you can then call the method 'childAccounts' which will return an array of active and pending child accounts...
+
+```php
+$childAccounts = $subscription->childAccounts();
+```
+
+* Pending state means that they are yet to accept the invite
+* Active state means they have accepted the invite
+
+This will return empty if the subscription has no child accounts, or the membership doesn't allow for child accounts.
+
+Example response
+
+```php
+[Array] => [
+    [max_child_accounts]    => (int) {the memberships maximum child account count},
+    [curr_child_accounts]   => (int) {a count of total child accounts, pending and active},
+    [curr_active_accounts]  => (int) {a count of active child accounts},
+    [curr_pending_accounts] => (int) {a count of pending child accounts},
+    [child_accounts]        => (array) {list of colleagues}
+]
+```

@@ -1,0 +1,17 @@
+## How to get a transaction
+
+### Construct a transaction controller
+
+Construct a new instance of the transaction controller
+
+```php
+$transactionController = new \Oberon\Controllers\TransactionController();
+```
+
+### Retrieve the transaction via the controller API
+
+Use the method `getTransaction` on the TransactionController class to retrieve an instance of the Oberon Transaction model.
+
+```php
+$transaction = $transactioncontroller->getTransaction({transaction_id});
+```

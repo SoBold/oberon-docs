@@ -1,0 +1,9 @@
+## How to check a users invites
+
+To check if a user has any pending invites to a subscription you can use this method..
+
+```php
+\Oberon\Helpers\ChildAccountHelper::checkInvites({user_id});
+```
+
+This will return an array from the `obrn_child_account_requests` table which will either be empty (if none) or contain entries to subscriptions they have been invited to.

@@ -1,0 +1,9 @@
+{
+    "subscription-pending-invites": "How to get a subscriptions pending invites",
+    "check-a-users-invites": "How to check a users invites",
+    "check-if-a-subscription-can-add-child": "How to check if a subscription can add a child account",
+    "send-an-invite": "How to send a child account invite",
+    "retrieve-an-invite": "How to retrieve an invite",
+    "delete-an-invite": "How to delete an invite request",
+    "respond-to-invite": "How to respond to an invite"
+}

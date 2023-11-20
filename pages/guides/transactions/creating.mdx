@@ -1,0 +1,19 @@
+## How to create a transaction
+
+### Construct a transaction controller
+
+Construct a new instance of the transaction controller
+
+```php
+$transactionController = new \Oberon\Controllers\TransactionController();
+```
+
+### Create the transaction via the controller API
+
+Use the method `createTransaction` on the TransactionController class to create an instance of the Oberon Transaction model. It will return back a new instance of the Oberon transaction model.
+
+```php
+$transaction = $transactioncontroller->createTransaction([
+    {transaction_data}
+]);
+```

@@ -1,0 +1,17 @@
+## How to get a subscription
+
+### Construct a subscription controller
+
+Construct a new instance of the subscription controller
+
+```php
+$subscriptionController = new \Oberon\Controllers\SubscriptionController();
+```
+
+### Retrieve the subscription via the controller API
+
+Use the method `getSubscription` on the SubscriptionController class to retrieve an instance of the Oberon Subscription model.
+
+```php
+$subscription = $subscriptioncontroller->getSubscription({subscription_id});
+```

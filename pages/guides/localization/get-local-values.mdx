@@ -1,0 +1,20 @@
+## How to get local country and currency values for the shop location
+
+In the plugin there is a localization helper. When constructed it will give tou the local currency and country information...
+
+```php
+$l10nHelper = new \Oberon\Helpers\L10nHelper();
+```
+
+this will the dynamically create 2 properties.
+
+* $country (array)
+* $currency (array)
+
+An example response
+
+```php
+[Array] => (
+    [USD] => ["United States of America"]
+)
+```

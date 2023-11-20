@@ -1,0 +1,17 @@
+## Sending an invite to a child account
+
+To send an invite to a user you can use the method inside the helper function
+
+Params
+
+* $email          (string) - The users email address to be added
+* $subscriptionId (int)    - The ID of the subscription you want it added to
+
+Return
+
+* success (boolean) - True if invite added and sent, false if failed
+* message (string)  - A message of the response
+
+```php
+\Oberon\Helpers\ChildAccountHelper::sendInvite({email}, {subscription_id});
+```

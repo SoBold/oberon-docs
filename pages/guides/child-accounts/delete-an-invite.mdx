@@ -1,0 +1,15 @@
+## How to delete an invite request
+
+To delete an invite request from a subscription, use the following method..
+
+Params:
+
+* $inviteId (int) - The ID of the invite to be deleted
+
+Returns:
+
+* (bool) - True if delete, false if not
+
+```php
+\Oberon\Helpers\ChildAccountHelper::removeInvite({invite_id});
+```

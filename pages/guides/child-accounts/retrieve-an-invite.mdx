@@ -1,0 +1,17 @@
+## How to retrieve an invite
+
+You can retrieve an invite by it's ID by using the follower method on the child account helper...
+Params:
+
+* $id (int) - The ID of the invite
+
+Return:
+
+* (bool/array)
+
+The response either returns false if the invite doesn't exists, or if it does exist and array of the invite request as found in the `obrn_child_account_requests` table.
+
+
+```php
+\Oberon\Helpers\ChildAccountHelper::getInvite({invite_id});
+```

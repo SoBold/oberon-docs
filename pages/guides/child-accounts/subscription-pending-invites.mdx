@@ -1,0 +1,20 @@
+## How to get a subscriptions pending invites
+
+The child account helper class has an available static method to do so.
+
+```php
+\Oberon\Helpers\ChildAccountHelper::getSubscriptionPendingChildAccounts({subscription_id});
+```
+
+This returns an arrray which looks like such..
+
+
+```php
+[Array] => (
+    [count]    => (int)
+    [success]  => (bool)
+    [accounts] => (array)
+)
+```
+
+The accounts array in the response contain the users details of those requested child accounts.

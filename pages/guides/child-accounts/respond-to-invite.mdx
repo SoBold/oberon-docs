@@ -1,0 +1,16 @@
+## How to respond to an invite
+
+To respond to an invite, there is a helper function in the child account helper.
+
+Params:
+
+* $inviteId (int)    - The ID of the invite request
+* $response (string) - Either "accept" or "decline"
+
+Returns:
+
+* (bool) - True if processed succesfully (both accept and decline), false if something went wrong
+
+```php
+\Oberon\Helpers\ChildAccountHelper::inviteResponse({invite_id}, {response});
+```
