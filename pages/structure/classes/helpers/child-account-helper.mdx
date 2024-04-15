@@ -13,7 +13,7 @@ $subscription_id = 123;
 $pending_accounts = ChildAccountHelper::getSubscriptionPendingChildAccounts($subscription_id);
 ```
 
-### Method: `getSubscriptionPendingChildAccounts`
+### Method: `getSubscriptionPendingChildAccounts(int $subscription_id): array`
 
 This method retrieves pending child accounts for a given subscription ID.
 
@@ -24,3 +24,115 @@ This method retrieves pending child accounts for a given subscription ID.
 **Returns:**
 
 -   (array): An array containing count, success status, and pending accounts.
+
+### Method: `checkInvites(int $user_id): array|boolean`
+
+Checks if a user has any pending invites to a subscription.
+
+**Parameters:**
+
+-   `$user_id` (int): The ID of the user.
+
+**Returns:**
+
+-   (array|boolean): An array of invite details or false if user not found.
+
+### Method: `checkCanAddChild(int $subscriptionId = 0): bool`
+
+Checks if a subscription can allow more child accounts.
+
+**Parameters:**
+
+-   `$subscriptionId` (int): The ID of the subscription.
+
+**Returns:**
+
+-   (boolean): True if more child accounts can be added, false otherwise.
+
+### Method: `sendInvite(string $email = '', int $subscription_id = 0): array`
+
+Sends an invite to a user for a subscription.
+
+**Parameters:**
+
+-   `$email` (string): The email of the user.
+-   `$subscription_id` (int): The ID of the subscription.
+
+**Returns:**
+
+-   (array): Success status and message.
+
+### Method: `getInvite(int $id = 0)`
+
+Retrieves an invite by ID.
+
+**Parameters:**
+
+-   `$id` (int): The ID of the invite.
+
+**Returns:**
+
+-   (object|false): The invite object or false if not found.
+
+### Method: `removeInvite(int $inviteId = 0): bool`
+
+Removes an invite by ID.
+
+**Parameters:**
+
+-   `$inviteId` (int): The ID of the invite.
+
+**Returns:**
+
+-   (boolean): True if the invite is removed successfully.
+
+### Method: `addChildAccount(int $userId = 0, int $subscriptionId = 0): bool`
+
+Adds a user as a child account to a subscription.
+
+**Parameters:**
+
+-   `$userId` (int): The ID of the user.
+-   `$subscription_id` (int): The ID of the subscription.
+
+**Returns:**
+
+-   (boolean): True if the user is added successfully.
+
+### Method: `removeChildAccount(int $userId = 0, int $subscriptionId = 0): bool`
+
+Removes a child account from a subscription.
+
+**Parameters:**
+
+-   `$userId` (int): The ID of the user.
+-   `$subscription_id` (int): The ID of the subscription.
+
+**Returns:**
+
+-   (boolean): True if the user is removed successfully.
+
+### Method: `inviteResponse(int $inviteId = 0, string $response = ''): bool`
+
+Processes the response to an invite.
+
+**Parameters:**
+
+-   `$inviteId` (int): The ID of the invite.
+-   `$response` (string): The response (accept/decline).
+
+**Returns:**
+
+-   (boolean): True if the response is processed successfully.
+
+### Method: `getUserIdByEmail(string $email): int|false`
+
+Retrieves a user ID by email address.
+
+**Parameters:**
+
+-   `$email` (string): The email address.
+
+**Returns:**
+
+-   (int|false): The user ID or false if not found.
