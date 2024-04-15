@@ -4,31 +4,33 @@ The Oberon Transaction Model is responsible for managing individual transaction 
 
 ## Properties
 
-| Property Name     | Type        | Description                                                                        | Version |
-| ----------------- | ----------- | ---------------------------------------------------------------------------------- | ------- |
-| id                | int         | Transaction ID.                                                                    | 0.1.0   |
-| subscription_id   | int         | Subscription ID associated with the transaction.                                   | 0.1.0   |
-| coupon_id         | int&#124;null  | Coupon ID associated with the transaction. Null if there's no associated coupon.   | 0.1.0   |
-| price             | float       | Price of the transaction.                                                          | 0.1.0   |
-| total             | float       | Total amount of the transaction.                                                   | 0.1.0   |
-| tax_amount        | float       | Tax amount of the transaction.                                                     | 0.1.0   |
-| tax_rate          | float       | Tax rate of the transaction.                                                       | 0.1.0   |
-| tax_class         | string      | Tax class of the transaction.                                                      | 0.1.0   |
-| gateway_type      | string      | Gateway type used for the transaction.                                             | 0.1.0   |
-| prorated          | bool        | Indicates if the transaction is prorated.                                          | 0.1.0   |
-| type              | string      | Type of the transaction (e.g., payment, refund).                                   | 0.1.0   |
-| renew             | bool        | Indicates if the transaction is for renewal.                                       | 0.1.0   |
-| payment_id        | string      | Payment ID of the transaction.                                                     | 0.1.0   |
-| status            | string      | Status of the transaction.                                                         | 0.1.0   |
-| created_at        | string      | Creation timestamp.                                                               | 0.1.0   |
-| expires_at        | string      | Expiry timestamp.                                                                 | 0.1.0   |
+| Property Name   | Type          | Description                                                                      | Version |
+| --------------- | ------------- | -------------------------------------------------------------------------------- | ------- |
+| id              | int           | Transaction ID.                                                                  | 0.1.0   |
+| subscription_id | int           | Subscription ID associated with the transaction.                                 | 0.1.0   |
+| membership_id   | int           | Membership ID associated with the transaction.                                   | 0.1.0   |
+| coupon_id       | int&#124;null | Coupon ID associated with the transaction. Null if there's no associated coupon. | 0.1.0   |
+| price           | float         | Price of the transaction.                                                        | 0.1.0   |
+| total           | float         | Total amount of the transaction.                                                 | 0.1.0   |
+| tax_amount      | float         | Tax amount of the transaction.                                                   | 0.1.0   |
+| tax_rate        | float         | Tax rate of the transaction.                                                     | 0.1.0   |
+| tax_class       | string        | Tax class of the transaction.                                                    | 0.1.0   |
+| gateway_type    | string        | Gateway type used for the transaction.                                           | 0.1.0   |
+| prorated        | bool          | Indicates if the transaction is prorated.                                        | 0.1.0   |
+| type            | string        | Type of the transaction (e.g., payment, refund).                                 | 0.1.0   |
+| renew           | bool          | Indicates if the transaction is for renewal.                                     | 0.1.0   |
+| payment_id      | string        | Payment ID of the transaction.                                                   | 0.1.0   |
+| status          | string        | Status of the transaction.                                                       | 0.1.0   |
+| created_at      | string        | Creation timestamp.                                                              | 0.1.0   |
+| expires_at      | string        | Expiry timestamp.                                                                | 0.1.0   |
 
 ## Methods
 
 ### `construct`
 
 **Parameters:**
-- `$id` (optional): Transaction ID or `0` to construct a new instance.
+
+-   `$id` (optional): Transaction ID or `0` to construct a new instance.
 
 **Description:** Initializes the model. By default, if no ID is provided, constructs a new transaction.
 
@@ -37,8 +39,9 @@ The Oberon Transaction Model is responsible for managing individual transaction 
 ### `init`
 
 **Parameters:**
-- `$data`: Array of data to be assigned to the model.
-- `$id` (optional): The transaction ID.
+
+-   `$data`: Array of data to be assigned to the model.
+-   `$id` (optional): The transaction ID.
 
 **Description:** Construct the model from inputted data.
 
@@ -47,7 +50,8 @@ The Oberon Transaction Model is responsible for managing individual transaction 
 ### `getValue`
 
 **Parameters:**
-- `$key`: The key of the columns you want to retrieve.
+
+-   `$key`: The key of the columns you want to retrieve.
 
 **Returns:** Mixed
 
@@ -74,6 +78,7 @@ The Oberon Transaction Model is responsible for managing individual transaction 
 ## Usage
 
 To initialize a new transaction:
+
 ```php
 $transaction = new \Oberon\Models\Transaction();
 ```
