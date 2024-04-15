@@ -21,7 +21,7 @@ $memberController = new MemberController();
 $newMember = $memberController->createMember($user_id);
 ```
 
-## Method: `getMember`
+### Method: `getMember`
 
 Retrieves member information by WordPress user ID.
 
@@ -32,7 +32,7 @@ $memberController = new MemberController();
 $existingMember = $memberController->getMember($user_id);
 ```
 
-## Method: `updateMember`
+### Method: `updateMember`
 
 Updates member information.
 
@@ -44,7 +44,7 @@ $updatedData = ['display_name' => 'New Name', 'email' => 'newemail@example.com']
 $updateSuccess = $memberController->updateMember($user_id, $updatedData);
 ```
 
-## Method: `deleteMember`
+### Method: `deleteMember`
 
 Deletes a member.
 
@@ -55,7 +55,7 @@ $memberController = new MemberController();
 $deleteSuccess = $memberController->deleteMember($user_id);
 ```
 
-## Method: `getMemberIdsByMembership`
+### Method: `getMemberIdsByMembership`
 
 Retrieves member IDs by membership ID.
 
