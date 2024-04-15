@@ -4,31 +4,32 @@ The Oberon Subscription Model is responsible for managing individual subscriptio
 
 ## Properties
 
-| Property Name   | Type             | Description                                                                       | Version |
-| --------------- | ---------------- | --------------------------------------------------------------------------------- | ------- |
-| id              | int              | Subscription ID.                                                                  | 0.1.0   |
-| user_id         | int              | User ID associated with the subscription.                                         | 0.1.0   |
-| membership_id   | int              | Membership ID associated with the subscription.                                   | 0.1.0   |
-| coupon_id       | int&#124;null    | Coupon ID associated with the subscription. Null if there's no associated coupon. | 0.1.0   |
-| price           | int              | Price of the subscription.                                                        | 0.1.0   |
-| total           | int              | Total amount of the subscription.                                                 | 0.1.0   |
-| tax_amount      | int              | Tax amount of the subscription.                                                   | 0.1.0   |
-| tax_rate        | int              | Tax rate of the subscription.                                                     | 0.1.0   |
-| tax_class       | string&#124;null | Tax class of the subscription. Null if not defined.                               | 0.1.0   |
-| gateway_type    | string           | Gateway type used for the subscription.                                           | 0.1.0   |
-| period          | int              | Period of the subscription.                                                       | 0.1.0   |
-| period_type     | string           | Period type of the subscription (e.g., days, months).                             | 0.1.0   |
-| renew           | bool             | Indicates if the subscription should be renewed.                                  | 0.1.0   |
-| status          | string           | Status of the subscription.                                                       | 0.1.0   |
-| created_at      | string           | Creation timestamp.                                                               | 0.1.0   |
-| expires_at      | string           | Expiry timestamp.                                                                 | 0.1.0   |
+| Property Name | Type             | Description                                                                       | Version |
+| ------------- | ---------------- | --------------------------------------------------------------------------------- | ------- |
+| id            | int              | Subscription ID.                                                                  | 0.1.0   |
+| user_id       | int              | User ID associated with the subscription.                                         | 0.1.0   |
+| membership_id | int              | Membership ID associated with the subscription.                                   | 0.1.0   |
+| coupon_id     | int&#124;null    | Coupon ID associated with the subscription. Null if there's no associated coupon. | 0.1.0   |
+| price         | int              | Price of the subscription.                                                        | 0.1.0   |
+| total         | int              | Total amount of the subscription.                                                 | 0.1.0   |
+| tax_amount    | int              | Tax amount of the subscription.                                                   | 0.1.0   |
+| tax_rate      | int              | Tax rate of the subscription.                                                     | 0.1.0   |
+| tax_class     | string&#124;null | Tax class of the subscription. Null if not defined.                               | 0.1.0   |
+| gateway_type  | string           | Gateway type used for the subscription.                                           | 0.1.0   |
+| period        | int              | Period of the subscription.                                                       | 0.1.0   |
+| period_type   | string           | Period type of the subscription (e.g., days, months).                             | 0.1.0   |
+| renew         | bool             | Indicates if the subscription should be renewed.                                  | 0.1.0   |
+| status        | string           | Status of the subscription.                                                       | 0.1.0   |
+| created_at    | string           | Creation timestamp.                                                               | 0.1.0   |
+| expires_at    | string           | Expiry timestamp.                                                                 | 0.1.0   |
 
 ## Methods
 
 ### `construct`
 
 **Parameters:**
-- `$id` (optional): Membership ID or `0` to construct a new instance.
+
+-   `$id` (optional): Membership ID or `0` to construct a new instance.
 
 **Description:** Initializes the model. By default, if no ID is provided, constructs a new subscription.
 
@@ -37,8 +38,9 @@ The Oberon Subscription Model is responsible for managing individual subscriptio
 ### `init`
 
 **Parameters:**
-- `$data`: Array of data to be assigned to the model.
-- `$id` (optional): The subscription ID.
+
+-   `$data`: Array of data to be assigned to the model.
+-   `$id` (optional): The subscription ID.
 
 **Description:** Construct the model from inputted data.
 
@@ -47,7 +49,8 @@ The Oberon Subscription Model is responsible for managing individual subscriptio
 ### `getValue`
 
 **Parameters:**
-- `$key`: The key of the columns you want to retrieve.
+
+-   `$key`: The key of the columns you want to retrieve.
 
 **Returns:** Mixed
 
@@ -90,11 +93,13 @@ The Oberon Subscription Model is responsible for managing individual subscriptio
 ## Usage
 
 To initialize a new subscription:
+
 ```php
 $subscription = new \Oberon\Models\Subscription();
 ```
 
 To save the subscription to the database:
+
 ```php
 $subscription->user_id = 123;
 $subscription->membership_id = 456;
@@ -103,7 +108,53 @@ $subscription->save();
 ```
 
 To retrieve a subscription transactions
+
 ```php
 $subscription->transactions();
 ```
 
+## Method: `getMember`
+
+Retrieves member information by WordPress user ID.
+
+Usage:
+
+```php
+$memberController = new MemberController();
+$existingMember = $memberController->getMember($user_id);
+```
+
+## Method: `updateMember`
+
+Updates member information.
+
+Usage:
+
+```php
+$memberController = new MemberController();
+$updatedData = ['display_name' => 'New Name', 'email' => 'newemail@example.com'];
+$updateSuccess = $memberController->updateMember($user_id, $updatedData);
+```
+
+## Method: `deleteMember`
+
+Deletes a member.
+
+Usage:
+
+```php
+$memberController = new MemberController();
+$deleteSuccess = $memberController->deleteMember($user_id);
+```
+
+## Method: `getMemberIdsByMembership`
+
+Retrieves member IDs by membership ID.
+
+Usage:
+
+```php
+$memberController = new MemberController();
+$membershipId = 123;
+$memberIds = $memberController->getMemberIdsByMembership($membershipId);
+```
