@@ -1,0 +1,97 @@
+# Database Helper
+
+## Overview
+
+This class provides helper methods for interacting with the database in the Oberon system.
+
+### Usage
+
+To use this class, include it in your PHP file and instantiate an object. Then, call its methods as needed.
+
+```php
+use Oberon\Helpers\DatabaseHelper;
+
+$databaseHelper = new DatabaseHelper();
+```
+
+### Method: `insert(string $table, array $data): int|bool`
+
+Inserts a new row into the specified table.
+
+**Parameters:**
+
+-   `$table` (string):The name of the table.
+-   `$data` (array):An associative array containing column names as keys and values to be inserted.
+
+**Returns:**
+
+-   (int|bool): The ID of the new row if successful, otherwise false.
+
+### Method: `update(string $table, array $data, array $where): bool`
+
+Updates a row in the specified table.
+
+**Parameters:**
+
+-   `$table` (string):The name of the table.
+-   `$data` (array):An associative array containing column names as keys and new values.
+-   `$where` (array):An associative array representing the WHERE clause conditions.
+
+**Returns:**
+
+-   (bool): True if the update is successful, otherwise false.
+
+### Method: `fetchAllRows(string $table, int $limit = -1, int|null $offset = 0, array $where = []): array`
+
+Fetches all rows from a table with optional pagination.
+
+**Parameters:**
+
+-   `$table` (string):The name of the table.
+-   `$limit` (int):The number of rows to fetch. Use -1 to fetch all rows.
+-   `$offset` (int/null):The offset for pagination.
+-   `$where` (array):An associative array representing the WHERE clause conditions.
+
+**Returns:**
+
+-   (array): An array containing the fetched rows.
+
+### Method: `countRows(string $table, array $where = []): int|null`
+
+Counts the total number of rows in a table.
+
+**Parameters:**
+
+-   `$table` (string):The name of the table.
+-   `$where` (array):An associative array representing the WHERE clause conditions.
+
+**Returns:**
+
+-   (int|null): The total number of rows in the table.
+
+### Method: `delete(string $table, array $where): bool`
+
+Deletes a row from the specified table.
+
+**Parameters:**
+
+-   `$table` (string):The name of the table.
+-   `$where` (array):An associative array representing the WHERE clause conditions.
+
+**Returns:**
+
+-   (bool): True if the deletion is successful, otherwise false.
+
+### Method: `fetchSingleColumnValue(string $table, string $column, int $id): string|int|null`
+
+Fetches a single value from a column by ID.
+
+**Parameters:**
+
+-   `$table` (string):The name of the table.
+-   `$column` (string):The name of the column to fetch.
+-   `$id` (int):The ID of the row.
+
+**Returns:**
+
+-   (string|int|null): The value of the specified column.
