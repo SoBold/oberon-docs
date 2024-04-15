@@ -1,0 +1,50 @@
+# Member Controller
+
+The Member Controller in the Oberon plugin facilitates member management operations, including creation, retrieval, updating, and deletion of member information.
+
+## Class: `MemberController`
+
+This class provides methods to interact with member data.
+
+### Constructor
+
+Initializes the controller with the WordPress database object.
+
+```php
+/**
+ * @var \wpdb WordPress Database
+ * @since 0.1.0
+ */
+private $wpdb;
+
+public function __construct()
+{
+    global $wpdb;
+    $this->wpdb = $wpdb;
+}
+```
+
+### Method: `createMember`
+
+Creates a new member instance using a WordPress user ID.
+
+-   **Parameters:**
+    -   `$user_id` (int): WordPress user ID.
+-   **Returns:**
+    -   `Member|null`: Member instance or null on failure.
+
+```php
+/**
+ * Create a new Member instance using a WordPress user ID
+ *
+ * @param int $user_id - WordPress user ID
+ *
+ * @return Member|null - Member instance or null on failure
+ *
+ * @since 0.1.0
+ */
+public function createMember(int $user_id)
+{
+    return new Member($user_id);
+}
+```

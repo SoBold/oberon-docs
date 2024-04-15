@@ -32,21 +32,5 @@ public function createEvent(string $action = '', array $data = [], string $time 
     $event = new Event($action, $data, $time);
     return $event;
 }
-
 ```
-
-## Usage Example:
-
-```php
-// Instantiate EventController
-$eventController = new EventController();
-
-// Create a new event
-$action = 'user_login';
-$data = ['user_id' => 123, 'username' => 'example_user'];
-$time = time();
-$event = $eventController->createEvent($action, $data, $time);
-
-// Use the event object as needed
-// For example, log the event or trigger further actions
 ````
