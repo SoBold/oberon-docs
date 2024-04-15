@@ -64,5 +64,15 @@ This table stores requests for creating child accounts within the Oberon plugin.
 -   `id`: Unique identifier for each child account request.
 -   `user_id`: ID of the user making the request.
 -   `email_address`: Email address of the child account.
+-   `token`: Token associated with the child account request.
 -   `subscription_id`: ID of the subscription associated with the request.
 -   `created_at`: Timestamp indicating when the request was created.
+
+## Child Account Table (`obrn_subscription_child`)
+
+This table stores information about child accounts associated with subscriptions within the Oberon plugin. Each record contains details such as the subscription ID and child account ID.
+
+-   `id`: Unique identifier for each child account entry.
+-   `subscription_id`: ID of the subscription associated with the child account.
+-   `child_account_id`: ID of the child account.
+-   `created_at`: Timestamp indicating when the child account was associated with the subscription.
