@@ -1,0 +1,57 @@
+# Transaction Controller
+
+The Transaction Controller in the Oberon plugin facilitates transaction-related operations, including creation, retrieval, updating, and deletion of transactions.
+
+## Class: `TransactionController`
+
+This class provides methods to interact with transaction data.
+
+### Method: `createTransaction`
+
+Creates a new transaction.
+
+**Usage:**
+
+```php
+$transactionController = new TransactionController();
+$newTransactionId = $transactionController->createTransaction([
+    'user_id' => 123,
+    'amount' => 50.00,
+    'type' => 'purchase',
+]);
+```
+
+### Method: `getTransaction`
+
+Retrieves transaction information by transaction ID.
+
+**Usage:**
+
+```php
+$transactionController = new TransactionController();
+$existingTransaction = $transactionController->getTransaction($txn_id);
+```
+
+### Method: `updateTransaction`
+
+Updates an existing transaction.
+
+**Usage:**
+
+```php
+$transactionController = new TransactionController();
+$updateSuccess = $transactionController->updateTransaction($txn_id, [
+    'amount' => 75.00,
+]);
+```
+
+### Method: `deleteTransaction`
+
+Deletes a transaction.
+
+**Usage:**
+
+```php
+$transactionController = new TransactionController();
+$deleteSuccess = $transactionController->deleteTransaction($txn_id);
+```
