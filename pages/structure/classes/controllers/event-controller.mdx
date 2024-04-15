@@ -1,0 +1,51 @@
+# Event Controller
+
+The Event Controller in the Oberon plugin is responsible for handling events related to various actions within the application. It allows for the creation of events with specific actions, data, and timestamps.
+
+## Class: `EventController`
+
+This class provides methods to create and manage events.
+
+### Method: `createEvent`
+
+Creates a new event with the specified action, data, and timestamp.
+
+-   Parameters:
+    -   `$action` (string): The name of the action associated with the event.
+    -   `$data` (array): Any additional data needed to handle the event.
+    -   `$time` (string): The Unix epoch timestamp indicating when the event occurred.
+-   Returns:
+    -   Instance of `Event`: The newly created event object.
+
+````php
+/**
+ * Create an event
+ *
+ * @param string $action - the name of the action
+ * @param array  $data   - any data needed to handle the event
+ * @param string $time   - unix epoch timestamp
+ *
+ * @return Event
+ */
+public function createEvent(string $action = '', array $data = [], string $time = '')
+{
+    $event = new Event($action, $data, $time);
+    return $event;
+}
+
+
+## Usage Example:
+
+```php
+// Instantiate EventController
+$eventController = new EventController();
+
+// Create a new event
+$action = 'user_login';
+$data = ['user_id' => 123, 'username' => 'example_user'];
+$time = time();
+$event = $eventController->createEvent($action, $data, $time);
+
+// Use the event object as needed
+// For example, log the event or trigger further actions
+````
