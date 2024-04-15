@@ -1,0 +1,26 @@
+# Child Account Helper
+
+This class provides helper methods for managing child accounts within the Oberon system.
+
+## Usage
+
+To use this class, include it in your PHP file and call its methods as needed.
+
+```php
+use Oberon\Helpers\ChildAccountHelper;
+
+$subscription_id = 123;
+$pending_accounts = ChildAccountHelper::getSubscriptionPendingChildAccounts($subscription_id);
+```
+
+### Method: `getSubscriptionPendingChildAccounts`
+
+This method retrieves pending child accounts for a given subscription ID.
+
+**Parameters:**
+
+-   `$subscription_id` (int): The ID of the subscription.
+
+**Returns:**
+
+-   (array): An array containing count, success status, and pending accounts.
