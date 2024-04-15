@@ -1,1 +1,68 @@
 # Custom Tables
+
+## Subscriptions Table (`obrn_subscriptions`)
+
+This table stores information about user subscriptions within the Oberon plugin. Each record contains details such as the user ID, membership ID, subscription period, renewal status, and creation timestamp.
+
+-   `id`: Unique identifier for each subscription.
+-   `user_id`: ID of the user associated with the subscription.
+-   `membership_id`: ID of the membership plan subscribed to.
+-   `period`: Duration of the subscription period.
+-   `period_type`: Type of period (e.g., days, months).
+-   `renew`: Boolean indicating whether the subscription is set to renew.
+-   `status`: Current status of the subscription.
+-   `created_at`: Timestamp indicating when the subscription was created.
+
+## Subscription Meta Table (`obrn_subscription_meta`)
+
+This table stores additional metadata associated with subscriptions. Each record contains a key-value pair representing various attributes related to a subscription.
+
+-   `id`: Unique identifier for each meta entry.
+-   `subscription_id`: ID of the subscription to which the meta belongs.
+-   `meta_key`: Key representing the attribute of the subscription.
+-   `meta_value`: Value associated with the meta key.
+
+## Transactions Table (`obrn_transactions`)
+
+This table records transactions related to subscription payments within the Oberon plugin. Each transaction entry contains details such as the subscription ID, membership ID, price, payment status, and creation timestamp.
+
+-   `id`: Unique identifier for each transaction.
+-   `subscription_id`: ID of the subscription associated with the transaction.
+-   `membership_id`: ID of the membership plan related to the transaction.
+-   `coupon_id`: ID of any applied coupon.
+-   `price`: Amount of the transaction.
+-   `total`: Total amount including tax.
+-   `tax_amount`: Amount of tax applied.
+-   `tax_rate`: Rate of tax applied.
+-   `tax_class`: Class of tax applied.
+-   `gateway_type`: Type of payment gateway used.
+-   `prorated`: Boolean indicating whether the transaction is prorated.
+-   `type`: Type of transaction (e.g., payment, refund).
+-   `renew`: Boolean indicating whether the transaction is related to subscription renewal.
+-   `payment_id`: Unique identifier for the payment.
+-   `status`: Current status of the transaction.
+-   `created_at`: Timestamp indicating when the transaction was created.
+-   `expires_at`: Timestamp indicating when the transaction expires.
+
+## Tokens Table (`obrn_tokens`)
+
+This table stores tokens generated within the Oberon plugin, which are used for various purposes such as authentication and authorization. Each token entry contains details such as the user ID, token type, token data, action, and expiration timestamp.
+
+-   `id`: Unique identifier for each token.
+-   `user_id`: ID of the user associated with the token (if applicable).
+-   `token`: Unique token string.
+-   `token_type`: Type of the token.
+-   `token_data`: Additional data associated with the token.
+-   `action`: Action for which the token is generated.
+-   `created_at`: Timestamp indicating when the token was created.
+-   `expires_at`: Timestamp indicating when the token expires.
+
+## Child Account Requests Table (`obrn_child_account_requests`)
+
+This table stores requests for creating child accounts within the Oberon plugin. Each request entry contains details such as the user ID, email address of the child account, associated subscription ID, and creation timestamp.
+
+-   `id`: Unique identifier for each child account request.
+-   `user_id`: ID of the user making the request.
+-   `email_address`: Email address of the child account.
+-   `subscription_id`: ID of the subscription associated with the request.
+-   `created_at`: Timestamp indicating when the request was created.
