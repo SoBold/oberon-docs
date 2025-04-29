@@ -4,30 +4,33 @@ The Oberon Membership Model manages post meta values defined in the 'membership'
 
 ## Properties
 
-| Property Name         | Type    | Description                                                      | Version |
-|-----------------------|---------|------------------------------------------------------------------|---------|
-| id                    | int     | The membership ID                                                | 0.1.0   |
-| membership_meta_keys  | array   | Membership Meta Keys                                             | 0.1.0   |
-| title                 | string  | Membership Title                                                 | 0.1.0   |
-| name                  | string  | Membership Name                                                  | 0.1.0   |
-| type                  | string  | Membership type                                                  | 0.1.0   |
-| group_id              | int     | Membership Group ID                                              | 0.1.0   |
-| group_order           | int     | Membership Group Order                                           | 0.1.0   |
-| billing_type          | string  | Membership billing type                                          | 0.1.0   |
-| price                 | float   | Membership price                                                 | 0.1.0   |
-| membership_type       | string  | Membership type                                                  | 0.1.0   |
-| period                | int     | Membership period                                                | 0.1.0   |
-| period_type           | string  | Membership period type                                           | 0.1.0   |
-| status                | string  | Membership status                                                | 0.1.0   |
-| rules                 | array   | Membership rules                                                 | 0.1.0   |
-| is_recurring          | bool    | Indicates if the membership is recurring                         | 0.1.0   |
+| Property Name         | Type   | Description                                       | Version |
+| --------------------- | ------ | ------------------------------------------------- | ------- |
+| id                    | int    | The membership ID                                 | 0.1.0   |
+| membership_meta_keys  | array  | Membership Meta Keys                              | 0.1.0   |
+| title                 | string | Membership Title                                  | 0.1.0   |
+| name                  | string | Membership Name                                   | 0.1.0   |
+| type                  | string | Membership type                                   | 0.1.0   |
+| group_id              | int    | Membership Group ID                               | 0.1.0   |
+| group_order           | int    | Membership Group Order                            | 0.1.0   |
+| billing_type          | string | Membership billing type                           | 0.1.0   |
+| price                 | float  | Membership price                                  | 0.1.0   |
+| membership_type       | string | Membership type                                   | 0.1.0   |
+| period                | int    | Membership period                                 | 0.1.0   |
+| period_type           | string | Membership period type                            | 0.1.0   |
+| status                | string | Membership status                                 | 0.1.0   |
+| rules                 | array  | Membership rules                                  | 0.1.0   |
+| is_recurring          | bool   | Indicates if the membership is recurring          | 0.1.0   |
+| enable_child_accounts | bool   | Indicates if the membership allows child accounts | 0.1.0   |
+| max_child_accounts    | int    | Indicates max allows child accounts               | 0.1.0   |
 
 ## Methods
 
 ### `__construct`
 
 **Parameters:**
-- `$id`: The membership ID or `0` to construct a new instance.
+
+-   `$id`: The membership ID or `0` to construct a new instance.
 
 **Description:** Initializes the model. If no ID is provided or if the ID is not associated with a valid membership post type, the method returns without doing anything. Otherwise, it loads meta and auxiliary data.
 
@@ -45,6 +48,12 @@ The Oberon Membership Model manages post meta values defined in the 'membership'
 
 **Version:** `0.1.0`
 
+### `periodToText`
+
+**Description:** Converts a numerical period and period type into a readable text description.
+
+**Version:** `0.1.0`
+
 ### `fields`
 
 **Returns:** Array
@@ -53,9 +62,18 @@ The Oberon Membership Model manages post meta values defined in the 'membership'
 
 **Version:** `0.1.0`
 
+### `getMembershipOptions`
+
+**Returns:** Array
+
+**Description:** Get membership list for upgrade/downgrade.
+
+**Version:** `0.1.0`
+
 ## Usage
 
 To construct a membership instance
+
 ```php
 $membership = new \Oberon\Models\Membership(1);
 ```

@@ -4,21 +4,24 @@ The Oberon Member Model represents individual members in the Oberon system. It p
 
 ## Properties
 
-| Property Name       | Type   | Description                           | Version |
-|---------------------|--------|---------------------------------------|---------|
-| user_id             | int    | User ID associated with the member    | 0.1.0   |
-| is_logged_in        | bool   | Checks if the user is logged in       | 0.1.0   |
-| display_name        | string | Member's display name                 | 0.1.0   |
-| email               | string | Member's email address                | 0.1.0   |
-| role                | string | Member's role                         | 0.1.0   |
-| registration_date   | string | Member's registration date            | 0.1.0   |
+| Property Name         | Type       | Description                            | Version |
+| --------------------- | ---------- | -------------------------------------- | ------- |
+| user_id               | int        | User ID associated with the member     | 0.1.0   |
+| is_logged_in          | bool       | Checks if the user is logged in        | 0.1.0   |
+| display_name          | string     | Member's display name                  | 0.1.0   |
+| email                 | string     | Member's email address                 | 0.1.0   |
+| role                  | string     | Member's role                          | 0.1.0   |
+| registration_date     | string     | Member's registration date             | 0.1.0   |
+| onboarding_complete   | bool       | Member's onboarding status             | 0.1.0   |
+| pending_child_account | array/bool | Member's Pending Child Account Invites | 0.1.0   |
 
 ## Methods
 
 ### `__construct`
 
 **Parameters:**
-- `$user_id`: The User ID of the member.
+
+-   `$user_id`: The User ID of the member.
 
 **Description:** Initializes the model and sets member properties based on WordPress user data.
 
@@ -27,7 +30,8 @@ The Oberon Member Model represents individual members in the Oberon system. It p
 ### `init`
 
 **Parameters:**
-- `$user_id`: The User ID of the member.
+
+-   `$user_id`: The User ID of the member.
 
 **Description:** Initializes member properties based on WordPress user data.
 
@@ -70,5 +74,13 @@ The Oberon Member Model represents individual members in the Oberon system. It p
 **Returns:** bool
 
 **Description:** Check if user has an active subscription.
+
+**Version:** `0.1.0`
+
+### `hasPendingChildAccount`
+
+**Returns:** array|bool
+
+**Description:** Check if the user has any pending child account invite requests.
 
 **Version:** `0.1.0`
