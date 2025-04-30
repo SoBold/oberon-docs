@@ -1,0 +1,111 @@
+# Fields Utility
+
+## Overview
+
+The `Fields` utility class is responsible for retrieving and rendering dynamic field inputs on the frontend in the Oberon plugin. It works by integrating registered field configurations and user meta values, enabling highly customizable and extensible form rendering.
+
+### Usage
+
+```php
+use Oberon\Utilities\Fields;
+
+// Get all custom fields (from meta)
+$customFields = Fields::customFields();
+
+// Render a field with its arguments and value
+echo Fields::get('user_phone');
+```
+
+## Class: `Fields`
+
+Provides methods to retrieve, process, and render dynamic form field inputs for members.
+
+---
+
+### Method: `customFields(): array`
+
+Retrieves and decodes any custom field configurations stored via WordPress options.
+
+#### Returns:
+
+-   **`array`** – An associative array of configured fields.
+
+#### Example:
+
+```php
+$fields = Fields::customFields();
+```
+
+---
+
+### Method: `get(string $field, array $args = []): string|array`
+
+Generates and returns a rendered HTML field group for a given field key.
+
+#### Parameters:
+
+-   **`$field`** (`string`) – The field key to retrieve and render.
+-   **`$args`** (`array`) – Optional overrides or modifications for rendering.
+
+#### Returns:
+
+-   **`string`** – The rendered HTML form field (via `Render::component()`).
+-   **`array`** – An empty array if the field is not registered.
+
+#### Example:
+
+```php
+echo Fields::get('user_address');
+```
+
+---
+
+### Field Rendering Behavior
+
+1. **Registered Fields**: Uses `apply_filters('obrn_default_fields', [])` to fetch the available field definitions.
+2. **User Meta**: Fetches user-specific values from either the current WP user or `$obrnMember->user_id`.
+3. **Render Structure**: Builds a field config array with the following structure:
+
+```php
+[
+  'label'      => __('Field Title'),
+  'type'       => 'select' or 'input',
+  'required'   => true or false,
+  'inputType'  => 'text', 'dropdown', etc.
+  'options'    => [], // for selects
+  'name'       => 'field_key',
+  'value'      => 'user_value',
+  'attributes' => '',
+]
+```
+
+4. **Rendering**: Outputs via `Render::component('form-group/group', $args)`
+
+---
+
+## Notes
+
+-   Falls back to `get_user_meta()` if no value is found on the WP user object.
+-   Field rendering can be fully customized using the `obrn_render_field` filter.
+-   Registered fields should be added via the `obrn_default_fields` filter for extensibility.
+
+---
+
+## Example: Registering a Field via Filter
+
+```php
+add_filter('obrn_default_fields', function ($fields) {
+    $fields['user_phone'] = [
+        'title'    => 'Phone Number',
+        'type'     => 'text',
+        'required' => true,
+    ];
+    return $fields;
+});
+```
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
