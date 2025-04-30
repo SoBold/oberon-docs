@@ -1,0 +1,96 @@
+# Meta Helper
+
+## Overview
+
+The `MetaHelper` class provides a lightweight utility for storing and retrieving plugin-specific metadata using WordPress's native `wp_options` table. It simplifies CRUD operations for key-value settings within the Oberon plugin namespace.
+
+### Usage
+
+```php
+use Oberon\Helpers\MetaHelper;
+
+$meta = new MetaHelper();
+
+// Store a value
+$meta->upsert('redirectAfterLogin', '/dashboard');
+
+// Retrieve a value
+$redirectPath = $meta->get('redirectAfterLogin');
+```
+
+## Class: `MetaHelper`
+
+Handles storing and retrieving custom Oberon-related configuration values in the WordPress options table (`wp_options`).
+
+---
+
+### Property: `private $wpdb`
+
+An instance of the global WordPress database object used for direct SQL operations.
+
+---
+
+### Constructor: `__construct()`
+
+Initializes the helper by assigning the global `$wpdb` object to the class instance.
+
+#### Example:
+
+```php
+$meta = new MetaHelper();
+```
+
+---
+
+### Method: `upsert(string $metaKey = '', string $metaValue = ''): int|false`
+
+Inserts a new option or updates an existing one in the WordPress `wp_options` table, namespaced with the `obrn_` prefix.
+
+#### Parameters:
+
+-   **`$metaKey`** (`string`) – The key for the option, automatically prefixed with `obrn_`.
+-   **`$metaValue`** (`string`) – The value to store or update.
+
+#### Returns:
+
+-   **`int|false`** – The number of rows affected by the query. Returns `false` on failure.
+
+#### Example:
+
+```php
+$meta->upsert('welcomeMessage', 'Hello, Oberon!');
+```
+
+---
+
+### Method: `get(string $metaKey = ''): string`
+
+Fetches a namespaced option from the WordPress `wp_options` table.
+
+#### Parameters:
+
+-   **`$metaKey`** (`string`) – The key to retrieve (without `obrn_` prefix).
+
+#### Returns:
+
+-   **`string`** – The value of the option if found, or an empty string if not found.
+
+#### Example:
+
+```php
+$welcomeMessage = $meta->get('welcomeMessage'); // "Hello, Oberon!"
+```
+
+---
+
+## Notes
+
+-   All keys are automatically prefixed with `obrn_` to avoid naming conflicts in the global `wp_options` namespace.
+-   Direct SQL queries are used for performance and flexibility, avoiding reliance on the Options API (`get_option()` / `update_option()`).
+-   Uses `$wpdb->prepare()` to avoid SQL injection vulnerabilities.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

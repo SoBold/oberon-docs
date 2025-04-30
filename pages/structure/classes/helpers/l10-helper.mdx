@@ -1,0 +1,125 @@
+# Localization Helper
+
+## Overview
+
+The `L10nHelper` class provides utilities for retrieving and formatting localization data, such as the user's local country and currency, using stored metadata and JSON configuration files.
+
+### Usage
+
+```php
+use Oberon\Helpers\L10nHelper;
+
+$l10n = new L10nHelper();
+
+// Access currency info
+$currency = $l10n->currency;
+
+// Format a value as local currency
+echo $l10n->formatToLocalCurrency(199.99);
+```
+
+## Class: `L10nHelper`
+
+Helper class to support localization functionality in the Oberon plugin.
+
+---
+
+### Property: `$currency` (array)
+
+An associative array representing the localized currency data for the current user or system.
+
+**Example:**
+
+```php
+[
+  'symbol' => '$',
+  'code' => 'USD',
+  'name' => 'US Dollar'
+]
+```
+
+---
+
+### Property: `$country` (array)
+
+An associative array containing the localized country information keyed by ISO country code.
+
+**Example:**
+
+```php
+[
+  'US' => 'United States'
+]
+```
+
+---
+
+### Constructor: `__construct()`
+
+Initializes the helper and populates the `$currency` and `$country` properties by reading metadata and local JSON config files.
+
+---
+
+### Method: `getLocalCountry(): array`
+
+Fetches the localized country information based on saved metadata.
+
+#### Returns:
+
+-   **`array`** – An associative array with the ISO country code as key and the country name as value. Returns an empty array if no country is configured.
+
+#### Example:
+
+```php
+$country = $l10n->getLocalCountry(); // [ 'US' => 'United States' ]
+```
+
+---
+
+### Method: `getLocalCurrency(): array`
+
+Fetches the localized currency details based on saved metadata.
+
+#### Returns:
+
+-   **`array`** – An associative array with details like `symbol`, `code`, and `name`. Returns an empty array if no currency is configured.
+
+#### Example:
+
+```php
+$currency = $l10n->getLocalCurrency(); // [ 'symbol' => '$', 'code' => 'USD', ... ]
+```
+
+---
+
+### Method: `formatToLocalCurrency(mixed $price = '0'): string`
+
+Formats a given numeric price into the local currency format using the symbol configured for the user or site.
+
+#### Parameters:
+
+-   **`$price`** (`mixed`) – The numeric price to format. Default is `'0'`.
+
+#### Returns:
+
+-   **`string`** – A string representing the formatted price using the local currency symbol.
+
+#### Example:
+
+```php
+echo $l10n->formatToLocalCurrency(100); // "$100"
+```
+
+---
+
+## Notes
+
+-   Localization data is sourced from `countries.json` and `currencies.json` located at:
+    `OBRN_BASE_PATH . '/src/inc/config/'`
+-   Relies on the `MetaHelper` class to retrieve stored metadata like `localizationCountry` and `localizationCurrency`.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

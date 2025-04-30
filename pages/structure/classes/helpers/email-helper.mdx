@@ -1,0 +1,68 @@
+# Email Helper
+
+## Overview
+
+The `EmailHelper` class provides a static method to simplify sending HTML emails in the Oberon WordPress plugin. It wraps the native `wp_mail()` function with preconfigured headers for content type and charset.
+
+### Usage
+
+```php
+use Oberon\Helpers\EmailHelper;
+
+EmailHelper::send(
+    'user@example.com',
+    'Welcome to Oberon',
+    '<h1>Hello!</h1><p>Your registration was successful.</p>'
+);
+```
+
+## Class: `EmailHelper`
+
+A static helper class for sending HTML emails via WordPress.
+
+---
+
+### Method: `send(string $to = '', string $subject = '', string $body = ''): bool`
+
+Sends an email with HTML content using the native WordPress `wp_mail()` function.
+
+#### Parameters:
+
+-   **`$to`** (`string`) – The recipient's email address.
+-   **`$subject`** (`string`) – The subject line of the email.
+-   **`$body`** (`string`) – The message body (HTML content is supported).
+
+#### Returns:
+
+-   **`bool`** – `true` if the email was successfully accepted for delivery, `false` otherwise.
+
+#### Example:
+
+```php
+$success = EmailHelper::send(
+    'admin@example.com',
+    'New Contact Form Submission',
+    '<p>You have a new message from the contact form.</p>'
+);
+
+if ($success) {
+    echo 'Email sent successfully.';
+} else {
+    echo 'Failed to send email.';
+}
+```
+
+---
+
+### Notes
+
+-   Uses headers to specify `Content-Type: text/html` and `charset=UTF-8`, which ensures proper rendering of HTML content and encoding support.
+-   This helper should be used whenever plugin-level email functionality is required to ensure consistent formatting and encoding.
+
+---
+
+## Dependencies
+
+-   [`wp_mail()` – WordPress Developer Reference](https://developer.wordpress.org/reference/functions/wp_mail/)
+
+---

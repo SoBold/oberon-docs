@@ -1,0 +1,97 @@
+# Login Helper
+
+## Overview
+
+The `LoginHelper` class provides logic to handle custom login flows for the Oberon plugin, including magic login token processing and child account invitation checks. It hooks into specific Oberon login-related actions and automates user authentication and redirection.
+
+### Usage
+
+This class is automatically hooked into the Oberon login flow via custom action hooks:
+
+```php
+use Oberon\Helpers\LoginHelper;
+
+new LoginHelper(); // Hooks into login-related actions
+```
+
+You typically don't call its methods directly — instead, they are executed via WordPress actions like `obrn_action_member_login` and `obrn_event_member_login`.
+
+## Class: `LoginHelper`
+
+Handles Oberon-specific login features such as magic login and child account invitations.
+
+---
+
+### Constructor: `__construct()`
+
+Registers WordPress actions to hook into login flows.
+
+#### Hooks Added:
+
+-   `obrn_action_member_login` → `handleMagicLogin()`
+-   `obrn_event_member_login` → `checkForPendingInvites()`
+
+#### Example:
+
+```php
+new LoginHelper();
+```
+
+---
+
+### Method: `checkForPendingInvites($user): void`
+
+Checks if the authenticated user has any pending child account invitations.
+
+#### Parameters:
+
+-   **`$user`** (`WP_User`) – The user object for the logged-in member.
+
+#### Behavior:
+
+-   Queries `ChildAccountHelper::checkInvites()` using the user's ID.
+-   Sets the `$_SESSION['HasPendingInvites']` flag to either the invite data or `false`.
+
+#### Example:
+
+```php
+// Triggered internally via do_action('obrn_event_member_login', $user);
+```
+
+---
+
+### Method: `handleMagicLogin($user): void`
+
+Handles magic login functionality when a user visits a URL with a magic token.
+
+#### Parameters:
+
+-   **`$user`** (`WP_User|int`) – A user object or user ID.
+
+#### Behavior:
+
+1. Ensures `$user` is a valid `WP_User` object.
+2. Sets authentication cookies for the user.
+3. Fires `obrn_event_member_login` hook for additional login events.
+4. Retrieves post-login redirect URL via `MetaHelper::get('redirectAfterLogin')`.
+5. Redirects the user to the login destination (defaults to `/`).
+
+#### Example:
+
+```php
+// Triggered internally via do_action('obrn_action_member_login', $user);
+```
+
+---
+
+## Notes
+
+-   `$_SESSION['HasPendingInvites']` is used to store login-time invite checks for downstream use (e.g., UI prompts).
+-   The `MetaHelper` class is required to fetch the post-login redirection path.
+-   This helper is primarily triggered through the custom `obrn_*` actions.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

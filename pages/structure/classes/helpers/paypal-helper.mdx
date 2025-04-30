@@ -1,0 +1,136 @@
+# PayPal Helper
+
+## Overview
+
+The `PaypalHelper` class facilitates interaction with the PayPal API, including OAuth token generation, order lookup, and authenticated requests. It uses credentials stored via `MetaHelper` and integrates with PayPal's REST API via Guzzle.
+
+### Usage
+
+```php
+use Oberon\Helpers\PaypalHelper;
+
+$paypal = new PaypalHelper();
+
+// Lookup an order by ID
+$orderDetails = $paypal->lookupOrderById('ORDER12345');
+```
+
+## Class: `PaypalHelper`
+
+Handles PayPal authentication and API communication using stored client credentials.
+
+---
+
+### Property: `$paypalUrl` (`string`)
+
+The base URL for PayPal API calls. Defaults to the sandbox endpoint:
+
+```php
+'https://api-m.sandbox.paypal.com'
+```
+
+---
+
+### Property: `$paypalAccessToken` (`string`)
+
+Stores the current OAuth access token used for authenticated requests. Automatically populated during construction.
+
+---
+
+### Property: `$paypalClientId` (`string`)
+
+The PayPal client ID, loaded from metadata using `MetaHelper`.
+
+---
+
+### Property: `$paypalClientSecret` (`string|bool`)
+
+The decoded PayPal client secret, loaded and base64-decoded from metadata.
+
+---
+
+### Constructor: `__construct()`
+
+Initializes the helper by retrieving PayPal credentials from `MetaHelper` and requesting an OAuth token.
+
+#### Example:
+
+```php
+$paypal = new PaypalHelper();
+```
+
+---
+
+### Method: `generateOauthToken(): string|bool`
+
+Fetches an OAuth 2.0 access token from PayPal using client credentials.
+
+#### Returns:
+
+-   **`string`** – The access token if successful.
+-   **`false`** – If the request fails.
+
+#### Example:
+
+```php
+$token = $paypal->generateOauthToken();
+```
+
+---
+
+### Method: `lookupOrderById(string $orderId = ''): array`
+
+Retrieves PayPal order details using an order ID.
+
+#### Parameters:
+
+-   **`$orderId`** (`string`) – The PayPal order ID.
+
+#### Returns:
+
+-   **`array`** – An associative array of the order details.
+-   **`false|string`** – On failure or exception, returns false or error message.
+
+#### Example:
+
+```php
+$order = $paypal->lookupOrderById('5O190127TN364715T');
+```
+
+---
+
+### Method: `externalRequest(string $endpoint, string $method, array $data = []): string|bool|array`
+
+Sends a request to a PayPal API endpoint using Guzzle with the stored access token.
+
+#### Parameters:
+
+-   **`$endpoint`** (`string`) – The API endpoint path (e.g., `/v2/checkout/orders/XYZ`).
+-   **`$method`** (`string`) – HTTP method (`GET` or `POST`).
+-   **`$data`** (`array`) – Optional data to send (for POST requests).
+
+#### Returns:
+
+-   **`array`** – Parsed JSON response.
+-   **`false`** – On HTTP failure.
+-   **`string`** – Error message on exception.
+
+#### Example:
+
+```php
+$response = $paypal->externalRequest('/v2/checkout/orders/ORDER123', 'GET');
+```
+
+---
+
+## Notes
+
+-   Assumes PayPal credentials (`paypalClientId` and `paypalClientSecret`) are stored in WordPress options via `MetaHelper`.
+-   Uses the **sandbox API** by default — you must change `$paypalUrl` for production use.
+-   Guzzle must be installed and autoloaded in the project.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
