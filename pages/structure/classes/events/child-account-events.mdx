@@ -1,0 +1,92 @@
+# Child Account Events
+
+## Overview
+
+The `ChildAccount` class defines event handlers for key actions related to child account subscriptions in the Oberon system. These events are hooked into custom WordPress actions and provide extensible points for responding to child account lifecycle events (request, accept, delete).
+
+### Usage
+
+This class is intended to be instantiated once during plugin initialization to bind its handlers to custom Oberon events.
+
+```php
+use Oberon\Events\ChildAccount;
+
+new ChildAccount(); // Registers event listeners
+```
+
+## Class: `ChildAccount`
+
+Registers and handles WordPress actions tied to child account events.
+
+---
+
+### Constructor: `__construct()`
+
+Hooks into custom WordPress actions to handle child account-related subscription events.
+
+#### Registered Hooks:
+
+-   `obrn_event_subscription_child_account_request` → `eventSubscriptionChildAccountRequest()`
+-   `obrn_event_subscription_child_account_accepted` → `eventSubscriptionChildAccountAccepted()`
+-   `obrn_event_subscription_child_account_delete` → `eventSubscriptionChildAccountDelete()`
+
+#### Example:
+
+```php
+new ChildAccount();
+```
+
+---
+
+### Method: `eventSubscriptionChildAccountRequest(array $data = []): void`
+
+Handles logic when a child account subscription request is initiated.
+
+#### Parameters:
+
+-   **`$data`** (`array`) – Event data payload (typically includes user or account details).
+
+#### Usage:
+
+Hooked into: `do_action('obrn_event_subscription_child_account_request', $data);`
+
+---
+
+### Method: `eventSubscriptionChildAccountAccepted(array $data = []): void`
+
+Handles logic when a child account subscription request is accepted.
+
+#### Parameters:
+
+-   **`$data`** (`array`) – Event data payload.
+
+#### Usage:
+
+Hooked into: `do_action('obrn_event_subscription_child_account_accepted', $data);`
+
+---
+
+### Method: `eventSubscriptionChildAccountDelete(array $data = []): void`
+
+Handles logic when a child account subscription is deleted or revoked.
+
+#### Parameters:
+
+-   **`$data`** (`array`) – Event data payload.
+
+#### Usage:
+
+Hooked into: `do_action('obrn_event_subscription_child_account_delete', $data);`
+
+---
+
+## Notes
+
+-   All event methods are currently placeholders and should be extended to implement specific business logic (e.g., email notifications, logging, syncing with external services).
+-   The `$data` array passed to each method should follow a consistent structure for predictability.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
