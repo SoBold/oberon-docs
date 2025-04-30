@@ -1,0 +1,111 @@
+# Subscription Events
+
+## Overview
+
+The `Subscription` class defines WordPress actions that represent key lifecycle events for user subscriptions in the Oberon system. These include creation, pausing, resuming, upgrading, downgrading, expiration, and related child account operations.
+
+### Usage
+
+Instantiate this class during your plugin’s bootstrap process to register all event listeners:
+
+```php
+use Oberon\Events\Subscription;
+
+new Subscription(); // Hooks into subscription-related events
+```
+
+## Class: `Subscription`
+
+Registers WordPress actions for subscription management and child account operations.
+
+---
+
+### Constructor: `__construct()`
+
+Hooks into the following Oberon-specific event actions:
+
+#### Registered Hooks:
+
+-   `obrn_event_subscription_created` → `eventSubscriptionCreated()`
+-   `obrn_event_subscription_paused` → `eventSubscriptionPaused()`
+-   `obrn_event_subscription_resumed` → `eventSubscriptionResumed()`
+-   `obrn_event_subscription_stopped` → `eventSubscriptionStopped()`
+-   `obrn_event_subscription_upgraded` → `eventSubscriptionUpgraded()`
+-   `obrn_event_subscription_downgraded` → `eventSubscriptionDowngraded()`
+-   `obrn_event_subscription_expired` → `eventSubscriptionExpired()`
+-   `obrn_event_subscription_child_account_request` → `eventSubscriptionChildAccountRequest()`
+-   `obrn_event_subscription_child_account_accepted` → `eventSubscriptionChildAccountAccepted()`
+-   `obrn_event_subscription_child_account_delete` → `eventSubscriptionChildAccountDelete()`
+
+---
+
+### Method: `eventSubscriptionCreated(array $data = []): void`
+
+Handles logic when a new subscription is created.
+
+---
+
+### Method: `eventSubscriptionPaused(array $data = []): void`
+
+Handles logic when a subscription is paused by the user or system.
+
+---
+
+### Method: `eventSubscriptionResumed(array $data = []): void`
+
+Handles logic when a previously paused subscription is resumed.
+
+---
+
+### Method: `eventSubscriptionStopped(array $data = []): void`
+
+Handles logic when a subscription is fully cancelled or stopped.
+
+---
+
+### Method: `eventSubscriptionUpgraded(array $data = []): void`
+
+Triggered when a subscription is upgraded to a higher tier.
+
+---
+
+### Method: `eventSubscriptionDowngraded(array $data = []): void`
+
+Triggered when a subscription is downgraded to a lower tier.
+
+---
+
+### Method: `eventSubscriptionExpired(array $data = []): void`
+
+Fires when a subscription naturally expires without renewal.
+
+---
+
+### Method: `eventSubscriptionChildAccountRequest(array $data = []): void`
+
+Handles child account request event under a subscription context.
+
+---
+
+### Method: `eventSubscriptionChildAccountAccepted(array $data = []): void`
+
+Handles acceptance of a child account request under a subscription.
+
+---
+
+### Method: `eventSubscriptionChildAccountDelete(array $data = []): void`
+
+Handles removal or deletion of a child account under a subscription.
+
+---
+
+## Notes
+
+-   Event methods are currently stubs and should be extended with logic such as notifying users, updating third-party systems, or adjusting billing.
+-   `$data` should consistently include keys like `user_id`, `subscription_id`, `plan_id`, `timestamp`, and any context-specific info.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

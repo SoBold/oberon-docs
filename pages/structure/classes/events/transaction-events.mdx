@@ -1,0 +1,100 @@
+# Subscription Transaction Events
+
+## Overview
+
+This `Subscription` event class handles transaction-related lifecycle events in the Oberon system. It hooks into custom WordPress actions to monitor completed, refunded, failed, and expired transactions associated with subscriptions.
+
+### Usage
+
+Instantiate this class during plugin bootstrapping to register all transaction event listeners:
+
+```php
+use Oberon\Events\Subscription;
+
+new Subscription(); // Hooks into transaction-related subscription events
+```
+
+## Class: `Subscription`
+
+Registers WordPress actions for subscription billing transaction events.
+
+---
+
+### Constructor: `__construct()`
+
+Hooks into custom WordPress actions to manage subscription transaction state changes.
+
+#### Registered Hooks:
+
+-   `obrn_event_transaction_completed` → `eventTransactionCompleted()`
+-   `obrn_event_transaction_refunded` → `eventTransactionRefunded()`
+-   `obrn_event_transaction_failed` → `eventTransactionFailed()`
+-   `obrn_event_transaction_expired` → `eventTransactionExpired()`
+
+---
+
+### Method: `eventTransactionCompleted(array $data = []): void`
+
+Handles logic after a transaction has successfully completed.
+
+#### Expected `$data` contents:
+
+-   `user_id` (`int`)
+-   `transaction_id` (`string`)
+-   `amount` (`float`)
+-   `subscription_id` (`int`)
+-   `timestamp` (`string`)
+
+---
+
+### Method: `eventTransactionRefunded(array $data = []): void`
+
+Handles logic after a transaction has been refunded.
+
+#### Expected `$data` contents:
+
+-   `user_id` (`int`)
+-   `transaction_id` (`string`)
+-   `refund_reason` (`string`)
+-   `amount_refunded` (`float`)
+-   `timestamp` (`string`)
+
+---
+
+### Method: `eventTransactionFailed(array $data = []): void`
+
+Triggered when a transaction fails (e.g., due to insufficient funds or payment gateway issues).
+
+#### Expected `$data` contents:
+
+-   `user_id` (`int`)
+-   `transaction_id` (`string`)
+-   `failure_reason` (`string`)
+-   `attempted_amount` (`float`)
+-   `timestamp` (`string`)
+
+---
+
+### Method: `eventTransactionExpired(array $data = []): void`
+
+Triggered when a pending transaction expires without being completed.
+
+#### Expected `$data` contents:
+
+-   `user_id` (`int`)
+-   `transaction_id` (`string`)
+-   `subscription_id` (`int`)
+-   `timestamp` (`string`)
+
+---
+
+## Notes
+
+-   Each method is a stub and should be implemented with business-specific logic such as logging, user notifications.
+-   `$data` should be validated before use to prevent security issues or malformed operations.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

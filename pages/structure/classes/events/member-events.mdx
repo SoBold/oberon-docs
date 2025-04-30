@@ -1,0 +1,97 @@
+# Member Events
+
+## Overview
+
+The `Member` event class provides hooks for handling various lifecycle events related to member accounts in the Oberon platform. These include events like registration, login, updates, deletions, and credit card expiration handling.
+
+### Usage
+
+This class should be instantiated during plugin bootstrap to register the event listeners with WordPress:
+
+```php
+use Oberon\Events\Member;
+
+new Member(); // Hooks into member-related events
+```
+
+## Class: `Member`
+
+Handles WordPress actions for key member lifecycle events.
+
+---
+
+### Constructor: `__construct()`
+
+Registers WordPress actions with their corresponding handler methods.
+
+#### Registered Hooks:
+
+-   `obrn_event_member_added` → `eventMemberAdded()`
+-   `obrn_event_member_updated` → `eventMemberUpdated()`
+-   `obrn_event_member_login` → `eventMemberLogin()`
+-   `obrn_event_member_signup_completed` → `eventMemberSignupCompleted()`
+-   `obrn_event_member_deleted` → `eventMemberDeleted()`
+-   `obrn_event_member_before_credit_card_expires` → `eventMemberBeforeCardExpires()`
+-   `obrn_event_member_after_credit_card_expires` → `eventMemberAfterCardExpires()`
+
+#### Example:
+
+```php
+new Member();
+```
+
+---
+
+### Method: `eventMemberAdded(array $data = []): void`
+
+Fires when a new member is added to the system.
+
+---
+
+### Method: `eventMemberUpdated(array $data = []): void`
+
+Fires when a member's profile is updated.
+
+---
+
+### Method: `eventMemberLogin(array $data = []): void`
+
+Fires when a member logs into the platform.
+
+---
+
+### Method: `eventMemberSignupCompleted(array $data = []): void`
+
+Fires upon completion of the member signup process.
+
+---
+
+### Method: `eventMemberDeleted(array $data = []): void`
+
+Fires when a member account is deleted.
+
+---
+
+### Method: `eventMemberBeforeCardExpires(array $data = []): void`
+
+Fires shortly before a member's credit card on file is about to expire.
+
+---
+
+### Method: `eventMemberAfterCardExpires(array $data = []): void`
+
+Fires after a member's credit card has expired.
+
+---
+
+## Notes
+
+-   Each method is currently a placeholder for implementing business logic (e.g., logging, emailing, syncing).
+-   The `$data` array passed to each event is expected to contain context like `user_id`, timestamps, or subscription metadata.
+-   These hooks serve as the foundation for event-driven automation within the Oberon plugin architecture.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
