@@ -1,0 +1,127 @@
+# Render Utility
+
+## Overview
+
+The `Render` class provides utility methods to render views, components, and frontend fields in the Oberon plugin. It supports default path resolution and integrates with WordPress theme overrides and user metadata.
+
+### Usage
+
+```php
+use Oberon\Utilities\Render;
+
+// Render a component with arguments
+echo Render::component('form-group/group', ['label' => 'Email']);
+
+// Render a full view
+echo Render::view('dashboard/overview');
+
+// Check if a theme override exists
+$isOverridden = Render::checkForThemeOverride('views/my-template');
+
+// Render a specific field
+echo Render::field('user_phone');
+```
+
+## Class: `Render`
+
+Provides rendering utilities for PHP-based views and frontend components.
+
+---
+
+### Method: `view(string $view = '', array $args = []): string|bool`
+
+Renders a full view from the `/src/views/` directory and returns the output.
+
+#### Parameters:
+
+-   **`$view`** (`string`) – Name or relative path of the view file.
+-   **`$args`** (`array`) – Arguments to be extracted and passed into the view.
+
+#### Returns:
+
+-   **`string|bool`** – The HTML markup from the view or `false` on failure.
+
+#### Example:
+
+```php
+echo Render::view('account/settings', ['tab' => 'profile']);
+```
+
+---
+
+### Method: `component(string $component = '', array $args = []): string|bool`
+
+Renders a reusable component from `/src/components/`.
+
+#### Parameters:
+
+-   **`$component`** (`string`) – Component name or relative path.
+-   **`$args`** (`array`) – Data to pass into the component file.
+
+#### Returns:
+
+-   **`string|bool`** – Rendered HTML string or `false`.
+
+#### Example:
+
+```php
+echo Render::component('alert/message', ['type' => 'success', 'text' => 'Profile updated!']);
+```
+
+---
+
+### Method: `checkForThemeOverride(string $path = '', array $args = []): bool`
+
+Checks if a theme override exists in the active theme using `get_template_part()`.
+
+#### Parameters:
+
+-   **`$path`** (`string`) – Relative path in the theme to look for (e.g., `'views/custom'`).
+-   **`$args`** (`array`) – Optional arguments to pass to the overridden template.
+
+#### Returns:
+
+-   **`bool`** – `true` if an override exists, otherwise `false`.
+
+#### Example:
+
+```php
+if (Render::checkForThemeOverride('views/my-template')) {
+    echo 'Custom template exists.';
+}
+```
+
+---
+
+### Method: `field(string $metaKey = '', array $args = []): string|bool`
+
+Renders a field input using the `Fields::get()` utility, resolving values from current user data.
+
+#### Parameters:
+
+-   **`$metaKey`** (`string`) – The meta key to fetch and render.
+-   **`$args`** (`array`) – Optional arguments (e.g., custom user).
+
+#### Returns:
+
+-   **`string|bool`** – Rendered field HTML or `false`.
+
+#### Example:
+
+```php
+echo Render::field('user_first_name');
+```
+
+---
+
+## Notes
+
+-   View and component files are resolved using a fallback like `name/name.php`.
+-   Output buffering is used to capture included file output cleanly.
+-   WordPress-specific functions like `get_template_part()` allow safe overrides in the active theme.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
