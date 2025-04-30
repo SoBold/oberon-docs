@@ -1,0 +1,158 @@
+# Tax Helper
+
+## Overview
+
+The `TaxHelper` class provides functionality to calculate tax and VAT for different countries, based on configuration values stored in WordPress options. It also includes utilities to fetch supported country and currency lists used in tax and localization logic.
+
+### Usage
+
+```php
+use Oberon\Helpers\TaxHelper;
+
+$taxHelper = new TaxHelper();
+
+$taxRate = $taxHelper->getTaxRate(); // e.g. 20
+$priceWithTax = $taxHelper->applyTaxRate(100); // e.g. 120.00
+```
+
+## Class: `TaxHelper`
+
+Handles tax configuration, rate calculation, and price adjustments based on VAT settings stored via `MetaHelper`.
+
+---
+
+### Property: `$taxEnabled` (`bool`)
+
+Indicates whether tax calculations are enabled based on the `enableTaxCalculations` WordPress option.
+
+---
+
+### Property: `$vatEnabled` (`bool`)
+
+Indicates whether VAT handling is enabled via the `settingVATEnabled` WordPress option.
+
+---
+
+### Property: `$vatCountry` (`string`)
+
+The country code used to determine VAT rates (e.g., `'gb'`, `'us'`).
+
+---
+
+### Constructor: `__construct()`
+
+Initializes the class by loading VAT and tax settings from WordPress options via `MetaHelper`.
+
+#### Example:
+
+```php
+$taxHelper = new TaxHelper();
+```
+
+---
+
+### Method: `getTaxRate(): int`
+
+Returns the VAT percentage based on the configured country.
+
+#### Returns:
+
+-   **`int`** – Tax rate percentage (e.g., 20 for UK, 21 for US).
+
+#### Example:
+
+```php
+$rate = $taxHelper->getTaxRate(); // 20
+```
+
+---
+
+### Method: `applyTaxRate(float $existingPrice = 0, float $taxRate = 0): float`
+
+Applies a tax rate to a price and returns the price including tax.
+
+#### Parameters:
+
+-   **`$existingPrice`** (`float`) – The base price.
+-   **`$taxRate`** (`float`) – Optional tax rate. If not provided, default country rate is used.
+
+#### Returns:
+
+-   **`float`** – Price including tax.
+
+#### Example:
+
+```php
+$priceWithTax = $taxHelper->applyTaxRate(100); // 120.00
+```
+
+---
+
+### Method: `getTaxAmount(float $existingPrice = 0, float $taxRate = 0): float`
+
+Calculates just the tax amount for a given price.
+
+#### Parameters:
+
+-   **`$existingPrice`** (`float`) – The base price.
+-   **`$taxRate`** (`float`) – Optional tax rate. If not provided, default country rate is used.
+
+#### Returns:
+
+-   **`float`** – Tax portion of the price.
+
+#### Example:
+
+```php
+$taxAmount = $taxHelper->getTaxAmount(100); // 20.00
+```
+
+---
+
+### Method: `getCountryList(): array`
+
+Loads the country list from the configuration JSON file.
+
+#### Returns:
+
+-   **`array`** – A key-value list of country codes and names.
+
+#### Example:
+
+```php
+$countries = $taxHelper->getCountryList();
+```
+
+---
+
+### Method: `getCurrencyList(): array`
+
+Loads the currency list from the configuration JSON file.
+
+#### Returns:
+
+-   **`array`** – A key-value list of currency codes and symbols/details.
+
+#### Example:
+
+```php
+$currencies = $taxHelper->getCurrencyList();
+```
+
+---
+
+## Notes
+
+-   Tax and VAT toggles are configured using WordPress options:
+    -   `enableTaxCalculations`
+    -   `settingVATEnabled`
+    -   `settingVATCountry`
+-   Country and currency data are loaded from:
+    -   `OBRN_BASE_PATH . '/src/inc/config/countries.json'`
+    -   `OBRN_BASE_PATH . '/src/inc/config/currencies.json'`
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

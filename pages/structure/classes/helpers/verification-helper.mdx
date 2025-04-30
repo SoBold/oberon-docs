@@ -1,0 +1,133 @@
+# Verification Helper
+
+## Overview
+
+The `VerificationHelper` class provides secure token-based verification functionality in the Oberon plugin. It enables verification flows like email change or magic link login by generating, validating, and handling one-time verification codes via custom URL parameters.
+
+### Usage
+
+```php
+use Oberon\Helpers\VerificationHelper;
+
+// Start a new verification process
+$token = VerificationHelper::start('email_change', get_current_user_id());
+
+// Generate a magic verification link
+$link = VerificationHelper::generateVerifyLink(get_current_user_id(), 'email_change');
+```
+
+## Class: `VerificationHelper`
+
+Manages token generation, storage, verification, and magic link routing for secure user actions.
+
+---
+
+### Property: `static $validActions` (`array`)
+
+Defines the supported verification actions. Currently includes:
+
+```php
+['email_change']
+```
+
+---
+
+### Constructor: `__construct()`
+
+Hooks into WordPress `init` to process magic links from URL query parameters.
+
+#### Example:
+
+```php
+new VerificationHelper();
+```
+
+---
+
+### Method: `start(string $action, int $user_id, string|int $timeToExpire = '+1hour'): string|false|\WP_Error`
+
+Begins a verification process by generating and saving a code.
+
+#### Parameters:
+
+-   **`$action`** (`string`) – The action to verify (`email_change`, etc.).
+-   **`$user_id`** (`int`) – The user’s ID.
+-   **`$timeToExpire`** (`string|int`) – Expiry time (e.g., `+1hour`, or a Unix timestamp).
+
+#### Returns:
+
+-   **`string`** – The verification code.
+-   **`false`** – On failure.
+-   **`\WP_Error`** – If invalid input is given.
+
+---
+
+### Method: `verify(string $code, string $action, int $user_id): bool`
+
+Validates a code against stored tokens for the given user and action.
+
+---
+
+### Method: `verifyCode(string $code, string $action, int $user_id, object $token): bool`
+
+Performs deep verification including expiry and token match.
+
+---
+
+### Method: `generateCode(int $type, string $action, int $user_id, string $expiryTime): string`
+
+Generates a verification code.
+
+#### Parameters:
+
+-   **`$type`** (`int`) – Type 1 = hash, Type 2 = 6-digit code.
+-   **`$action`** (`string`)
+-   **`$user_id`** (`int`)
+-   **`$expiryTime`** (`string|int`)
+
+#### Returns:
+
+-   **`string`** – The generated token.
+
+---
+
+### Method: `saveCode(string $code, string $action, int $user_id, string $expiry): bool`
+
+Saves or updates the verification code in the database.
+
+---
+
+### Method: `generateVerifyLink(\WP_User|int $user, string $action): string|false`
+
+Creates a magic verification link with token, user login, and action in the query string.
+
+---
+
+### Method: `checkHandleMagicLinks(): void`
+
+Handles incoming magic link requests via the `init` hook.
+
+-   Validates and sanitizes query parameters (`obrn_action`, `obrn_token`, `user_login`).
+-   Verifies token and triggers appropriate `do_action('obrn_action_{$action}')`.
+-   Redirects or displays error messages as needed.
+
+---
+
+## Notes
+
+-   Tokens are stored in the `tokens` table using `DatabaseHelper`.
+-   All URLs are generated using `add_query_arg()` and decoded safely.
+-   Code supports both hashed and 6-digit numeric token types.
+-   Expired tokens are automatically rejected.
+
+---
+
+## Hooks
+
+-   `obrn_action_{$action}` – Triggered after a successful verification from a magic link.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
