@@ -1,0 +1,104 @@
+---
+title: UpdateProfileSignup
+description: Updates a user's profile during the signup process by sending profile data to the backend.
+---
+
+# `UpdateProfileSignup`
+
+## Overview
+
+The `UpdateProfileSignup` function is used to update a user's profile information during or after the signup process. It sends a **POST** request to the `/v1/auth/account/profile` endpoint with the provided profile data. The function returns a boolean indicating whether the operation was successful.
+
+---
+
+## Function Definition
+
+```ts
+const UpdateProfileSignup = async (profileData: any): Promise<boolean>
+```
+
+---
+
+## Parameters
+
+| Name          | Type  | Description                                          |
+| ------------- | ----- | ---------------------------------------------------- |
+| `profileData` | `any` | FormData or structured profile data to be submitted. |
+
+> **Note:** `profileData` should ideally be a strongly-typed object or `FormData` to improve validation and code safety.
+
+---
+
+## Returns
+
+**`Promise<boolean>`**
+
+-   `true`: If the profile update was successful (no `errors` returned by API).
+-   `false`: If the update failed or the response contained an `errors` object.
+
+---
+
+## Function Details
+
+### API URL Construction
+
+The endpoint is built using:
+
+```ts
+const apiUrl = obrnArgs.apiUrl + '/v1/auth/account/profile';
+```
+
+### Authenticated Request
+
+The request:
+
+-   Uses the `POST` method.
+-   Includes `X-WP-Nonce` from `obrnArgs` for authentication.
+-   Sends the `profileData` as the body (could be raw object or `FormData`).
+
+### Response Handling
+
+The response is parsed using `.json()`, and the result is evaluated:
+
+```ts
+resolve(updateProfile && !updateProfile.errors ? true : false);
+```
+
+No detailed error information is returned — only a `true`/`false` outcome based on presence of errors.
+
+---
+
+## Dependencies
+
+-   **`ObrnArgs`**: Provides the base API URL and security nonce.
+-   **`fetch`**: Native Fetch API is used for the network request.
+
+---
+
+## Example Usage
+
+```ts
+const isUpdated = await UpdateProfileSignup(
+    new FormData(document.querySelector('#signup-form')!)
+);
+
+if (isUpdated) {
+    console.log('Profile updated successfully.');
+} else {
+    console.error('Profile update failed.');
+}
+```
+
+---
+
+## Recommendations
+
+-   Wrap the fetch in a `try/catch` for network error handling.
+-   Improve type safety by defining an interface for `profileData`.
+-   Consider returning an object with success + error details instead of a plain boolean.
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`

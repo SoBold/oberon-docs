@@ -1,0 +1,104 @@
+---
+title: ConfirmSignup
+description: Submits final signup data, including payment info, to complete user registration.
+---
+
+# `ConfirmSignup`
+
+## Overview
+
+The `ConfirmSignup` function finalizes a user’s registration by submitting payment-related data to the backend. It sends a **POST** request to the `/v1/auth/signup/complete` endpoint using the configured API URL and nonce for authentication. This function does not return any value but logs the response for further handling.
+
+---
+
+## Function Definition
+
+```ts
+const ConfirmSignup = async (paymentInfo: any): Promise<void>
+```
+
+---
+
+## Parameters
+
+| Name          | Type  | Description                                                                 |
+| ------------- | ----- | --------------------------------------------------------------------------- |
+| `paymentInfo` | `any` | An object containing payment and/or signup completion data to be submitted. |
+
+---
+
+## Returns
+
+**`Promise<void>`**
+This function resolves after the API response is received. The response is logged via `console.log` for debugging. No structured value is returned.
+
+---
+
+## Function Details
+
+### Constructing the API URL
+
+The endpoint is built using:
+
+```ts
+const apiUrl = obrnArgs.apiUrl + '/v1/auth/signup/complete';
+```
+
+### Authenticated POST Request
+
+The function makes a `POST` request with:
+
+-   Headers:
+    -   `X-WP-Nonce`: Retrieved from `obrnArgs` for authentication.
+-   Body:
+    -   `paymentInfo`: Serialized to JSON and sent as the request payload.
+
+### Response Handling
+
+The function parses the response using:
+
+```ts
+.then(res => res.json())
+```
+
+and logs the result for future handling:
+
+```ts
+console.log('completeSignup', completeSignup);
+```
+
+> **TODO:** Error handling and response structure parsing should be added for robustness.
+
+---
+
+## Dependencies
+
+-   **`ObrnArgs`**: Contains the API base URL and authentication nonce.
+-   **`fetch`**: Native Fetch API is used to perform the HTTP request.
+
+---
+
+## Example Usage
+
+```ts
+await ConfirmSignup({
+    transactionId: 'abc123',
+    userId: 42,
+    membershipId: 5,
+    amountPaid: 29.99,
+});
+```
+
+---
+
+## TODO
+
+-   Add error handling (`try/catch`) for network and server errors.
+-   Define a specific interface for `paymentInfo`.
+-   Consider returning structured success/failure responses instead of just logging.
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`

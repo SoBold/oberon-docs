@@ -1,0 +1,117 @@
+---
+title: verifyMembershipChange
+description: Validates whether a membership change is permissible by querying the backend.
+---
+
+# `verifyMembershipChange`
+
+## Overview
+
+The `verifyMembershipChange` function checks whether a user can switch from their current membership to a new one. It sends a GET request with the current and target membership IDs to an API endpoint and returns a result indicating whether the change is valid, along with any relevant restrictions such as maximum child accounts.
+
+---
+
+## Function Definition
+
+```ts
+const verifyMembershipChange = async (
+  currentSubscriptionId: number,
+  newMembershipId: number
+): Promise<VerificationResult>
+```
+
+---
+
+## Parameters
+
+| Name                    | Type     | Description                                           |
+| ----------------------- | -------- | ----------------------------------------------------- |
+| `currentSubscriptionId` | `number` | ID of the user's current subscription.                |
+| `newMembershipId`       | `number` | ID of the new membership the user wants to switch to. |
+
+---
+
+## Returns
+
+**Promise\<VerificationResult\>**
+
+### Response Object Structure
+
+| Property          | Type                  | Description                                                  |
+| ----------------- | --------------------- | ------------------------------------------------------------ |
+| `isValid`         | `boolean`             | Indicates if the membership change is allowed.               |
+| `error`           | `string` _(optional)_ | Reason the change is not allowed, if any.                    |
+| `maxChildAccount` | `number` _(optional)_ | The maximum number of child accounts allowed, if applicable. |
+
+---
+
+## Function Details
+
+### API URL Construction
+
+The endpoint is constructed with query parameters for:
+
+```ts
+/v1/auth/signup/change/check;
+```
+
+Query string is built via a utility function `encodeDataToURL`.
+
+### Authenticated GET Request
+
+The request includes the WordPress nonce for authorization via the `X-WP-Nonce` header.
+
+### Success Handling
+
+If the API returns no errors, the function resolves with `{ isValid: true }`.
+
+### Error Handling
+
+If the API returns an error or if the request fails:
+
+-   The response is captured with `isValid: false`
+-   A user-friendly error message is returned
+
+---
+
+## Utility Function: `encodeDataToURL`
+
+```ts
+const encodeDataToURL = (data: Record<string, any>): string => {
+    return Object.entries(data)
+        .map(
+            ([key, value]) =>
+                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        )
+        .join('&');
+};
+```
+
+Used to serialize query parameters for the API request.
+
+---
+
+## Dependencies
+
+-   **`ObrnArgs`**: Contains the API base URL and security nonce.
+-   **`VerificationResult`**: Defines the structure of the API response.
+
+---
+
+## Example Usage
+
+```ts
+const result = await verifyMembershipChange(101, 202);
+
+if (result.isValid) {
+    console.log('Membership change is allowed.');
+} else {
+    console.warn('Cannot change membership:', result.error);
+}
+```
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`

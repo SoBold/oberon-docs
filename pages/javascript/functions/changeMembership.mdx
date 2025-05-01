@@ -1,0 +1,114 @@
+---
+# changeMembership
+description: Handles the process of changing a user's membership and returns the result, including any validation or error messages.
+---
+
+# `changeMembership`
+
+## Overview
+
+The `changeMembership` function facilitates the transition of a user's membership from one subscription plan to another. It sends a POST request to the API with the current and new membership IDs, the type of action (e.g., upgrade or downgrade), and optionally, a pro-rated price. The response indicates whether the operation was successful and includes relevant data or errors.
+
+---
+
+## Function Definition
+
+```ts
+const changeMembership = async (
+  currentSubscriptionId: number,
+  newMembershipId: number,
+  membershipChangeAction: string,
+  proratedPrice?: number
+): Promise<ChangeMembershipResult>
+```
+
+---
+
+## Parameters
+
+| Name                     | Type                  | Description                                                        |
+| ------------------------ | --------------------- | ------------------------------------------------------------------ |
+| `currentSubscriptionId`  | `number`              | The ID of the user's current subscription.                         |
+| `newMembershipId`        | `number`              | The ID of the membership the user is switching to.                 |
+| `membershipChangeAction` | `string`              | The type of change being requested (e.g., "upgrade", "downgrade"). |
+| `proratedPrice`          | `number` _(optional)_ | The pre-calculated pro-rated cost, if applicable.                  |
+
+---
+
+## Returns
+
+**Promise\<ChangeMembershipResult\>**
+
+The returned promise resolves to an object with the following structure:
+
+### Response Object Structure
+
+| Property          | Type                  | Description                                                      |
+| ----------------- | --------------------- | ---------------------------------------------------------------- |
+| `isValid`         | `boolean`             | Indicates if the operation was successful.                       |
+| `error`           | `string` _(optional)_ | Provides an error message if the operation fails.                |
+| `maxChildAccount` | `number` _(optional)_ | Specifies the max number of child accounts allowed, if returned. |
+
+---
+
+## Function Details
+
+### Constructing the API URL
+
+The API endpoint is constructed using `obrnArgs.apiUrl` with the fixed path:
+
+```
+/v1/auth/signup/change
+```
+
+### Authenticated POST Request
+
+A POST request is made with the following structure:
+
+-   Headers:
+    -   `Content-Type: application/json`
+    -   `X-WP-Nonce`: Nonce token from `obrnArgs`
+-   Body: JSON stringified payload containing the subscription and action data.
+
+### Success Handling
+
+If the server responds with a valid JSON payload, it is returned as the result.
+
+### Error Handling
+
+If the API call fails (e.g., due to network issues or server errors), a structured error response is returned:
+
+```ts
+{
+  isValid: false,
+  error: 'Error during API call. Please try again later.'
+}
+```
+
+---
+
+## Dependencies
+
+-   **`ObrnArgs`**: Provides the API base URL and nonce for secure requests.
+-   **`ChangeMembershipResult`**: Interface defining the expected response format from the API.
+
+---
+
+## Example Usage
+
+```ts
+const result = await changeMembership(123, 456, 'upgrade', 12.99);
+
+if (result.isValid) {
+    console.log('Membership changed successfully');
+    console.log('Max child accounts allowed:', result.maxChildAccount);
+} else {
+    console.error('Failed to change membership:', result.error);
+}
+```
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`

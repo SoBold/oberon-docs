@@ -1,0 +1,116 @@
+---
+title: upgradePayment
+description: Initiates a membership upgrade payment process by sending pricing and subscription details to the backend.
+---
+
+# `upgradePayment`
+
+## Overview
+
+The `upgradePayment` function handles the backend communication necessary to initiate a payment flow for upgrading a user's membership. It sends the current subscription, the new membership, and optionally the pro-rated price to the API and returns a result indicating success, failure, or additional constraints (e.g., max child accounts).
+
+---
+
+## Function Definition
+
+```ts
+const upgradePayment = async (
+  currentSubscriptionId: number,
+  newMembershipId: number,
+  proratedPrice?: number
+): Promise<upgradePaymentResult>
+```
+
+---
+
+## Parameters
+
+| Name                    | Type                  | Description                                                 |
+| ----------------------- | --------------------- | ----------------------------------------------------------- |
+| `currentSubscriptionId` | `number`              | The ID of the current subscription the user is on.          |
+| `newMembershipId`       | `number`              | The ID of the membership plan the user wants to upgrade to. |
+| `proratedPrice`         | `number` _(optional)_ | The pre-calculated pro-rated amount to be charged.          |
+
+---
+
+## Returns
+
+**Promise\<upgradePaymentResult\>**
+
+### Response Object Structure
+
+| Property          | Type                  | Description                                            |
+| ----------------- | --------------------- | ------------------------------------------------------ |
+| `isValid`         | `boolean`             | Indicates if the operation was successful.             |
+| `error`           | `string` _(optional)_ | Describes what went wrong if `isValid` is `false`.     |
+| `maxChildAccount` | `number` _(optional)_ | Max number of allowed child accounts for the new plan. |
+
+---
+
+## Function Details
+
+### API URL Construction
+
+The request URL is built by appending the following endpoint to the base API URL from `obrnArgs`:
+
+```
+/v1/auth/signup/change/payment
+```
+
+### Authenticated POST Request
+
+The function performs a `POST` request with:
+
+-   JSON body containing the subscription change data
+-   Headers:
+    -   `Content-Type: application/json`
+    -   `X-WP-Nonce`: WordPress nonce for authentication
+
+### Success Handling
+
+The API response is parsed with `.json()` and returned as-is to the caller.
+
+### Error Handling
+
+If the fetch fails (e.g., network issue), the function catches the error and returns:
+
+```ts
+{
+  isValid: false,
+  error: 'Error during API call. Please try again later.'
+}
+```
+
+---
+
+## Dependencies
+
+-   **`ObrnArgs`**: Contains the base API URL and authentication nonce used in the request.
+-   **`upgradePaymentResult`**: Defines the structure of the API response returned by the function.
+
+---
+
+## Example Usage
+
+```ts
+const result = await upgradePayment(101, 202, 9.99);
+
+if (result.isValid) {
+    console.log('Upgrade payment initiated');
+} else {
+    console.error('Upgrade failed:', result.error);
+}
+```
+
+---
+
+## Notes
+
+-   The commented-out `paymentFormEvent()` logic indicates a potential future integration with a payment form display logic via a DOM event.
+-   You may consider exposing more details (e.g. transaction ID or redirection URL) in future iterations.
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`
