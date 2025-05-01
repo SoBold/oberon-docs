@@ -1,0 +1,70 @@
+# WordPress Filter Loader
+
+This file includes all the filter registration files used by the Oberon plugin for account management and user onboarding.
+
+---
+
+## Purpose
+
+To organize and modularize WordPress filter logic in the `Oberon` plugin by including each filter definition from the `src/inc/filters/` directory.
+
+---
+
+## Included Filters
+
+The following filter files are included and automatically loaded when the plugin initializes:
+
+| Filter File                           | Description                                                                                                |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `account-set-password-content.php`    | Sets labels and placeholders for the "Set Password" UI.                                                    |
+| `account-remove-password-content.php` | Customizes content for removing a user password.                                                           |
+| `account-change-password-content.php` | Provides default labels and placeholders for password change UI.                                           |
+| `account-setup-fields.php`            | Defines how the account setup sections and fields are grouped and displayed.                               |
+| `default-fields.php`                  | Contains core form field definitions used in account-related forms (e.g., first name, last name, address). |
+| `available-payment-methods.php`       | Determines which payment gateways (Stripe, PayPal, Offline) are available based on meta config.            |
+| `membership-signup-content.php`       | (Optional) Configures custom content displayed during the membership signup flow.                          |
+
+---
+
+## Best Practices
+
+-   Add new filters by creating a file in `src/inc/filters/`, then include it here.
+-   Ensure all files return valid filters using `add_filter()`.
+-   Group filters by domain (e.g., account, memberships, payments) for clarity.
+
+---
+
+## Example
+
+To add a new filter:
+
+```php
+// src/inc/filters/my-custom-filter.php
+add_filter('my_custom_filter', function ($value) {
+    return 'Modified: ' . $value;
+});
+```
+
+Then include it:
+
+```php
+include(OBRN_BASE_PATH . '/src/inc/filters/my-custom-filter.php');
+```
+
+---
+
+## Location
+
+```php
+File: /src/inc/filters/filters.php
+```
+
+This file is typically loaded during plugin load.
+
+---
+
+## Since
+
+`v0.1.0`
+
+---

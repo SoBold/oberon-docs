@@ -1,0 +1,95 @@
+# `obrn_membership_signup_content` Filter
+
+Customize the content used in the Oberon Membership Signup flow, particularly around payment methods and related text.
+
+---
+
+## Overview
+
+This filter allows to customize default labels, text, and available gateway options presented to users during the membership signup process.
+
+---
+
+## Default Values
+
+```php
+[
+  'payment_heading' => __('Payment'),
+  'payment_text'    => __('Payment method'),
+  'gateway_select'  => [
+    'offline' => __('Pay via invoice'),
+    'stripe'  => __('Pay via card'),
+    'paypal'  => __('Pay via PayPal'),
+  ],
+  'gateway_text'    => [
+    'offline' => __('You will be sent an invoice for payment, but your subscription starts immediately (subject to terms and conditions)'),
+    'stripe'  => __(''),
+    'paypal'  => __(''),
+  ],
+  'offline_message' => __('Offline payment, invoice will be sent to your email after confirming'),
+  'submit_text'     => __('Subscribe')
+];
+```
+
+---
+
+## Usage Example
+
+```php
+add_filter('obrn_membership_signup_content', function ($args) {
+    $args['submit_text'] = __('Join Now');
+    $args['gateway_select']['stripe'] = __('Pay securely with card');
+    return $args;
+});
+```
+
+---
+
+## Use Cases
+
+-   Customize the payment gateway label text for localization or branding.
+-   Override the offline message or submission button.
+-   Hide or disable specific payment options by removing them from `gateway_select`.
+
+---
+
+## Hook Type
+
+`Filter`
+
+---
+
+## Parameters
+
+| Param   | Type    | Description                                     |
+| ------- | ------- | ----------------------------------------------- |
+| `$args` | `array` | The content configuration array to be filtered. |
+
+---
+
+## Returns
+
+| Type    | Description                                                 |
+| ------- | ----------------------------------------------------------- |
+| `array` | Modified content array for rendering the signup payment UI. |
+
+---
+
+## Since
+
+`0.1.0`
+
+---
+
+## Related
+
+-   `obrn_available_payment_methods`
+-   `obrn_account_setup_fields`
+
+---
+
+## Location
+
+```php
+File: /src/inc/filters/membership-signup-content.php
+```

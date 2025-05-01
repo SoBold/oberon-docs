@@ -1,0 +1,80 @@
+# Handle Email Change
+
+## Overview
+
+This function hooks into the custom action `obrn_action_email_change` to finalize a user's email update. It moves the pending email from user meta into the user's primary email record in WordPress.
+
+---
+
+## Hook: `obrn_action_email_change`
+
+Fires when a user confirms a pending email change request. The action expects the user ID as its argument.
+
+---
+
+## Usage
+
+Triggered after a successful email verification via magic link or token validation.
+
+```php
+do_action('obrn_action_email_change', $user_id);
+```
+
+---
+
+## Parameters
+
+-   **`$userId`** (`int`): The ID of the user whose email is being changed.
+
+---
+
+## Behavior
+
+1. Retrieves the `pending_email` meta value for the user.
+2. If a valid email is found:
+    - Updates the `user_email` field via `wp_update_user`.
+    - Returns `true` on success.
+3. If no pending email is set:
+    - Returns `false`.
+
+---
+
+## Example
+
+```php
+$userId = get_current_user_id();
+do_action('obrn_action_email_change', $userId);
+```
+
+---
+
+## Source
+
+```php
+\add_action('obrn_action_email_change', function ($userId) {
+    $pendingEmail = \get_user_meta($userId, 'pending_email', true);
+
+    if ($pendingEmail && $pendingEmail != '') {
+        $updateUser = \wp_update_user([
+            'ID'         => $userId,
+            'user_email' => $pendingEmail,
+        ]);
+        return $updateUser ? true : false;
+    } else {
+        return false;
+    }
+});
+```
+
+---
+
+## Notes
+
+-   This should typically be called after verifying a token via `VerificationHelper`.
+-   You may optionally delete the `pending_email` meta afterward for cleanliness.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

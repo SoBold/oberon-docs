@@ -1,0 +1,82 @@
+# `obrn_available_payment_methods` Filter
+
+This filter allows to dynamically control which payment methods are available during the checkout or account setup flow. The availability is based on site configuration stored via the `MetaHelper` class and can be extended or overridden as needed.
+
+---
+
+## Purpose
+
+Determines and returns the available payment gateways (e.g., Stripe, PayPal, Offline) based on stored gateway settings.
+
+---
+
+## Default Behavior
+
+The filter retrieves gateway availability from saved site meta via:
+
+```php
+$gateways = json_decode($metaHelper->get('gateways'), true);
+```
+
+It then parses that to check which gateways are enabled:
+
+```php
+$args = wp_parse_args($args, [
+  'stripe'  => true|false,
+  'paypal'  => true|false,
+  'offline' => true|false,
+]);
+```
+
+---
+
+## Example Output
+
+When used, the filter might return:
+
+```php
+[
+  'stripe'  => true,
+  'paypal'  => false,
+  'offline' => true,
+]
+```
+
+---
+
+## Usage Example
+
+Override available payment methods manually:
+
+```php
+add_filter('obrn_available_payment_methods', function ($methods) {
+    $methods['paypal'] = false;
+    $methods['stripe'] = true;
+    $methods['offline'] = false;
+    return $methods;
+});
+```
+
+---
+
+## Use Cases
+
+-   Disabling a specific gateway regardless of saved settings.
+-   Dynamically toggling gateway availability by user role or subscription type.
+-   Logging or debugging payment gateway state before display.
+
+---
+
+## Notes
+
+-   **Hook name:** `obrn_available_payment_methods`
+-   **Returns:** Associative array of gateway names mapped to booleans
+-   **Source:** Uses `MetaHelper::get('gateways')`
+
+---
+
+## File Reference
+
+```php
+/src/inc/filters/available-payment-methods.php
+```

@@ -1,0 +1,60 @@
+# `account_change_password_content` Filter
+
+This filter allows us to customize the labels and placeholder text used in the "Change Password" form on the user account page.
+
+It provides an associative array of configurable values that define the appearance and wording of form fields.
+
+---
+
+## Default Values
+
+When the filter is applied, the following default values are used unless overridden:
+
+```php
+[
+  'current_password_label'       => __('Enter current password'),
+  'current_password_placeholder' => __('Current password'),
+  'new_password_label'           => __('Enter password'),
+  'new_password_placeholder'     => __('New password'),
+  'confirm_password_label'       => __('Confirm new password'),
+  'confirm_password_placeholder' => __('Confirm new password'),
+  'button_text'                  => __('Change password')
+]
+```
+
+---
+
+## Usage Example
+
+To override one or more of the default values, use this filter in theme or plugin:
+
+```php
+add_filter('account_change_password_content', function ($args) {
+    $args['button_text'] = __('Update Password');
+    $args['new_password_label'] = __('Choose a new password');
+
+    return $args;
+});
+```
+
+---
+
+## When It's Triggered
+
+This filter is typically applied just before rendering the **Change Password** form in the frontend account UI. It's meant to localize or customize field labels and messages without modifying the template file directly.
+
+---
+
+## Notes
+
+-   Ideal for internationalization or branding.
+-   Ensures consistent UX text across different themes or child themes.
+-   Hook name: `account_change_password_content`
+
+---
+
+## File Reference
+
+```php
+/src/inc/filters/account-change-password-content.php
+```

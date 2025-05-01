@@ -1,0 +1,61 @@
+# Country Codes Reference
+
+This dataset defines ISO 3166-1 alpha-2 country codes and their corresponding country names used throughout the Oberon plugin  (e.g., for user profiles, checkout billing, localization helpers, etc.).
+
+---
+
+## Format
+
+Each country is represented as a key-value pair:
+
+```json
+{
+  "US": "United States",
+  "GB": "United Kingdom",
+  "DE": "Germany",
+  "IN": "India",
+  ...
+}
+```
+
+---
+
+## Usage
+
+### JavaScript / TypeScript Example
+
+```ts
+import countries from './countries.json';
+
+function getCountryName(code) {
+    return countries[code] || 'Unknown';
+}
+```
+
+### PHP Example
+
+```php
+$countries = json_decode(file_get_contents(__DIR__ . '/countries.json'), true);
+echo $countries['US']; // United States
+```
+
+---
+
+## Preview (Partial)
+
+| Code | Country Name   |
+| ---- | -------------- |
+| US   | United States  |
+| GB   | United Kingdom |
+| DE   | Germany        |
+| IN   | India          |
+| JP   | Japan          |
+| ...  | ...            |
+
+---
+
+## Notes
+
+-   Stored in `/src/inc/config/countries.json`
+-   Used by `L10nHelper`, form dropdowns, and tax logic.
+-   HTML entities like `&amp;` may need decoding depending on usage context.

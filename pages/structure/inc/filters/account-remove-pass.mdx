@@ -1,0 +1,55 @@
+# `account_remove_password_content` Filter
+
+This filter allows us to customize the labels, placeholders, and button text shown in the "Remove Password" section of the account interface.
+
+It is useful for tailoring user-facing copy for better clarity, localization.
+
+---
+
+## Default Values
+
+These are the default values applied to the form unless overridden via the filter:
+
+```php
+[
+  'password_label'       => __('Enter password'),
+  'password_placeholder' => __('Current password'),
+  'button_text'          => __('Remove password')
+]
+```
+
+---
+
+## Usage Example
+
+We can customize these labels and button text with a simple filter like this:
+
+```php
+add_filter('account_remove_password_content', function ($args) {
+    $args['button_text'] = __('Disable Password');
+    $args['password_label'] = __('Type your password to proceed');
+
+    return $args;
+});
+```
+
+---
+
+## When It's Triggered
+
+This filter is executed when rendering the **Remove Password** form on the frontend account page. It ensures flexibility in modifying UI strings without editing the view templates directly.
+
+---
+
+## Notes
+
+-   Hook name: `account_remove_password_content`
+-   Supports full internationalization.
+
+---
+
+## File Reference
+
+```php
+src/inc/filters/account-remove-password-content.php
+```
