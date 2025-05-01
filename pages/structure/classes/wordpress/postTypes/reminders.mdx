@@ -1,0 +1,146 @@
+# Reminders Custom Post Type
+
+## Overview
+
+The `Reminders` class registers and manages the custom post type for scheduled reminders in the Oberon plugin. These reminders are configured to be triggered based on subscription events or intervals and can send templated emails to users, admins, or specific memberships.
+
+---
+
+## Class: `Reminders`
+
+Defines the structure and behavior of the `reminder` post type, including labels, arguments, metadata keys, and admin UI behavior.
+
+---
+
+### Usage
+
+Instantiated during plugin bootstrap:
+
+```php
+new \Oberon\WordPress\PostTypes\Reminders();
+```
+
+---
+
+## Properties
+
+### `post_type` (`PostTypes`)
+
+Reference to the parent post type class for accessing shared configuration.
+
+### `post_type_slug` (`string`)
+
+Slug for the post type (`reminder`).
+
+### `text_domain` (`string`)
+
+Translation text domain (`oberon_reminder`).
+
+### `labels` (`array<string, string>`)
+
+WordPress labels for the UI (e.g. "Add New Reminder").
+
+### `args` (`array`)
+
+Arguments passed to `register_post_type`.
+
+### `meta_keys` (`array<string, string>`)
+
+Keys for custom metadata fields stored with each reminder.
+
+```php
+[
+  'trigger_length'                      => 'int',
+  'trigger_interval'                    => 'string',
+  'trigger'                             => 'string',
+  'reminderEmailToUser'                 => 'boolean',
+  'reminderEmailUserSubject'           => 'string',
+  'reminderEmailToUserTemplate'        => 'string',
+  'reminderEmailToAdmin'               => 'boolean',
+  'reminderEmailAdminSubject'          => 'string',
+  'reminderEmailToAdminTemplate'       => 'string',
+  'reminderEmailToSpecificMemberships' => 'boolean',
+  'memberships'                         => 'array'
+]
+```
+
+---
+
+## Registered WordPress Hooks
+
+| Hook             | Method                | Description                          |
+| ---------------- | --------------------- | ------------------------------------ |
+| `init`           | `addPostType()`       | Registers the custom post type       |
+| `add_meta_boxes` | `registerMetaBoxes()` | Adds UI panels for post editor       |
+| `save_post`      | `savePostData()`      | Saves post meta when post is updated |
+
+---
+
+## Method: `addPostType(): void`
+
+Registers the custom post type using `register_post_type` with merged default and custom arguments.
+
+---
+
+## Method: `registerMetaBoxes(): void`
+
+Adds two metaboxes to the Reminder post editor:
+
+-   **Reminder Trigger**: Configures when the reminder should trigger
+-   **Reminder Email**: Sets up who gets the email, the content, and the subject
+
+---
+
+## Method: `savePostData(int $post_id): void`
+
+Handles saving all configured `meta_keys` during post save. Includes:
+
+-   Checkbox handling for user/admin membership email toggles
+-   Empty fallbacks for serialized arrays (`memberships`)
+-   Proper autosave and permission checks
+
+---
+
+## Method: `reminderTrigger(): void`
+
+Renders the **Reminder Trigger** metabox:
+
+```php
+Render::view('admin/edit/metaboxes/cpt-reminders-trigger', [$this])
+```
+
+---
+
+## Method: `reminderEmail(): void`
+
+Renders the **Reminder Email** metabox:
+
+```php
+Render::view('admin/edit/metaboxes/cpt-reminders-email', [$this])
+```
+
+---
+
+## Example
+
+```php
+$reminders = get_posts([
+  'post_type' => 'reminder',
+  'numberposts' => -1,
+]);
+```
+
+---
+
+## Notes
+
+-   Ensure templates referenced in `reminderEmail()` and `reminderTrigger()` exist to avoid runtime errors.
+-   Consider sanitizing inputs during `savePostData()` for increased security in production.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
+
+---

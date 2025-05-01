@@ -1,0 +1,117 @@
+# Post Types Utility
+
+## Overview
+
+The `PostTypes` class provides helper methods for interacting with custom post types in the Oberon plugin—specifically `membership` and `group`. It includes logic to manage metadata, retrieve lists of published items, and define default post type arguments.
+
+### Usage
+
+This class can be used when working with custom post type data in the backend, especially for building interfaces or performing lookups.
+
+```php
+use Oberon\WordPress\PostTypes;
+
+$postTypes = new PostTypes();
+
+$meta = $postTypes->loadMeta(['custom_key' => 'string']);
+$groups = $postTypes->getAllGroups();
+$memberships = PostTypes::getAllMembership();
+```
+
+---
+
+## Class: `PostTypes`
+
+Provides methods and configuration for managing custom post types and retrieving their metadata and content.
+
+---
+
+### Property: `default` (`array`)
+
+Default arguments used when registering post types in the Oberon plugin.
+
+#### Structure:
+
+```php
+[
+  'public'              => false,
+  'exclude_from_search' => true,
+  'publicly_queryable'  => false,
+  'show_ui'             => true,
+  'show_in_menu'        => 'Oberon',
+  'show_in_nav_menus'   => false,
+  'show_in_admin'       => true,
+  'show_in_rest'        => false,
+  'supports'            => ['title'],
+];
+```
+
+---
+
+### Method: `loadMeta(array $meta_keys): array|bool`
+
+Loads metadata values for a post in the post editor screen.
+
+#### Parameters:
+
+-   **`$meta_keys`** (`array<string, string>`): An associative array of meta keys and their expected data types (e.g., `['key_name' => 'string']`).
+
+#### Returns:
+
+-   **`array`** – Associative array of sanitized key-value meta pairs.
+-   **`false`** – If not accessed within the post editor screen or no post ID is found.
+
+#### Example:
+
+```php
+$meta = $postTypes->loadMeta([
+  'duration' => 'int',
+  'price' => 'float'
+]);
+```
+
+---
+
+### Static Method: `getAllMembership(): array`
+
+Returns an associative array of published memberships that are marked as `"active"` via their `membership_type` meta key.
+
+#### Returns:
+
+-   **`array<int, string>`** – `[ post_id => post_title ]`
+
+#### Example:
+
+```php
+$activeMemberships = PostTypes::getAllMembership();
+```
+
+---
+
+### Method: `getAllGroups(): array`
+
+Returns all published `group` post type entries.
+
+#### Returns:
+
+-   **`array<int, \WP_Post>`** – List of `WP_Post` objects.
+
+#### Example:
+
+```php
+$groups = $postTypes->getAllGroups();
+```
+
+---
+
+## Notes
+
+-   The `loadMeta()` method is designed to be used in the post edit screen (`post.php`).
+-   Post meta values are automatically cast to the defined types using ` ()`.
+-   This class does not register post types directly—it assumes they are registered elsewhere in the plugin.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

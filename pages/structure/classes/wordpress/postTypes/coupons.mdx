@@ -1,0 +1,125 @@
+# Coupons Custom Post Type
+
+## Overview
+
+The `Coupons` class defines and manages the custom post type for coupons within the Oberon plugin. It extends the base `PostTypes` class to inherit default behaviors and meta management functionality, while customizing labels, fields, and WordPress admin behavior for the `coupon` post type.
+
+### Usage
+
+This class is instantiated automatically when registering the plugin’s custom post types:
+
+```php
+new \Oberon\WordPress\PostTypes\Coupons();
+```
+
+It registers the `coupon` post type, defines metadata fields, and integrates with the WordPress admin dashboard.
+
+---
+
+## Class: `Coupons`
+
+Extends `PostTypes` to manage `coupon` post type registration, meta fields, and admin UI behavior.
+
+---
+
+### Properties
+
+#### `post_type` (`PostTypes`)
+
+Instance of the parent `PostTypes` class for default arguments and helper methods.
+
+#### `post_type_slug` (`string`)
+
+Slug of the custom post type (`coupon`).
+
+#### `text_domain` (`string`)
+
+Text domain for translation (`oberon_coupon`).
+
+#### `labels` (`array<string, string>`)
+
+Custom post type labels used in the WordPress admin menu.
+
+#### `args` (`array<string, mixed>`)
+
+Arguments passed to `register_post_type`, merged with the default parent class configuration.
+
+#### `meta_keys` (`static array<string, string>`)
+
+Meta keys and their expected types for the `coupon` post type.
+
+```php
+[
+  'discountType'      => 'string',
+  'discount'          => 'int',
+  'usageCount'        => 'int',
+  'couponDescription' => 'string',
+  'couponStart'       => 'string',
+  'couponEnd'         => 'string',
+  'couponMemberships' => 'array',
+  'couponsUserIds'    => 'array'
+]
+```
+
+---
+
+## WordPress Hooks Registered
+
+| Hook                       | Callback Method        | Purpose                               |
+| -------------------------- | ---------------------- | ------------------------------------- |
+| `init`                     | `addPostType()`        | Registers the `coupon` post type      |
+| `add_meta_boxes`           | `registerMetaBoxes()`  | Adds a meta box for coupon settings   |
+| `save_post`                | `savePostData()`       | Saves post meta data on save          |
+| `post_row_actions`         | `removeTrashActions()` | Removes trash option from row actions |
+| `bulk_actions-edit-coupon` | `removeTrashActions()` | Removes bulk trash for coupons        |
+
+---
+
+## Method: `addPostType(): void`
+
+Registers the `coupon` custom post type with arguments merged from the parent `PostTypes` class.
+
+---
+
+## Method: `registerMetaBoxes(): void`
+
+Adds the "Coupon Options" meta box in the post editor screen.
+
+---
+
+## Method: `renderOptions(): void`
+
+Renders the `Coupon Options` meta box using a reusable template view:
+
+```php
+echo \Oberon\Utilities\Render::view('admin/edit/metaboxes/cpt-coupons-options', [$this]);
+```
+
+---
+
+## Method: `savePostData(int $post_id): void`
+
+Saves all defined meta fields to the database when a coupon is saved.
+
+-   Iterates through `self::$meta_keys`
+-   Saves the value using `update_post_meta`
+
+---
+
+## Method: `removeTrashActions(array $actions): array`
+
+Removes the "Trash" option from row actions and bulk actions in the post list for the `coupon` post type.
+
+---
+
+## Notes
+
+-   This class centralizes all logic related to `coupon` post type registration and handling.
+-   Relies on a structured array of meta keys for data sanitization and consistency.
+-   Integrates with reusable admin UI via `Render::view()`.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

@@ -1,0 +1,136 @@
+# Activation Handler
+
+## Overview
+
+The `Activation` class is responsible for setting up essential database tables when the Oberon plugin is activated. It ensures the required tables for subscriptions, metadata, transactions, tokens, and child account requests are created using WordPress's `dbDelta()` function.
+
+### Usage
+
+This class is hooked into plugin’s activation.
+
+```php
+register_activation_hook(__FILE__, ['\Oberon\WordPress\Activation', 'run']);
+```
+
+## Class: `Activation`
+
+Handles the creation of plugin-specific database tables during activation.
+
+---
+
+### Static Method: `run(): void`
+
+Executes all database setup tasks needed by the Oberon plugin.
+
+#### Behavior:
+
+1. Loads `dbDelta()` from the WordPress core.
+2. Creates the following tables (if not already present):
+    - `obrn_subscriptions`
+    - `obrn_subscription_meta`
+    - `obrn_transactions`
+    - `obrn_tokens`
+    - `obrn_child_account_requests`
+
+---
+
+## Tables Created
+
+### `obrn_subscriptions`
+
+Stores subscription information for members.
+
+| Column          | Type      | Description                  |
+| --------------- | --------- | ---------------------------- |
+| `id`            | INT       | Primary key                  |
+| `user_id`       | INT       | Associated WordPress user ID |
+| `membership_id` | INT       | Linked membership plan ID    |
+| `period`        | INT       | Duration (e.g. 1, 12)        |
+| `period_type`   | VARCHAR   | e.g. 'month', 'year'         |
+| `renew`         | BOOLEAN   | Auto-renewal flag            |
+| `status`        | VARCHAR   | Status of the subscription   |
+| `created_at`    | TIMESTAMP | Timestamp of creation        |
+
+---
+
+### `obrn_subscription_meta`
+
+Stores key-value metadata for subscriptions.
+
+| Column            | Type    | Description                  |
+| ----------------- | ------- | ---------------------------- |
+| `id`              | INT     | Primary key                  |
+| `subscription_id` | INT     | Foreign key to subscriptions |
+| `meta_key`        | VARCHAR | Metadata key                 |
+| `meta_value`      | VARCHAR | Metadata value               |
+
+---
+
+### `obrn_transactions`
+
+Stores payment-related records.
+
+| Column            | Type      | Description                       |
+| ----------------- | --------- | --------------------------------- |
+| `id`              | INT       | Primary key                       |
+| `subscription_id` | INT       | Associated subscription ID        |
+| `membership_id`   | INT       | Membership at time of transaction |
+| `coupon_id`       | INT       | Linked coupon ID (nullable)       |
+| `price`           | FLOAT     | Base price                        |
+| `total`           | FLOAT     | Final total after discounts/tax   |
+| `tax_amount`      | FLOAT     | Tax amount applied                |
+| `tax_rate`        | FLOAT     | Tax rate used                     |
+| `tax_class`       | VARCHAR   | Optional tax class                |
+| `gateway_type`    | VARCHAR   | Payment method                    |
+| `prorated`        | BOOLEAN   | Whether it was prorated           |
+| `type`            | VARCHAR   | Transaction type (e.g., 'renew')  |
+| `renew`           | BOOLEAN   | Whether this is a renewal         |
+| `payment_id`      | VARCHAR   | Gateway-specific payment ID       |
+| `status`          | VARCHAR   | Transaction status                |
+| `created_at`      | TIMESTAMP | Creation time                     |
+| `expires_at`      | TIMESTAMP | Optional expiry time              |
+
+---
+
+### `obrn_tokens`
+
+Stores temporary tokens used for login, email verification, etc.
+
+| Column       | Type      | Description                     |
+| ------------ | --------- | ------------------------------- |
+| `id`         | INT       | Primary key                     |
+| `user_id`    | INT       | Linked user ID (nullable)       |
+| `token`      | VARCHAR   | Verification or auth token      |
+| `token_type` | INT       | Type (e.g., 1 = hash, 2 = code) |
+| `token_data` | VARCHAR   | Optional token metadata         |
+| `action`     | VARCHAR   | Action the token applies to     |
+| `created_at` | TIMESTAMP | Creation timestamp              |
+| `expires_at` | TIMESTAMP | Expiration timestamp            |
+
+---
+
+### `obrn_child_account_requests`
+
+Stores pending child account invitations.
+
+| Column            | Type      | Description              |
+| ----------------- | --------- | ------------------------ |
+| `id`              | INT       | Primary key              |
+| `user_id`         | INT       | Parent user ID           |
+| `email_address`   | VARCHAR   | Child's invitation email |
+| `subscription_id` | INT       | Associated subscription  |
+| `created_at`      | TIMESTAMP | Timestamp of the request |
+
+---
+
+## Notes
+
+-   All tables use `$wpdb->prefix`.
+-   `dbDelta()` is used to ensure compatibility and upgradability of schema definitions.
+-   Each table is only created if it does not already exist.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

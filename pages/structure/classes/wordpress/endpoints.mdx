@@ -1,0 +1,112 @@
+# REST API Endpoints
+
+## Overview
+
+The `Endpoints` class registers and manages all REST API routes for the Oberon plugin under the `obrn/v1` namespace. It maps route paths and HTTP methods to a shared dynamic handler (`apiEndpoint`) and includes custom permission callbacks based on user roles and nonces.
+
+### Usage
+
+This class is initialized during plugin activation/load.
+
+```php
+new \Oberon\WordPress\Endpoints();
+```
+
+All routes are defined within the `registerEndpoints()` method and routed dynamically through the `apiEndpoint()` handler.
+
+---
+
+## Class: `Endpoints`
+
+Registers REST API routes for Oberon and handles request routing and permissions.
+
+---
+
+### Property: `$namespace` (`string`)
+
+The REST API namespace, set to `obrn/v1`.
+
+---
+
+### Constructor: `__construct()`
+
+Registers the plugin's API endpoints using the `rest_api_init` WordPress action.
+
+---
+
+### Method: `registerEndpoints(): void`
+
+Registers all API routes using `register_rest_route`.
+
+#### Route Categories:
+
+-   **Members**
+    -   `GET /members`
+-   **Subscriptions**
+    -   `GET`, `POST`, `DELETE /subscriptions`
+-   **Transactions**
+    -   `POST`, `DELETE /transactions`
+-   **Memberships**
+    -   `GET /memberships`
+-   **Settings**
+    -   `POST /settings/account`, `/settings/fields`, `/settings/gateway`, `/settings/gateway/enable`
+-   **Authentication**
+    -   `POST /auth/login`, `/auth/signup`, `/auth/forgot`, `/auth/reset`
+    -   `POST /auth/account/profile`, `/auth/signup/start`, `/auth/signup/complete`
+    -   `GET /auth/signup/check-membership-price`, `/auth/signup/check-coupon`, `/auth/signup/change/check`, `/auth/signup/change/price`
+    -   `POST /auth/signup/change`, `/auth/signup/change/payment`
+    -   `POST|PUT /auth/verify`
+    -   `POST|PUT|DELETE /auth/account/password`
+-   **Stripe**
+    -   `POST /gateway/stripe/create-payment-intent`
+
+---
+
+### Method: `checkPermissions($request): bool`
+
+Checks general user permissions by validating the `x_wp_nonce` and ensuring the user is logged in.
+
+---
+
+### Method: `checkAdminPermissions($request): bool`
+
+Validates the nonce and checks if the current user is an `administrator` or `editor`.
+
+---
+
+### Method: `noPrivCheckPermissions(): bool`
+
+Validates the `x_wp_nonce` for unauthenticated users (used for login, signup, etc.).
+
+---
+
+### Method: `apiEndpoint(\WP_REST_Request $request): \WP_REST_Response`
+
+Routes the API request to a PHP file based on the request route and method.
+
+#### Behavior:
+
+-   Builds path from route (e.g. `/obrn/auth/login` → `/src/api/auth/login/POST.php`)
+-   Includes the corresponding file if it exists
+-   Returns 404 if no matching handler is found
+
+#### Example:
+
+```php
+// Handles POST to /obrn/v1/auth/login
+$apiPath = OBRN_BASE_PATH . '/src/api/auth/login/POST.php';
+```
+
+---
+
+## Notes
+
+-   Route security relies on `wp_verify_nonce()` and current user roles.
+-   File-based routing allows modular and testable endpoint implementations.
+-   Handles both authenticated and unauthenticated (e.g., login/signup) workflows.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
