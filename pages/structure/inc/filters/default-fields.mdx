@@ -1,0 +1,73 @@
+# `obrn_default_fields` Filter
+
+This filter allows to modify or extend the default user fields used during account setup or user onboarding in the Oberon plugin.
+
+---
+
+## Purpose
+
+Defines the structure and metadata for all default account form fields, including name, email, address, and country selector. Also merges in custom fields via the `Oberon\Utilities\Fields::customFields()` method.
+
+---
+
+## Default Fields
+
+By default, the following fields are provided:
+
+| Field Key              | Title          | Type     | Required | Placeholder      |
+| ---------------------- | -------------- | -------- | -------- | ---------------- |
+| `user_firstname`       | First name     | text     | true     | Enter first name |
+| `user_lastname`        | Last name      | text     | true     | Enter last name  |
+| `user_email`           | Email          | email    | true     | Enter email      |
+| `obrn-address-street`  | Street address | text     | false    | Street address   |
+| `obrn-address-city`    | City           | text     | false    | City             |
+| `obrn-address-zip`     | ZIP/Postcode   | text     | false    | ZIP or Postcode  |
+| `obrn-address-country` | Country        | dropdown | false    | Country          |
+
+The country dropdown options are loaded from:
+
+```
+/src/inc/config/countries.json
+```
+
+---
+
+## Example Usage
+
+Override or extend default fields:
+
+```php
+add_filter('obrn_default_fields', function ($fields) {
+    $fields['user_phone'] = [
+        'title'       => __('Phone Number'),
+        'required'    => false,
+        'type'        => 'text',
+        'placeholder' => __('Enter your phone number'),
+    ];
+    return $fields;
+});
+```
+
+---
+
+## Notes
+
+-   **Hook name:** `obrn_default_fields`
+-   **Returns:** Associative array of field configurations
+-   **File Source:** `src/inc/filters/account/default-fields.php`
+-   **Uses:** `Oberon\Utilities\Fields::customFields()` for additional fields
+
+---
+
+## Related
+
+-   `obrn_account_setup_fields`
+-   `obrn_available_payment_methods`
+
+---
+
+## File Reference
+
+```php
+/src/inc/filters/default-fields.php
+```

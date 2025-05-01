@@ -1,0 +1,70 @@
+# `obrn_account_setup_fields` Filter
+
+This filter allows to customize the fields displayed during **account setup** for a user within the Oberon plugin. It defines sections such as personal information and address fields, with support for dynamic labeling and extensions.
+
+---
+
+## Default Field Structure
+
+The default field layout provided by the filter is:
+
+```php
+[
+  'personal_information' => [
+    'title'  => __('Personal information'),
+    'fields' => [
+      'user_firstname' => __('First Name'),
+      'user_lastname'  => __('Last Name'),
+      'user_phone'     => __('Phone number'),
+    ],
+    'address' => [
+      'title'  => __('Address'),
+      'fields' => [
+        'obrn-address-street'  => __('Street Address'),
+        'obrn-address-city'    => __('City'),
+        'obrn-address-zip'     => __('ZIP or Postcode'),
+        'obrn-address-country' => __('Country')
+      ]
+    ]
+  ]
+]
+```
+
+---
+
+## Usage Example
+
+We can customize or extend the fields by hooking into the filter:
+
+```php
+add_filter('obrn_account_setup_fields', function ($fields) {
+    $fields['personal_information']['fields']['user_middle_name'] = __('Middle Name');
+    $fields['personal_information']['address']['fields']['obrn-address-state'] = __('State/Province');
+    return $fields;
+});
+```
+
+---
+
+## Use Cases
+
+-   Add or remove fields during account setup
+-   Localize field labels
+-   Reorganize personal or address information
+-   Predefine structured sections for additional information
+
+---
+
+## Notes
+
+-   **Hook name:** `obrn_account_setup_fields`
+-   **Structure:** Nested arrays representing field groups
+-   **Extendability:** Fully extendable via PHP filters
+
+---
+
+## File Reference
+
+```php
+/src/inc/filters/account-setup-fields.php
+```

@@ -1,0 +1,57 @@
+# `account_set_password_content` Filter
+
+This filter allows customization of the labels, placeholders, and button text used in the **Set Password** section of the account interface.
+
+It's useful when implementing a custom UI, applying branding, or localizing text for users setting a password for the first time.
+
+---
+
+## Default Values
+
+Below are the default values applied unless overridden via the filter:
+
+```php
+[
+  'new_password_label'           => __('Enter password'),
+  'new_password_placeholder'     => __('New password'),
+  'confirm_password_label'       => __('Confirm new password'),
+  'confirm_password_placeholder' => __('New password'),
+  'button_text'                  => __('Set a password')
+]
+```
+
+---
+
+## Usage Example
+
+We can override the defaults by applying your own filter:
+
+```php
+add_filter('account_set_password_content', function ($args) {
+    $args['button_text'] = __('Create Password');
+    $args['new_password_label'] = __('Choose a secure password');
+    return $args;
+});
+```
+
+---
+
+## When It's Triggered
+
+This filter is called when rendering the **Set Password** form (typically for users who registered without one).
+
+---
+
+## Notes
+
+-   **Hook name:** `account_set_password_content`
+-   Fully translation-ready (`__()` used).
+-   Designed for customization without needing to override templates.
+
+---
+
+## File Reference
+
+```php
+/src/inc/filters/account-set-password-content.php
+```

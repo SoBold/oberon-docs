@@ -1,0 +1,102 @@
+# Currency Metadata Reference
+
+This dataset provides structured information for a wide range of world currencies, including their ISO 4217 codes, display symbols, plural names, decimal precision, and formatting rules. It is used throughout the Oberon plugin for financial processing, internationalization (i18n), and UI rendering.
+
+---
+
+## Format
+
+Each currency entry is defined by its ISO code as the key and includes:
+
+-   `symbol`: Symbol for display (e.g., `$`, `€`)
+-   `name`: Full currency name
+-   `symbol_native`: Symbol used natively in local formats
+-   `decimal_digits`: Number of decimal places (e.g., `2` for USD, `0` for JPY)
+-   `rounding`: Rounding increment (e.g., `0.05` for CHF)
+-   `code`: Currency code (redundant key)
+-   `name_plural`: Plural form for display
+
+### Example
+
+```json
+{
+    "USD": {
+        "symbol": "$",
+        "name": "US Dollar",
+        "symbol_native": "$",
+        "decimal_digits": 2,
+        "rounding": 0,
+        "code": "USD",
+        "name_plural": "US dollars"
+    }
+}
+```
+
+---
+
+## Usage
+
+### JavaScript Example
+
+```ts
+import currencies from './currencies.json';
+
+function formatAmount(code, amount) {
+    const c = currencies[code];
+    return `${c.symbol} ${amount.toFixed(c.decimal_digits)}`;
+}
+```
+
+### PHP Example
+
+```php
+$currencies = json_decode(file_get_contents(__DIR__ . '/currencies.json'), true);
+$eur = $currencies['EUR'];
+echo "{$eur['symbol']} 10.00"; // € 10.00
+```
+
+---
+
+## Preview Table (Sample)
+
+| Code | Symbol | Name          | Decimals | Rounding |
+| ---- | ------ | ------------- | -------- | -------- |
+| USD  | $      | US Dollar     | 2        | 0        |
+| EUR  | €      | Euro          | 2        | 0        |
+| JPY  | ¥      | Japanese Yen  | 0        | 0        |
+| CHF  | CHF    | Swiss Franc   | 2        | 0.05     |
+| GBP  | £      | British Pound | 2        | 0        |
+
+---
+
+## Notes
+
+-   The data is typically loaded from `currencies.json` and cached at runtime.
+-   `symbol_native` is useful for language-specific formatting.
+-   `rounding` is important for payment gateways (e.g., Stripe, PayPal) that enforce rounding for some currencies.
+-   Some symbols are the same (`$`) for different currencies, so `code` and `name` should be used for disambiguation.
+
+---
+
+## File Location
+
+This file is found at:
+
+```
+/src/inc/config/currencies.json
+```
+
+It may be referenced by:
+
+-   Checkout and billing components
+-   Currency dropdowns
+-   Locale formatters
+
+---
+
+## Updating
+
+To update the list, refer to:
+
+-   [ISO 4217 Registry](https://www.iso.org/iso-4217-currency-codes.html)
+-   Local bank APIs or trusted exchange sources
