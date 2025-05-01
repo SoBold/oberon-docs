@@ -1,0 +1,117 @@
+# Admin Interface Handler
+
+## Overview
+
+The `Admin` class registers admin pages, enqueues scripts, and renders UI views for the Oberon WordPress plugin. It integrates with the WordPress admin interface using core hooks such as `admin_menu`, `admin_head`, and `show_user_profile`.
+
+### Usage
+
+This class is automatically instantiated during plugin bootstrapping to register all admin menus and functionality:
+
+```php
+new \Oberon\WordPress\Admin();
+```
+
+## Class: `Admin`
+
+Handles all WordPress admin interactions for the Oberon plugin.
+
+---
+
+### Constructor: `__construct()`
+
+Registers the following hooks and filters:
+
+-   `admin_menu` → `registerAdminPages()`
+-   `admin_head` → `registerAdminScripts()`
+-   `show_user_profile` → `createMembershipButtons()`
+-   `parent_file` (filter) → `changeActiveAdminMenu()`
+
+---
+
+### Method: `registerAdminScripts(): void`
+
+Enqueues admin-specific styles and scripts, depending on the environment.
+
+#### Behavior:
+
+-   In development mode (`OBRN_ENV == 'development'`), loads assets from localhost.
+-   In production mode, loads assets from the plugin’s `/dist/` directory.
+-   Passes config values to JS via `wp_localize_script()`:
+    -   `nonce`
+    -   `apiUrl`
+    -   `adminUrl`
+    -   `stripePublicKey`
+
+---
+
+### Method: `registerAdminPages(): void`
+
+Registers all primary and sub-menu admin pages used by the plugin.
+
+#### Menu Structure:
+
+-   **Main Menu**:
+
+    -   Oberon (custom SVG icon)
+
+-   **Submenus**:
+    -   Dashboard
+    -   Memberships (`post_type=membership`)
+    -   Coupons (`post_type=coupon`)
+    -   Groups (`post_type=group`)
+    -   Reminders (`post_type=reminder`)
+    -   Subscriptions (`oberon-subscriptions`)
+    -   Transactions (`oberon-transactions`)
+    -   Members (`oberon-members`)
+    -   Settings (`oberon-settings`)
+
+#### Additional Submenu Pages (Editor UIs):
+
+-   Add/Edit Membership: `oberon-membership`
+-   Add/Edit Group: `oberon-group`
+-   Add/Edit Subscription: `oberon-subscription`
+-   Add/Edit Transaction: `oberon-transaction`
+
+Each custom submenu renders a corresponding PHP view from `/src/views/admin/`.
+
+---
+
+### Method: `changeActiveAdminMenu(string $parent_file): string`
+
+Corrects the active admin menu highlight when editing nested resources.
+
+#### Behavior:
+
+Modifies `$plugin_page` to ensure the correct parent menu is active for:
+
+-   `oberon-membership`
+-   `oberon-group`
+-   `oberon-subscription`
+-   `oberon-transaction`
+
+---
+
+### Method: `createMembershipButtons(\WP_User $user): void`
+
+Creates the membership and transaction shortcodes on profile page.
+
+#### Uses:
+
+```php
+Render::component('user-profile', ['user' => $user]);
+```
+
+---
+
+## Notes
+
+-   Uses `Render::view()` and `Render::component()` to decouple HTML rendering from logic.
+-   Icon is base64-encoded SVG embedded directly in the menu.
+-   Relies on WordPress roles and capabilities (e.g., `manage_options`) for access control.
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

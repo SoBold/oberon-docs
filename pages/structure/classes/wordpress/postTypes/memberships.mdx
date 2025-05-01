@@ -1,0 +1,139 @@
+# Memberships Custom Post Type
+
+## Overview
+
+The `Memberships` class defines and registers the `membership` custom post type for the Oberon plugin. It extends the core `PostTypes` class and manages metadata, admin metaboxes, and UI behavior for WordPress. Memberships support recurring plans, custom rules, pricing, and child account control.
+
+### Usage
+
+This class is automatically instantiated during plugin execution:
+
+```php
+new \Oberon\WordPress\PostTypes\Memberships();
+```
+
+---
+
+## Class: `Memberships`
+
+Extends the base `PostTypes` class and encapsulates functionality for the `membership` post type.
+
+---
+
+### Properties
+
+#### `post_type` (`PostTypes`)
+
+Parent class instance to access default post type settings.
+
+#### `post_type_slug` (`string`)
+
+Slug for the custom post type (`membership`).
+
+#### `text_domain` (`string`)
+
+Text domain for translations (`oberon_membership`).
+
+#### `labels` (`array<string, string>`)
+
+WordPress UI labels for the `membership` CPT.
+
+#### `args` (`array<string, mixed>`)
+
+Arguments passed to `register_post_type`.
+
+#### `meta_keys` (`static array<string, string>`)
+
+List of expected custom fields and their data types:
+
+```php
+[
+  'billing_type'          => 'string',
+  'price'                 => 'float',
+  'membership_type'       => 'string',
+  'period'                => 'int',
+  'period_type'           => 'string',
+  'rules'                 => 'array',
+  'active_fields'         => 'array',
+  'enable_child_accounts' => 'boolean',
+  'max_child_accounts'    => 'int'
+]
+```
+
+---
+
+## WordPress Hooks Registered
+
+| Hook                           | Callback Method        | Purpose                                   |
+| ------------------------------ | ---------------------- | ----------------------------------------- |
+| `init`                         | `addPostType()`        | Registers the custom post type            |
+| `add_meta_boxes`               | `registerMetaBoxes()`  | Adds UI sections in the post editor       |
+| `save_post`                    | `savePostData()`       | Saves custom field values to the database |
+| `post_row_actions`             | `removeTrashActions()` | Removes the "Trash" action                |
+| `bulk_actions-edit-membership` | `removeTrashActions()` | Removes bulk trash for memberships        |
+
+---
+
+## Method: `addPostType(): void`
+
+Registers the `membership` custom post type with WordPress using `register_post_type()`.
+
+---
+
+## Method: `registerMetaBoxes(): void`
+
+Adds three metaboxes to the editor UI:
+
+-   `Membership Terms`: Shown via `renderTerms()`
+-   `Membership Rules`: Shown via `renderRules()`
+-   `Membership Options`: Shown via `renderOption()`
+
+---
+
+## Method: `savePostData(int $post_id): void`
+
+-   Saves each field listed in `meta_keys` from the `$_POST` request.
+-   Ensures checkboxes like `enable_child_accounts` are stored even if not set.
+-   Uses `update_post_meta()` for saving.
+
+---
+
+## Method: `removeTrashActions(array $actions): array`
+
+Removes the “Trash” option from the row and bulk action menus for the `membership` CPT.
+
+---
+
+## Method: `renderTerms(): void`
+
+Renders the **Membership Terms** UI via:
+
+```php
+Render::view('admin/edit/metaboxes/membership/cpt-membership-terms', [$this])
+```
+
+---
+
+## Method: `renderRules(): void`
+
+Renders the **Membership Rules** UI via:
+
+```php
+Render::view('admin/edit/metaboxes/membership/cpt-membership-rules', [$this])
+```
+
+---
+
+## Method: `renderOption(): void`
+
+Renders the **Membership Options** UI via:
+
+```php
+Render::view('admin/edit/metaboxes/membership/cpt-membership-options', [$this])
+```
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`

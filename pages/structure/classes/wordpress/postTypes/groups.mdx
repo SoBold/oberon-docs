@@ -1,0 +1,147 @@
+# Groups Custom Post Type
+
+## Overview
+
+The `Groups` class defines and manages the `group` custom post type in the Oberon plugin. It extends the base `PostTypes` class and includes logic for meta field handling, membership assignment, and admin UI integration. This post type facilitates grouping memberships and managing their assignment and ordering.
+
+### Usage
+
+This class is instantiated automatically when initializing Oberon post types:
+
+```php
+new \Oberon\WordPress\PostTypes\Groups();
+```
+
+It handles registration, metadata, UI rendering, and cleanup logic for `group` entities.
+
+---
+
+## Class: `Groups`
+
+Extends the `PostTypes` class and defines the structure and logic for managing `group` custom post types.
+
+---
+
+### Properties
+
+#### `post_type` (`PostTypes`)
+
+Parent instance for default post type settings.
+
+#### `post_type_slug` (`string`)
+
+The registered slug for the CPT (`group`).
+
+#### `text_domain` (`string`)
+
+Used for translations (`oberon_group`).
+
+#### `labels` (`array<string, string>`)
+
+Admin-facing labels for the `group` CPT.
+
+#### `args` (`array<string, mixed>`)
+
+Arguments passed to `register_post_type`.
+
+#### `meta_keys` (`static array<string, string>`)
+
+Meta fields expected for this post type:
+
+```php
+[
+  'sortedMemberships' => 'array'
+]
+```
+
+---
+
+## WordPress Hooks Registered
+
+| Hook             | Callback Method            | Purpose                                         |
+| ---------------- | -------------------------- | ----------------------------------------------- |
+| `init`           | `registerCustomPostType()` | Registers the `group` CPT                       |
+| `add_meta_boxes` | `registerMetaBoxes()`      | Adds the meta box for group membership config   |
+| `save_post`      | `saveCustomData()`         | Saves metadata when editing a group             |
+| `wp_trash_post`  | `handleTrashedPost()`      | Cleans up assigned memberships if group trashed |
+
+---
+
+## Method: `registerCustomPostType(): void`
+
+Registers the `group` custom post type using WordPress's `register_post_type()` function.
+
+---
+
+## Method: `registerMetaBoxes(): void`
+
+Adds a meta box titled **Group** for editing group membership relationships.
+
+---
+
+## Method: `renderGroupMembership(): void`
+
+Renders the meta box UI using:
+
+```php
+Render::view('admin/edit/metaboxes/cpt-groups-group-membership', [$this])
+```
+
+---
+
+## Method: `saveCustomData(int $post_id): void`
+
+Saves custom post meta data:
+
+-   Updates `sortedMemberships` meta key
+-   Assigns memberships to the group using `updateMembershipStatus()`
+-   Handles optional unassignment
+
+---
+
+## Method: `handleTrashedPost(int $post_id): void`
+
+When a group post is trashed, it:
+
+-   Queries all memberships assigned to that group
+-   Unassigns memberships using `updateMembershipStatus()`
+
+---
+
+## Method: `getMembershipIDsForGroup(array $query_args): array`
+
+Returns an array of membership post IDs that match specific meta queries (e.g. assigned to a group).
+
+---
+
+## Method: `updateMembershipStatus(...)`
+
+Updates meta fields on membership posts:
+
+-   Sets `assigned = true` and `groupID` to the group’s ID
+-   Stores order via `membershipOrder`
+-   Unassigns specified memberships by removing `assigned` and `groupID` metas
+
+---
+
+## Method: `getAllMemberships(): array`
+
+Returns an associative array of active memberships:
+
+```php
+[ post_id => post_title ]
+```
+
+---
+
+## Notes
+
+-   Membership assignment and unassignment are handled dynamically via post meta.
+-   Relies on sorted arrays and form data from the meta box interface.
+-   Includes optional debug output for testing purposes (commented out).
+
+---
+
+## Since
+
+-   **Version**: `0.1.0`
