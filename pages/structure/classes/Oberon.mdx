@@ -1,0 +1,130 @@
+# Oberon Plugin Initialization (`Oberon` class)
+
+This class is the core plugin initializer class for the Oberon plugin. It orchestrates the plugin's REST API endpoints, custom post types, shortcodes, filters, and frontend/backend behaviors.
+
+---
+
+## Class: `Oberon\Oberon`
+
+The `Oberon` class is the entry point of the plugin's execution and is responsible for initializing all critical components.
+
+---
+
+## Constructor Responsibilities
+
+-   **REST Endpoints**: Registers all REST API routes.
+-   **Custom Post Types**:
+
+    -   `Memberships`
+    -   `Coupons`
+    -   `Groups`
+    -   `Reminders`
+
+-   **Helpers**:
+
+    -   `LoginHelper`
+    -   `VerificationHelper`
+
+-   **Actions & Filters**: Hooks all custom filters and actions.
+-   **Shortcodes**: Registers multiple UI rendering shortcodes.
+-   **Frontend Integration**:
+
+    -   Replaces page templates for key screens
+    -   Enqueues frontend assets
+    -   Localizes JS variables
+
+-   **Admin Role Handling**: Redirects users from admin if they're `oberon_member` based on plugin config.
+
+---
+
+## Role Registration: `registerRoles()`
+
+Adds a new WordPress role `oberon_member` with minimal permissions. Based on plugin settings, it can:
+
+-   Disable admin bar
+-   Redirect away from the admin dashboard
+
+---
+
+## Template Routing: `changeTemplates()`
+
+Overrides default page templates for:
+
+-   Login
+-   Account
+-   Thank You
+-   Signup
+
+Looks for these templates inside:
+
+```
+src/views/front/templates/
+```
+
+---
+
+## Frontend Assets: `enqueueFrontStyles()`
+
+Enqueues:
+
+-   `styles.css` and `bundle.js` from development or production path
+-   Injects localized script variables (`obrnArgs`) with API URLs, page IDs, Stripe/PayPal keys, etc.
+
+---
+
+## Shortcodes: `registerShortcodes()`
+
+Registers UI shortcodes for:
+
+-   Account setup / password change / password reset
+-   Membership signup
+-   Email & billing changes
+-   Login/signup/forgot/reset flows
+-   Upgrade/Downgrade options
+
+---
+
+## Global Member Model: `initGlobalMember()`
+
+Fetches the current user and makes their member model globally available via `$obrnMember`.
+
+---
+
+## Logout Redirect: `logoutRedirect()`
+
+Redirects user to a configured page after logout if `redirectAfterLogout` is set.
+
+---
+
+## Filters & Actions
+
+Includes external filter and action registration files:
+
+-   `src/inc/filters/filters.php`
+-   `src/inc/actions/actions.php`
+
+---
+
+## AJAX Handler: `updateUserMetaAction()`
+
+Handles `wp_ajax_update_user_meta`:
+
+-   Validates and updates a user meta key/value via POST.
+
+Returns JSON success/failure.
+
+---
+
+## Since
+
+`0.1.0`
+
+---
+
+## Related Classes
+
+-   `\Oberon\WordPress\Endpoints`
+-   `\Oberon\WordPress\PostTypes\*`
+-   `\Oberon\Helpers\MetaHelper`
+-   `\Oberon\Utilities\Render`
+-   `\Oberon\Controllers\MemberController`
