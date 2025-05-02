@@ -1,0 +1,69 @@
+# Remove Password Form
+
+This component allows a user to remove their account password. It's typically used in passwordless login scenarios or when switching to magic links.
+
+---
+
+## Example HTML Output
+
+```html
+<section class="obrn">
+    <div class="obrnRemovePassword__Container">
+        <form
+            action=""
+            class="obrnRemovePassword__Form"
+            id="obrnRemovePassword__Form"
+        >
+            <div class="obrnRemovePassword__Form-Group">
+                <label for="current_password">Enter password</label>
+                <input
+                    type="password"
+                    name="current_password"
+                    placeholder="Current password"
+                />
+            </div>
+            <div
+                id="obrnRemovePassword__Form-Message"
+                style="display:none;"
+            ></div>
+            <div class="obrnRemovePassword__Form-Submit">
+                <button type="submit" class="obrnRemovePassword__Form-Button">
+                    Remove password
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+```
+
+---
+
+## Dynamic Filter Reference
+
+This form uses the `account_remove_password_content` filter to allow customization of:
+
+-   `password_label`
+-   `password_placeholder`
+-   `button_text`
+
+Example filter implementation in PHP:
+
+```php
+add_filter('account_remove_password_content', function ($args) {
+    return wp_parse_args($args, [
+        'password_label'       => __('Enter password'),
+        'password_placeholder' => __('Current password'),
+        'button_text'          => __('Remove password'),
+    ]);
+});
+```
+
+---
+
+## Usage
+
+```php
+[obrn-account-remove-password]
+```
+
+Use this shortcode to render the form on a frontend page.

@@ -1,0 +1,104 @@
+# Change Billing Information
+
+This view displays the current user's billing email and address, with editable fields via a popup modal interface. It is secured to only show content to logged-in users.
+
+---
+
+## Example HTML Output
+
+```html
+<div class="uk-margin-small-top" style="display: flex;">
+    <div>
+        <label>Billing address</label>
+        <label>user@example.com</label>
+    </div>
+    <div>
+        <input
+            type="button"
+            name="edit"
+            value="edit"
+            data-action="change-email"
+        />
+    </div>
+</div>
+
+<div class="uk-margin-small-top" style="display: flex;">
+    <div>
+        <label>Billing address</label>
+        <label>123 Street, Apt 4B, City, ZIP</label>
+    </div>
+    <div>
+        <input
+            type="button"
+            name="edit"
+            value="edit"
+            data-action="change-address"
+        />
+    </div>
+</div>
+
+<!-- Modal popup -->
+<div id="obrn_popup" class="obrn_popup">
+    <div id="changeEmail">
+        <input type="text" id="newEmail" placeholder="Enter new email" />
+        <div
+            class="obrnLogin__Msg error"
+            id="newBillingEmailErr"
+            style="display:none; color:white;"
+        ></div>
+    </div>
+    <div id="changeAddress">
+        <input
+            type="text"
+            id="obrn_billing_address1"
+            placeholder="Enter Address line 1"
+        />
+        <input
+            type="text"
+            id="obrn_billing_address2"
+            placeholder="Enter Address line 2"
+        />
+        <input
+            type="text"
+            id="obrn_billing_address_city"
+            placeholder="Enter city"
+        />
+        <input
+            type="text"
+            id="obrn_billing_address_postCode"
+            placeholder="Enter postcode"
+        />
+    </div>
+    <button id="updateButton">Edit</button>
+    <button id="cancelButton">Cancel</button>
+</div>
+```
+
+---
+
+## PHP Behavior
+
+-   Checks if a user is logged in with `get_current_user_id()`.
+-   Redirects unauthenticated users to the WordPress login page.
+-   Pulls billing meta fields via `get_user_meta()`:
+
+    -   `obrn_billing_email`
+    -   `obrn_billing_address1`, `address2`, `city`, `postCode`
+
+---
+
+## JavaScript Integration
+
+Expected front-end behavior (not shown here) should include:
+
+-   Toggling visibility of `#obrn_popup`
+
+---
+
+## Usage
+
+```php
+[obrn-change-billing-information]
+```
+
+Place this shortcode inside a page or template where users can manage billing info.

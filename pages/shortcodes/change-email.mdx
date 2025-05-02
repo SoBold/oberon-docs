@@ -1,0 +1,75 @@
+# `[obrn-change-email]`
+
+Renders a **multi-step change email flow** for logged-in users, allowing them to:
+
+1. Request a verification code,
+2. Enter the code,
+3. Provide a new email address,
+4. Receive a login link at their new address for verification.
+
+---
+
+## Requirements
+
+-   **User must be logged in** — otherwise, the user is redirected to the homepage (`/`).
+
+---
+
+## Flow Steps
+
+### Step 1: Send Code
+
+-   Shows the user's **current email**.
+-   Explains the process of email change.
+-   Button: `Send code`
+
+### Step 2: Enter Code and New Email
+
+-   Input field for **verification code** sent via email.
+-   Once validated, a field for **new email address** appears.
+-   Button: `Send login link`
+
+### Step 3: Confirmation Message
+
+-   Displays a success message with instructions to click the login link in their inbox.
+-   Notes that the link will **expire in 10 minutes**.
+
+---
+
+## TypeScript
+
+-   TS handle:
+
+    -   Sending the initial code via AJAX.
+    -   Validating the entered code.
+    -   Revealing the `new_email` section.
+    -   Triggering the login link send.
+    -   Managing transitions between sections via `style.display`.
+
+---
+
+## Sections and IDs
+
+-   `#changeEmailCode` – step 1: request code
+-   `#changeEmailEnterCode` – step 2: enter code & new email
+-   `#successEmailChange` – step 3: confirmation message
+
+These IDs are expected to be toggled dynamically using TypeScript.
+
+---
+
+## Styling & Layout
+
+-   Classes prefixed with `obrnLogin__` for structured layout.
+-   Reuses styling similar to login/signup forms.
+-   Uses `obrnLogin__Container`, `obrnLogin__Card`, `obrnLogin__Title`, `obrnLogin__FormGroup`.
+
+---
+
+## Usage
+
+```php
+[obrn-change-email]
+```
+
+---

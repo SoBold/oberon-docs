@@ -1,0 +1,52 @@
+# `[obrn-signup-form]`
+
+Renders a two-step signup form that collects a user’s email first, then conditionally reveals the password field upon validation or interaction.
+
+---
+
+## Features
+
+-   **Two-step UI**:
+
+    -   Initially displays only the **email address** field.
+    -   The **password field** (`#obrnSignup__Form-Password`) is hidden by default and revealed via JS logic.
+
+-   **Inline feedback**:
+
+    -   A hidden `<div>` (`#loginMsg`) is included to show signup validation or error messages dynamically.
+
+-   **Submit button**:
+
+    -   Triggers the registration flow, typically handled via JavaScript/AJAX.
+
+---
+
+## Structure
+
+-   `<form id="obrnSignupForm">`
+
+    -   `user_email` input (shown)
+    -   `password` input (hidden by default)
+    -   `loginMsg` div (for displaying status/errors)
+    -   Submit button
+
+---
+
+## Integration Notes
+
+-   JavaScript logic is expected to:
+
+    -   Reveal password field based on email validation.
+    -   Handle form submission asynchronously.
+
+-   Localization via `__()` supports multilingual use.
+
+---
+
+## Usage
+
+```php
+[obrn-signup-form]
+```
+
+---
