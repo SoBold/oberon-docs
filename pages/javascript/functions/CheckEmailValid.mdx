@@ -1,0 +1,77 @@
+---
+# CheckEmailValid
+description: Validates the format of an email address using a regular expression.
+---
+
+# `CheckEmailValid`
+
+## Overview
+
+The `CheckEmailValid` function verifies whether a given string is in a valid email format. It uses a regular expression (regex) to perform a syntactic check and returns a boolean result.
+
+This function does **not** verify whether the email address actually exists or is reachable — it only validates that the **format is correct**.
+
+---
+
+## Function Definition
+
+```ts
+const CheckEmailValid = (email: string): boolean
+```
+
+---
+
+## Parameters
+
+| Name    | Type     | Description                    |
+| ------- | -------- | ------------------------------ |
+| `email` | `string` | The email address to validate. |
+
+---
+
+## Returns
+
+**`boolean`** – Returns `true` if the email address is valid, otherwise `false`.
+
+---
+
+## Function Details
+
+### Email Validation Logic
+
+The function uses the following regular expression to validate the format:
+
+```ts
+/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+```
+
+-   Allows:
+    -   Alphanumeric characters
+    -   Dots (`.`), underscores (`_`), percent signs (`%`), plus (`+`), and hyphens (`-`) in the local part
+    -   A domain name that includes subdomains and a TLD with at least 2 characters
+
+---
+
+## Example Usage
+
+```ts
+console.log(CheckEmailValid('user@example.com')); // true
+console.log(CheckEmailValid('invalid-email@')); // false
+console.log(CheckEmailValid('user@site')); // false
+console.log(CheckEmailValid('user@site.io')); // true
+```
+
+---
+
+## Limitations
+
+-   Does not check for:
+    -   Disposable email services
+    -   Domain validity or DNS records
+    -   Mail server availability
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`

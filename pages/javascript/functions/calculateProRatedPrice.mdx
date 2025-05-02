@@ -1,0 +1,124 @@
+---
+# calculateProRatedPrice
+description: Calculates the pro-rated price difference when changing membership subscriptions.
+---
+
+# `calculateProRatedPrice`
+
+## Overview
+
+The `calculateProRatedPrice` function is used to determine the **pro-rated cost** when a user switches from one membership plan to another. It constructs a REST API call using the current and new subscription IDs to fetch pricing details from the backend. The result includes whether the request was valid, any error message, and the calculated pro-rated price.
+
+---
+
+## Function Definition
+
+```ts
+const calculateProRatedPrice = async (
+  currentSubscriptionId: number,
+  newMembershipId: number
+): Promise<CalculateProRatedPriceResult>
+```
+
+---
+
+## Parameters
+
+| Name                    | Type     | Description                                      |
+| ----------------------- | -------- | ------------------------------------------------ |
+| `currentSubscriptionId` | `number` | The ID of the user's current subscription.       |
+| `newMembershipId`       | `number` | The ID of the membership plan being switched to. |
+
+---
+
+## Returns
+
+**Promise\<CalculateProRatedPriceResult\>**
+
+The promise resolves to an object with the following structure:
+
+### Response Object Structure
+
+| Property        | Type      | Description                                                                 |
+| --------------- | --------- | --------------------------------------------------------------------------- |
+| `isValid`       | `boolean` | Indicates whether the API call and calculation were successful.             |
+| `error`         | `string`  | _(Optional)_ If invalid, provides an error message.                         |
+| `proratedPrice` | `number`  | _(Optional)_ The calculated pro-rated price. Returned if `isValid` is true. |
+
+---
+
+## Function Details
+
+### Constructing the API URL
+
+The function builds the API endpoint dynamically using `obrnArgs.apiUrl` and the query params from the provided subscription IDs.
+
+### Authenticated API Call
+
+A GET request is made to:
+
+```
+/v1/auth/signup/change/price
+```
+
+with encoded query parameters and an `X-WP-Nonce` header for authentication.
+
+### Success Handling
+
+If the API call succeeds and returns valid data, the result (including the pro-rated price) is returned.
+
+### Failure Handling
+
+If the request fails (e.g., network error), the function catches the error and returns:
+
+```ts
+{
+  isValid: false,
+  error: 'Error during API call. Please try again later.'
+}
+```
+
+---
+
+## Dependencies
+
+-   **`ObrnArgs`**: Interface used to access the API base URL and nonce for authentication.
+-   **`CalculateProRatedPriceResult`**: Interface defining the structure of the function's return value.
+-   **`encodeDataToURL()`**: Utility function used to encode the query string.
+
+---
+
+## Utility: `encodeDataToURL`
+
+Encodes a plain object into a URL query string format:
+
+```ts
+const encodeDataToURL = (data: Record<string, any>): string => {
+    return Object.entries(data)
+        .map(
+            ([key, value]) =>
+                `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+        )
+        .join('&');
+};
+```
+
+---
+
+## Version
+
+**Introduced in version** `0.1.0`
+
+---
+
+## Example Usage
+
+```ts
+const result = await calculateProRatedPrice(123, 456);
+
+if (result.isValid) {
+    console.log('Pro-rated price:', result.proratedPrice);
+} else {
+    console.error('Failed to calculate price:', result.error);
+}
+```
