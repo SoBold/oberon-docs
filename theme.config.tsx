@@ -37,22 +37,21 @@ const config: DocsThemeConfig = {
         text: 'Oberon Docs | SoBold',
     },
     sidebar: {
-        extraContent: (
-            <a
-                href="https://sobold.github.io/oberon-api/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                    display: 'block',
-                    marginTop: '2rem',
-                    padding: '0.5rem 1rem',
-                    fontSize: '0.875rem',
-                    color: '#888',
-                    textDecoration: 'none',
-                }}
-            >
-                Api v1 →
-            </a>
+        component: () => (
+            <div style={{ marginTop: '2rem', padding: '1rem' }}>
+                <a
+                    href="https://sobold.github.io/oberon-api/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                        color: '#888',
+                        fontSize: '0.875rem',
+                        textDecoration: 'none',
+                    }}
+                >
+                    Migration from Nextra v3 →
+                </a>
+            </div>
         ),
     },
 };
