@@ -1,0 +1,85 @@
+# `[obrn-membership-upgrade-downgrade-options]`
+
+Renders available **upgrade** or **downgrade** options for the logged-in user's active memberships. This shortcode lets users switch to another eligible membership plan with a simple button interface.
+
+---
+
+-   No attributes required.
+
+---
+
+## Requirements
+
+-   **User must be logged in**.
+-   **Must have at least one active subscription** that:
+
+    -   Is **not a child account**
+    -   Has defined upgrade or downgrade options via `getMembershipOptions()`.
+
+---
+
+## Features
+
+-   **Displays available plans** grouped by:
+
+    -   `upgrade`
+    -   `downgrade`
+
+-   Renders membership **title** and **price**.
+-   Shows a dynamic **"Upgrade"** or **"Downgrade"** button.
+-   Action buttons include data attributes:
+
+    -   `data-id`: ID of the selected membership to switch to
+    -   `current-subscription`: ID of the user’s current subscription
+    -   `membership-action`: `upgrade` or `downgrade`
+
+---
+
+## Output Markup
+
+Each membership option is rendered in this format:
+
+```html
+<div class="account__card">
+    <h5>Membership Title</h5>
+    <p>Formatted Price</p>
+    <a
+        class="button button--primary"
+        id="membershipChange"
+        current-subscription="123"
+        data-id="456"
+        membership-action="upgrade"
+    >
+        Upgrade
+    </a>
+</div>
+```
+
+---
+
+## JavaScript Integration
+
+This shortcode **requires JavaScript logic** to handle button clicks:
+
+-   Listen for clicks on `#membershipChange`.
+-   Read `data-id`, `current-subscription`, and `membership-action`.
+
+---
+
+## Integration Notes
+
+-   Uses:
+
+    -   `Oberon\Models\Member`
+    -   `Oberon\Models\Membership`
+
+-   Intended for users already subscribed to a membership plan.
+-   Upgrade/downgrade plans must be configured in the backend.
+
+---
+
+## Usage
+
+```php
+[obrn-membership-upgrade-downgrade-options]
+```

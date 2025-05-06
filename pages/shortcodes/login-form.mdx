@@ -1,0 +1,65 @@
+# Login Form
+
+A dynamic login form that reveals the password field after email validation and optionally includes a "Forgot Password?" trigger.
+
+---
+
+## Example HTML Output
+
+```html
+<form id="obrnLoginForm">
+    <input type="hidden" name="login_type" value="" />
+    <div
+        class="obrnLogin__FormGroup ke-login__form-group"
+        id="obrnLogin__Form-Email"
+    >
+        <label for="user_email">Email Address</label>
+        <input type="email" name="user_email" id="user_email" />
+    </div>
+    <div
+        class="obrnLogin__FormGroup ke-login__form-group"
+        id="obrnLogin__Form-Password"
+        style="display: none;"
+    >
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" />
+    </div>
+    <div class="obrnLogin__Msg error" id="loginMsg" style="display:none"></div>
+    <div class="obrnLogin__Submit mt-5 text-center">
+        <button type="submit" class="button button--primary" name="submit">
+            Continue
+        </button>
+    </div>
+</form>
+```
+
+---
+
+## JavaScript Behavior
+
+-   Initially shows only the email field.
+-   After submitting a valid email, reveals the password field.
+-   Displays errors in the `#loginMsg` container.
+-   `login_type` input may be used to support email-only, magic link, or password login.
+
+---
+
+## Optional "Forgot Password?" Link
+
+If `disable_forgot` is **not true**, the following will be rendered:
+
+```html
+<a href="javascript:void(0);" id="obrnLogin__ForgotTrigger">Forgot password?</a>
+```
+
+This can toggle a password reset form in your JS logic.
+
+---
+
+## Usage
+
+```php
+[obrn-login-form]
+```
+
+Place this shortcode wherever a login flow is needed.

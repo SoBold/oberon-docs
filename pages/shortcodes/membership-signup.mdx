@@ -1,0 +1,79 @@
+# `[obrn-membership-signup]`
+
+Renders a dynamic frontend membership signup form, allowing logged-in users to subscribe to a specific membership plan with full support for payment gateways, tax calculation, and upgrade flows.
+
+---
+
+-   `id`: _(required)_ The post ID of the membership (`post_type = membership`) to display and subscribe to.
+
+---
+
+## Requirements
+
+-   **User must be logged in** — otherwise, the message `Please sign in or register to take out a membership` will be shown.
+-   **Membership must exist and be active** — inactive or invalid memberships will result in an error message.
+
+---
+
+## Features
+
+-   **Dynamic fields**: Hidden inputs for user ID, currency, tax, and pricing.
+-   **Upgrade support**: If `action=upgrade` and `proRatedPrice` are in the query string:
+
+    -   Membership price is overridden.
+    -   Hidden fields include `upgrade_action=1` and `subscription_id`.
+
+-   **Multiple gateways**:
+
+    -   Pulled from the `obrn_available_payment_methods` filter.
+    -   Options include Stripe, PayPal, and Offline.
+
+-   **Payment explanation text** is shown dynamically for each method.
+-   **Terms & Conditions** and optional **newsletter opt-in** checkboxes.
+
+---
+
+## Hidden Inputs
+
+The form includes data like:
+
+-   `membership_id`, `membership_price`, `total_price`
+-   `tax_rate`, `tax_amount`
+-   `currency`, `gateway`, `paypal_orderId`, `user_id`
+-   `upgrade_action`, `subscription_id`, `transaction_id`
+
+---
+
+## Price Summary Section
+
+Includes:
+
+-   Membership title and billing cycle
+-   Subtotal and tax breakdown
+-   Final total
+-   Coupon code display (shown only when applicable)
+
+---
+
+## Submit Button Behavior
+
+-   Disabled by default
+-   Activated when:
+
+    -   A payment gateway is selected
+    -   Terms & conditions checkbox is checked
+
+---
+
+## Integration Notes
+
+-   Uses `Oberon\Models\Membership`, `Oberon\Helpers\TaxHelper`, `Oberon\Helpers\L10nHelper`
+-   Rendered fields and localized strings suggest strong integration with JavaScript/TypeScript-based logic for actual payment submission and validation.
+
+---
+
+## Usage
+
+```php
+[obrn-membership-signup id="123"]
+```

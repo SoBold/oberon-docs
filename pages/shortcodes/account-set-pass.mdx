@@ -1,0 +1,78 @@
+# Set Password Form
+
+This form allows a user to set a new password. It's typically used after signup or password reset when no password exists yet.
+
+---
+
+## Example HTML Output
+
+```html
+<section class="obrn">
+    <div class="obrnSetPassword__Container">
+        <form
+            action=""
+            class="obrnSetPassword__Form"
+            id="obrnSetPassword__Form"
+        >
+            <div class="obrnSetPassword__Form-Group">
+                <label for="new_password">Enter password</label>
+                <input
+                    type="password"
+                    name="new_password"
+                    placeholder="New password"
+                />
+            </div>
+            <div class="obrnSetPassword__Form-Group">
+                <label for="confirm_password">Confirm new password</label>
+                <input
+                    type="password"
+                    name="confirm_password"
+                    placeholder="New password"
+                />
+            </div>
+            <div id="obrnSetPassword__Form-Message" style="display:none;"></div>
+            <div class="obrnSetPassword__Form-Submit">
+                <button type="submit" class="obrnSetPassword__Form-Button">
+                    Set a password
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+```
+
+---
+
+## Dynamic Filter Reference
+
+This form uses the `account_set_password_content` filter to override the following fields dynamically:
+
+-   `new_password_label`
+-   `new_password_placeholder`
+-   `confirm_password_label`
+-   `confirm_password_placeholder`
+-   `button_text`
+
+### Example PHP Filter Hook
+
+```php
+add_filter('account_set_password_content', function ($args) {
+    return wp_parse_args($args, [
+        'new_password_label'           => __('Enter password'),
+        'new_password_placeholder'     => __('New password'),
+        'confirm_password_label'       => __('Confirm new password'),
+        'confirm_password_placeholder' => __('New password'),
+        'button_text'                  => __('Set a password'),
+    ]);
+});
+```
+
+---
+
+## Usage
+
+```php
+[obrn-account-set-password]
+```
+
+Place this shortcode inside a page to render the password setup form.

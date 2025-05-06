@@ -1,0 +1,51 @@
+### Change Password Shortcode Form (`account-change-password`)
+
+This shortcode renders a frontend form that allows logged-in users to change their account password securely.
+
+---
+
+```php
+apply_filters('account_change_password_content', $args);
+```
+
+The form is dynamically populated via the `account_change_password_content` filter to allow customization of labels, placeholders, and the submit button text.
+
+---
+
+### Filter: `account_change_password_content`
+
+| Key                            | Description                                 | Type     | Default Value            |
+| ------------------------------ | ------------------------------------------- | -------- | ------------------------ |
+| `current_password_label`       | Label for current password field            | `string` | `Enter current password` |
+| `current_password_placeholder` | Placeholder text for current password input | `string` | `Current password`       |
+| `new_password_label`           | Label for new password field                | `string` | `Enter password`         |
+| `new_password_placeholder`     | Placeholder for new password                | `string` | `New password`           |
+| `confirm_password_label`       | Label for confirm password                  | `string` | `Confirm new password`   |
+| `confirm_password_placeholder` | Placeholder for confirmation                | `string` | `Confirm new password`   |
+| `button_text`                  | Submit button text                          | `string` | `Change password`        |
+
+---
+
+### Rendered Form Structure
+
+The form includes:
+
+-   Current password input
+-   New password input
+-   Confirm password input
+-   Submit button
+-   Message div for async feedback
+
+All inputs are standard HTML password fields. The form is styled with `obrnChangePassword__` prefixed CSS classes for BEM-style scoping.
+
+---
+
+### Usage
+
+To render this form on a page or post, use the following shortcode:
+
+```wordpress
+[obrn-account-change-password]
+```
+
+This will insert the form and apply the content filter automatically.

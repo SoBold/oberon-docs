@@ -1,0 +1,75 @@
+# Account Setup Form
+
+This form allows a user to input or update their personal and address-related information during account setup.
+
+---
+
+## Example HTML Output
+
+```html
+<form action="" class="account-setup" id="obrnAccount__Setup">
+    <div class="account-setup__section">
+        <p>Personal information</p>
+        <!-- Fields rendered dynamically by Oberon\Utilities\Render::field() -->
+        <p>Address</p>
+        <!-- More dynamic fields -->
+    </div>
+    <button type="submit" name="submit">Save details</button>
+</form>
+```
+
+_Note: Fields are dynamically rendered using the `Render::field()` utility based on the keys and types defined in the setup configuration._
+
+---
+
+## Dynamic Filter Reference
+
+This form uses the `obrn_account_setup_fields` filter to determine the fields and grouping logic.
+
+### Example Filter Hook
+
+```php
+add_filter('obrn_account_setup_fields', function ($args) {
+    return [
+        'personal_information' => [
+            'title' => __('Personal information'),
+            'fields' => [
+                'user_firstname' => __('First Name'),
+                'user_lastname' => __('Last Name'),
+                'user_phone' => __('Phone number'),
+            ],
+            'address' => [
+                'title' => __('Address'),
+                'fields' => [
+                    'obrn-address-street' => __('Street Address'),
+                    'obrn-address-city' => __('City'),
+                    'obrn-address-zip' => __('ZIP or Postcode'),
+                    'obrn-address-country' => __('Country'),
+                ]
+            ]
+        ]
+    ];
+});
+```
+
+---
+
+## Field Rendering
+
+Each field is rendered via:
+
+```php
+echo \Oberon\Utilities\Render::field($name);
+```
+
+This supports types like `text`, `email`, `dropdown`, etc., as defined in the `obrn_default_fields` filter.
+
+---
+
+## Usage
+
+```php
+[obrn-account-setup]
+```
+
+Use this shortcode to render the account setup form on a page or template.
